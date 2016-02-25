@@ -19,4 +19,5 @@ public class MyAppContext extends Application {
         super.onCreate();
         isLogIn = false;
     }
+    ssss
 }
