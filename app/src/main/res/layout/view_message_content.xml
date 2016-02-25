@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_messagecontent_source"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textSize="27sp" />
+        <!--                   arrow imageview-->
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="9dp"
+        android:background="#000000" />
+
+    <TextView
+        android:id="@+id/tv_messagecontent_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/textview_shape"
+        android:lineSpacingMultiplier="1.1"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/tv_messagecontent_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="right"
+        android:paddingRight="15dp"
+        android:text="2016-12-13 2.30pm"
+        android:textSize="20sp" />
+</LinearLayout>

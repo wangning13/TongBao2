@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <include layout="@layout/toolbar" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        >
+        <RelativeLayout
+            android:id="@+id/begin_layout"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="3" >
+
+            <EditText
+                android:id="@+id/beginaddress"
+                android:background="@drawable/frameframe"
+                android:layout_weight="1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:maxLength="40"
+                android:hint="出发地"/>
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/fromto_layout"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/fromto_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="至"
+                    android:textSize="25sp"
+                    android:textColor="#1F6EF2" />
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/end_layout"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="3" >
+                <EditText
+                    android:id="@+id/endaddress"
+                    android:layout_weight="1"
+                    android:background="@drawable/frameframe"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:maxLength="40"
+                    android:hint="目的地"/>
+
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/searc_layout"
+            android:gravity="center"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="40dp">
+                <Button android:id="@+id/search_btn"
+                    android:background="#1F6EF2"
+                    android:layout_weight="1"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="搜索"
+                    android:textSize="25sp"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="right" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/listView" />
+
+</LinearLayout>
