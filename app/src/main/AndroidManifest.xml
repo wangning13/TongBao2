@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="nju.tb"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+        android:name=".Commen.MyAppContext"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".atys.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".atys.ScrambleOrderActivity"
+            android:label="@string/title_activity_order"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".atys.OrderDetailActivity"
+            android:label="@string/title_activity_order_detail"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".atys.DoTaskActivity"
+            android:label="@string/title_activity_do_task"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".atys.UseWalletActivity"
+            android:label="@string/title_activity_use_wallet"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".atys.RechargeActivity"
+            android:label="@string/title_activity_recharge"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".atys.WithdrawActivity"
+            android:label="@string/title_activity_withdraw"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".atys.ChangeInfoActivity"/>
+        <activity
+            android:name=".atys.HelpcenterActivity"
+            android:label="@string/title_activity_helpcenter"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".atys.MessageActivity"
+            android:label="@string/title_activity_message"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".atys.MessageContentActivity"/>
+        <activity android:name=".atys.CarsManagementActivity"/>
+        <activity android:name=".atys.AddCarActivity"/>
+        <activity android:name=".atys.CarInfoActivity"/>
+        <activity android:name=".atys.CertificationActivity"/>
+        <activity android:name=".atys.SelectAlbumActivity"/>
+        <activity android:name=".atys.AlbumDetailActivity"/>
+    </application>
+
+</manifest>

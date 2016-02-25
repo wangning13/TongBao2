@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#1F6EF2"
+            android:gravity="center"
+            android:text="认证"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+
+        <ImageView
+            android:id="@+id/iv_identification_leftarrow"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/arrow_left" />
+    </FrameLayout>
+
+    <TabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/linearlayout_shape"
+                android:orientation="horizontal" />
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <!--车辆认证   ______________________________                                 -->
+                <LinearLayout
+                    android:id="@+id/certification_cheliangrenzheng"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/linearlayout_shape"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:paddingBottom="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="20dp"
+                            android:text="证件审核状态："
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/certification_cheliang_state"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:paddingBottom="20dp"
+                            android:paddingTop="20dp"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/linearlayout_shape"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:paddingBottom="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="20dp"
+                            android:text="车牌号："
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/certification_chepaihao"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:paddingBottom="5dp"
+                            android:paddingTop="5dp"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/linearlayout_shape"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:paddingBottom="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="20dp"
+                            android:text="行驶证："
+                            android:textSize="20sp" />
+                        <!-- 此处imageview                            -->
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/linearlayout_shape"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:paddingBottom="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="20dp"
+                            android:text="车头照："
+                            android:textSize="20sp" />
+                        <!--此处imageview                -->
+                    </LinearLayout>
+                </LinearLayout>
+                <!-- 实名认证____________________________________________________________ -->
+                <LinearLayout
+                    android:id="@+id/certification_shimingrenzheng"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/linearlayout_shape"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:paddingBottom="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="20dp"
+                            android:text="证件审核状态："
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/certification_shiming_state"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:paddingBottom="20dp"
+                            android:paddingTop="20dp"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/linearlayout_shape"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:paddingBottom="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="20dp"
+                            android:text="真实姓名："
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/certification_zhenshixingming"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:paddingBottom="20dp"
+                            android:paddingTop="20dp"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/linearlayout_shape"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:paddingBottom="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="20dp"
+                            android:text="驾驶证号："
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/certification_jiashizhenghao"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:paddingBottom="20dp"
+                            android:paddingTop="20dp"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/linearlayout_shape"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:paddingBottom="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="20dp"
+                            android:text="驾驶证："
+                            android:textSize="20sp" />
+                        <!--此处imageview                -->
+                    </LinearLayout>
+
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="50dp">
+
+        <Button
+            android:id="@+id/tijiaoshenhe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:text="提交审核" />
+    </LinearLayout>
+</LinearLayout>
