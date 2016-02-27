@@ -59,21 +59,57 @@ public class OrderFragment extends Fragment {
                 }
             }
         });
-        class OnLongClick implements AdapterView.OnItemLongClickListener {
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!longClickState) {
-                    adapter.setClickState(true);
-                    selectedId.clear();
-                    deleteLayout.setVisibility(View.VISIBLE);
-                    lv.setAdapter(adapter);
-                    return true;
-                } else {
-                    return false;
+//        class OnLongClick implements AdapterView.OnItemLongClickListener {
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                if (!longClickState) {
+//                    adapter.setClickState(true);
+//                    selectedId.clear();
+//                    deleteLayout.setVisibility(View.VISIBLE);
+//                    lv.setAdapter(adapter);
+//                    return true;
+//                } else {
+//                    return false;
+//                }
+//            }
+//        }
+//        lv.setOnItemLongClickListener(new OnLongClick());
+        //确认删除按钮的监听事件
+        okButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View view) {
+                selectedId = adapter.getSelectedId();
+                if (selectedId.size() == 0) {
+                    return;
                 }
+                ArrayList<Boolean> arr = new ArrayList<Boolean>();
+                for (int i = 0; i < mData.size(); i++) {
+                    arr.add(false);
+                }
+                for (int j : selectedId) {
+                    arr.set(j, true);
+                }
+                Iterator dataIterator = mData.iterator();
+                Iterator arrIterator = arr.iterator();
+                while (arrIterator.hasNext()) {
+                    boolean b = (boolean) arrIterator.next();
+                    dataIterator.next();
+                    if (b) {
+                        arrIterator.remove();
+                        dataIterator.remove();
+                    }
+                }
+                adapter.setClickState(false);
+                adapter.notifyDataSetChanged();
+                deleteLayout.setVisibility(View.GONE);
             }
-        }
-        lv.setOnItemLongClickListener(new OnLongClick());
-       
+        });
+        //取消按钮的监听事件
+        cancelButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View view) {
+                adapter.setClickState(false);
+                lv.setAdapter(adapter);
+                deleteLayout.setVisibility(View.GONE);
+            }
+        });
 
 
 
