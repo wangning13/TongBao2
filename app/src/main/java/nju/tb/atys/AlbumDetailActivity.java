@@ -26,10 +26,10 @@ public class AlbumDetailActivity extends Activity {
     // private List<LocalFile> files = new ArrayList<LocalFile>();
     private MyGridView albumDetailGridView;
     //缩小
-    private ScaleAnimation scaleAnimation = new ScaleAnimation(2f, 1f, 2f, 1f,
+    private ScaleAnimation scaleAnimation = new ScaleAnimation(1.2f, 1f, 1.2f, 1f,
             Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
     //放大
-    private ScaleAnimation scaleAnimation1 = new ScaleAnimation(1f, 2f, 1f, 2f,
+    private ScaleAnimation scaleAnimation1 = new ScaleAnimation(1f, 1.2f, 1f, 1.2f,
             Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
     @Override
@@ -49,15 +49,16 @@ public class AlbumDetailActivity extends Activity {
         albumDetailGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                albumDetailGridView.setCurrentPosition(position);
                 if (adapter.isFirstClick()) {
                     startAnimation(view, true);
                     adapter.setIsClick(position);
                     adapter.setLastClick(position);
                     adapter.setFirstClick();
                     adapter.notifyDataSetChanged();
+
                     return;
                 }
-
                 startAnimation(view, true);
                 startAnimation(adapter.getLastView(), false);
                 adapter.setLastClick(adapter.getIsClick());

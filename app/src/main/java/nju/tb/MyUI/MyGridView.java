@@ -12,10 +12,12 @@ public class MyGridView extends GridView {
 
     public MyGridView(Context context) {
         super(context);
+        setChildrenDrawingCacheEnabled(true);
     }
 
     public MyGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setChildrenDrawingCacheEnabled(true);
     }
 
     public void setCurrentPosition(int pos) {
