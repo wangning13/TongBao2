@@ -13,7 +13,8 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal|center_vertical"
         android:padding="10dp"
+        android:textColor="#1F6EF2"
         android:text="删除该车辆"
-        android:textSize="30sp"
+        android:textSize="20sp"
         />
 </LinearLayout>
