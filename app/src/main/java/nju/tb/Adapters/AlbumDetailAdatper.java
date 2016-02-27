@@ -81,7 +81,6 @@ public class AlbumDetailAdatper extends BaseAdapter {
     }
 
     public View getLastView() {
-        Log.i("lastview", "" + lastClick);
         return lastView;
     }
 
