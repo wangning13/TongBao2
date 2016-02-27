@@ -34,14 +34,6 @@ public class OldOrderListAdapter  extends BaseAdapter {
         isLongClick = false;
     }
 
-    public void setClickState(boolean clickState) {
-        this.isLongClick = clickState;
-    }
-
-    public List<Integer> getSelectedId() {
-        return this.selectedId;
-    }
-
     public int getCount() {
         return list != null ? list.size() : 0;
     }
@@ -60,24 +52,6 @@ public class OldOrderListAdapter  extends BaseAdapter {
         convertView = mInflater.inflate(R.layout.oldorderitem, null);
         info = (TextView)convertView.findViewById(R.id.info);
         info.setText(list.get(position).get("info").toString());
-        RelativeLayout longClick = (RelativeLayout) convertView.findViewById(R.id.message_item_longclick);
-        CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.message_check);
-
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    selectedId.add(position);
-                } else {
-                    selectedId.remove(position);
-                }
-            }
-        });
-
-        if(isLongClick){
-            longClick.setVisibility(View.VISIBLE);
-            checkBox.setClickable(true);
-        }
         return convertView;
     }
 

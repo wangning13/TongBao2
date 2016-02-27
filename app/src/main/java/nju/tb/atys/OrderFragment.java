@@ -35,47 +35,20 @@ public class OrderFragment extends Fragment {
     private ListView lv;
     private ArrayAdapter<Order> adapter;
     private List<Map<String, Order>> mData;
-    private Button cancelButton;
-    private Button okButton;
-    private RelativeLayout deleteLayout;
-    private boolean longClickState = false;
-    public List<Integer> selectedId = new ArrayList<Integer>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.orderfragment, container, false);
         lv=(ListView)view.findViewById(R.id.listView);
-        cancelButton = (Button) view.findViewById(R.id.delete_cancel);
-        okButton = (Button) view.findViewById(R.id.delete_ok);
-        deleteLayout = (RelativeLayout) view.findViewById(R.id.message_delete);
         mData = getData();
         final OldOrderListAdapter adapter = new OldOrderListAdapter(getActivity(),mData);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                if (!longClickState) {
-                    showInfo(position);
-                }
+                showInfo(position);
             }
         });
-        class OnLongClick implements AdapterView.OnItemLongClickListener {
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!longClickState) {
-                    adapter.setClickState(true);
-                    selectedId.clear();
-                    deleteLayout.setVisibility(View.VISIBLE);
-                    lv.setAdapter(adapter);
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        }
-        lv.setOnItemLongClickListener(new OnLongClick());
-       
-
-
 
         return view;
     }
