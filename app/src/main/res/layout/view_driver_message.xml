@@ -4,26 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#1F6EF2"
-            android:gravity="center"
-            android:text="消息"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp" />
-
-        <ImageView
-            android:id="@+id/iv_message_leftarrow"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/arrow_left" />
-    </FrameLayout>
+    <include layout="@layout/toolbar" />
 
     <ListView
         android:id="@+id/lv_messagelist"
@@ -48,20 +30,20 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#BFBFBF"
+                android:background="#ffffff"
                 android:gravity="center"
                 android:text="取消"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/delete_ok"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#CC0000"
+                android:background="#D9D9D9"
                 android:gravity="center"
                 android:text="删除"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

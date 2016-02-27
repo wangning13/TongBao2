@@ -4,33 +4,47 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <TextView
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:background="#1F6EF2"
-            android:gravity="center"
-            android:text="车辆管理"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
-        <ImageView
-            android:id="@+id/iv_cars_leftarrow"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/arrow_left" />
+            <ImageButton
+                android:id="@+id/head_TitleBackBtn"
+                android:gravity="center_vertical"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/arrow"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:layout_gravity="center"
+                android:id="@+id/toolbar_title" />
 
-        <ImageView android:id="@+id/iv_cars_addcar"
-            android:layout_height="40dp"
-            android:layout_width="40dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/addcar"
-           android:layout_gravity="right|center_vertical" />
-    </FrameLayout>
+            <ImageView android:id="@+id/iv_cars_addcar"
+                android:layout_height="35dp"
+                android:layout_width="35dp"
+                android:scaleType="centerInside"
+                android:paddingRight="5dp"
+                android:src="@drawable/addcar"
+                android:layout_gravity="right|center_vertical" />
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
     <ListView android:id="@+id/lv_cars_carlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

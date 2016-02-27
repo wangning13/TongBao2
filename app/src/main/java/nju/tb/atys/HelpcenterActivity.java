@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import nju.tb.R;
-import nju.tb.constants.ViewHolder;
 import nju.tb.entity.Order;
 
 public class HelpcenterActivity extends Activity {
@@ -106,6 +105,9 @@ public class HelpcenterActivity extends Activity {
         }
 
 
-
+        public final class ViewHolder{
+            public TextView info;
+            public Button viewBtn;
+        }
     }
 }

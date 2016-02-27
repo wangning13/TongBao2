@@ -14,13 +14,16 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import nju.tb.Adapters.OldOrderListAdapter;
 import nju.tb.entity.Order;
 import nju.tb.R;
 
@@ -32,20 +35,48 @@ public class OrderFragment extends Fragment {
     private ListView lv;
     private ArrayAdapter<Order> adapter;
     private List<Map<String, Order>> mData;
+    private Button cancelButton;
+    private Button okButton;
+    private RelativeLayout deleteLayout;
+    private boolean longClickState = false;
+    public List<Integer> selectedId = new ArrayList<Integer>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.orderfragment, container, false);
         lv=(ListView)view.findViewById(R.id.listView);
+        cancelButton = (Button) view.findViewById(R.id.delete_cancel);
+        okButton = (Button) view.findViewById(R.id.delete_ok);
+        deleteLayout = (RelativeLayout) view.findViewById(R.id.message_delete);
         mData = getData();
-        MyAdapter adapter = new MyAdapter(getActivity());
+        final OldOrderListAdapter adapter = new OldOrderListAdapter(getActivity(),mData);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                showInfo(position);
+                if (!longClickState) {
+                    showInfo(position);
+                }
             }
         });
+        class OnLongClick implements AdapterView.OnItemLongClickListener {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!longClickState) {
+                    adapter.setClickState(true);
+                    selectedId.clear();
+                    deleteLayout.setVisibility(View.VISIBLE);
+                    lv.setAdapter(adapter);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        lv.setOnItemLongClickListener(new OnLongClick());
+       
+
+
+
         return view;
     }
     public void showInfo(int position){
@@ -106,36 +137,6 @@ public class OrderFragment extends Fragment {
 
 
 
-
-    public class MyAdapter extends BaseAdapter {
-        private LayoutInflater mInflater;
-
-        public MyAdapter(Context context) {
-            this.mInflater = LayoutInflater.from(context);
-        }
-
-        public int getCount() {
-            return mData.size();
-        }
-
-        public Object getItem(int arg0) {
-            return null;
-        }
-
-        public long getItemId(int arg0) {
-            return 0;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView info = null;
-            Button viewBtn=null;
-            convertView = mInflater.inflate(R.layout.oldorderitem, null);
-            info = (TextView)convertView.findViewById(R.id.info);
-            info.setText(mData.get(position).get("info").toString());
-            return convertView;
-
-        }
-    }
 }
 
 
