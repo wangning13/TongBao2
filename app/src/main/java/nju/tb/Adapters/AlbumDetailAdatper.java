@@ -4,6 +4,7 @@ package nju.tb.Adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import nju.tb.R;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import nju.tb.Commen.LocalImageHelper;
 import nju.tb.Commen.LocalImageHelper.LocalFile;
@@ -27,6 +32,10 @@ public class AlbumDetailAdatper extends BaseAdapter {
     private List<LocalFile> files;
     private DisplayImageOptions displayImageOptions;
     private ImageLoader imageLoader;
+    private int isClick = 0;
+    private int lastClick = isClick;
+    private boolean firstClick = true;
+    private View lastView = null;
 
     public AlbumDetailAdatper(Context context, List<LocalFile> files) {
         this.context = context;
@@ -44,6 +53,36 @@ public class AlbumDetailAdatper extends BaseAdapter {
                 .build();
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+
+    }
+
+    public boolean isFirstClick() {
+        return this.firstClick;
+    }
+
+    public void setFirstClick() {
+        this.firstClick = false;
+    }
+
+    public int getIsClick() {
+        return isClick;
+    }
+
+    public void setIsClick(int isClick) {
+        this.isClick = isClick;
+    }
+
+    public int getLastClick() {
+        return lastClick;
+    }
+
+    public void setLastClick(int lastClick) {
+        this.lastClick = lastClick;
+    }
+
+    public View getLastView() {
+        Log.i("lastview", "" + lastClick);
+        return lastView;
     }
 
     @Override
@@ -73,6 +112,13 @@ public class AlbumDetailAdatper extends BaseAdapter {
         viewHolder = (ViewHolder) convertView.getTag();
         imageLoader.displayImage(files.get(position).getThumbnailUri(), viewHolder.albumDetailImageVIew,
                 displayImageOptions, null);
+        if (position == lastClick) {
+            lastView = convertView;
+
+        }
+        if (position != isClick) {
+            convertView.clearAnimation();
+        }
         return convertView;
     }
 
