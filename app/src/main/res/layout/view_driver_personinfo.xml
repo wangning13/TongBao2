@@ -191,7 +191,7 @@
             android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="0.5"
-            android:src="@drawable/redpoint"
+            android:src="@drawable/arrow_right"
             android:visibility="invisible"/>
     </LinearLayout>
 </LinearLayout>
