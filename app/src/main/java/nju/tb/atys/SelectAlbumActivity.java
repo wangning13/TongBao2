@@ -52,6 +52,7 @@ public class SelectAlbumActivity extends Activity {
 //                Log.i("000000000:::",(myList.getList()==null)+"");
 //                Log.i("111111111111111:::",myList.getList().size()+"");
                 bundle.putSerializable("albumdetail", myList);
+                bundle.putString("foldername",folderName);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

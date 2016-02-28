@@ -10,6 +10,9 @@ import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import nju.tb.MyUI.MyGridView;
 import nju.tb.R;
@@ -23,13 +26,15 @@ import nju.tb.Commen.LocalImageHelper.LocalFile;
 import nju.tb.atys.SelectAlbumActivity.ListSerializable;
 
 public class AlbumDetailActivity extends Activity {
-    // private List<LocalFile> files = new ArrayList<LocalFile>();
     private MyGridView albumDetailGridView;
+    private TextView albumNameTextView;
+    private TextView albumDetailOKTextView;
+
     //缩小
-    private ScaleAnimation scaleAnimation = new ScaleAnimation(1.2f, 1f, 1.2f, 1f,
+    private ScaleAnimation scaleAnimation = new ScaleAnimation(1.4f, 1f, 1.4f, 1f,
             Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
     //放大
-    private ScaleAnimation scaleAnimation1 = new ScaleAnimation(1f, 1.2f, 1f, 1.2f,
+    private ScaleAnimation scaleAnimation1 = new ScaleAnimation(1f, 1.4f, 1f, 1.4f,
             Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
     @Override
@@ -38,7 +43,14 @@ public class AlbumDetailActivity extends Activity {
         setContentView(R.layout.view_driver_albumdetail);
 
         albumDetailGridView = (MyGridView) findViewById(R.id.albumdetail_gridview);
+        albumNameTextView = (TextView) findViewById(R.id.albumdetail_name);
+        albumDetailOKTextView=(TextView) findViewById(R.id.albumdetail_ok);
+
         Bundle bundle = this.getIntent().getExtras();
+        //相册名
+        String folderName = bundle.getString("foldername");
+        albumNameTextView.setText(folderName);
+        //相册图片
         ListSerializable myList = (ListSerializable) bundle.getSerializable("albumdetail");
         List<LocalFile> gridviewData = myList.getList();
 
@@ -51,7 +63,7 @@ public class AlbumDetailActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 albumDetailGridView.setCurrentPosition(position);
                 if (adapter.isFirstClick()) {
-                    startAnimation(view, true);
+//                    startAnimation(view, true);
                     adapter.setIsClick(position);
                     adapter.setLastClick(position);
                     adapter.setFirstClick();
@@ -59,8 +71,8 @@ public class AlbumDetailActivity extends Activity {
 
                     return;
                 }
-                startAnimation(view, true);
-                startAnimation(adapter.getLastView(), false);
+//                startAnimation(view, true);
+//                startAnimation(adapter.getClickView(), false);
                 adapter.setLastClick(adapter.getIsClick());
                 adapter.setIsClick(position);
                 adapter.notifyDataSetChanged();
@@ -68,7 +80,7 @@ public class AlbumDetailActivity extends Activity {
         });
     }
 
-    private void startAnimation(View view, boolean toBigger) {
+    public void startAnimation(View view, boolean toBigger) {
         AnimationSet set = new AnimationSet(true);
         if (toBigger) {
             scaleAnimation1.setDuration(500);

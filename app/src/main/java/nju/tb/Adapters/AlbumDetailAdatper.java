@@ -25,6 +25,7 @@ import java.util.Map;
 
 import nju.tb.Commen.LocalImageHelper;
 import nju.tb.Commen.LocalImageHelper.LocalFile;
+import nju.tb.atys.AlbumDetailActivity;
 
 public class AlbumDetailAdatper extends BaseAdapter {
     private Context context;
@@ -32,10 +33,10 @@ public class AlbumDetailAdatper extends BaseAdapter {
     private List<LocalFile> files;
     private DisplayImageOptions displayImageOptions;
     private ImageLoader imageLoader;
-    private int isClick = 0;
+    private int isClick = -1;
     private int lastClick = isClick;
     private boolean firstClick = true;
-    private View lastView = null;
+    private View clickView = null;
 
     public AlbumDetailAdatper(Context context, List<LocalFile> files) {
         this.context = context;
@@ -80,8 +81,8 @@ public class AlbumDetailAdatper extends BaseAdapter {
         this.lastClick = lastClick;
     }
 
-    public View getLastView() {
-        return lastView;
+    public View getClickView() {
+        return clickView;
     }
 
     @Override
@@ -111,9 +112,10 @@ public class AlbumDetailAdatper extends BaseAdapter {
         viewHolder = (ViewHolder) convertView.getTag();
         imageLoader.displayImage(files.get(position).getThumbnailUri(), viewHolder.albumDetailImageVIew,
                 displayImageOptions, null);
-        if (position == lastClick) {
-            lastView = convertView;
-
+        if (position == isClick) {
+            clickView = convertView;
+            AlbumDetailActivity albumDetailActivity=new AlbumDetailActivity();
+            albumDetailActivity.startAnimation(convertView,true);
         }
         if (position != isClick) {
             convertView.clearAnimation();
