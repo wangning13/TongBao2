@@ -25,7 +25,7 @@
             android:src="@drawable/arrow_left"/>
     </FrameLayout>
 
-    <GridView
+    <nju.tb.MyUI.MyGridView
         android:id="@+id/albumdetail_gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

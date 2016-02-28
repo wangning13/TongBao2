@@ -2,19 +2,16 @@ package nju.tb.atys;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import nju.tb.MyUI.DeleteCarDialog;
 import nju.tb.R;
@@ -25,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CarsManagementActivity extends Activity {
+    private TextView toolbar_text;
     private ImageView addcar;
     private ListView carList;
 
@@ -34,6 +32,22 @@ public class CarsManagementActivity extends Activity {
         setContentView(R.layout.view_driver_cars);
         carList = (ListView) findViewById(R.id.lv_cars_carlist);
         addcar = (ImageView) findViewById(R.id.iv_cars_addcar);
+
+
+        //toolbar的标题
+        //回退按钮
+        toolbar_text=(TextView) findViewById(R.id.toolbar_title);
+        toolbar_text.setText("车辆管理");
+
+
+        //回退按钮
+        ImageButton titleBackBtn = (ImageButton) findViewById(R.id.head_TitleBackBtn);
+        titleBackBtn.setVisibility(View.VISIBLE);
+        titleBackBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                CarsManagementActivity.this.finish();
+            }
+        });
 
         // 测试数据
         final List<Map<String, String>> data = new ArrayList<Map<String, String>>();

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <nju.tb.MyUI.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent">
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:background="@drawable/albumdetail_item_selector">
 
     <ImageView
         android:id="@+id/albumdetail_item_imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:padding="2dp"
         android:scaleType="centerCrop"/>
 </nju.tb.MyUI.SquareLayout>

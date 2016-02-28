@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nju.tb.Adapters.TaskListAdapter;
 import nju.tb.entity.Order;
 import nju.tb.R;
 
@@ -60,7 +61,7 @@ public class DoTaskActivity extends Activity {
 
         lv=(ListView)findViewById(R.id.tasklistView);
         mData = getData();
-        MyAdapter adapter = new MyAdapter(this);
+        final  TaskListAdapter adapter = new TaskListAdapter(this,mData);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,12 +74,12 @@ public class DoTaskActivity extends Activity {
 
     public void showInfo(int position){
 
-        Order order=getData().get(position).get("info");
+        Order order=mData.get(position).get("info");
         String detail=order.toStringdetail();
         ImageView img=new ImageView(DoTaskActivity.this);
         new AlertDialog.Builder(this).setView(img)
                 .setMessage(detail)
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                .setNegativeButton("放弃", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
@@ -139,32 +140,4 @@ public class DoTaskActivity extends Activity {
     }
 
 
-    public class MyAdapter extends BaseAdapter {
-        private LayoutInflater mInflater;
-
-        public MyAdapter(Context context) {
-            this.mInflater = LayoutInflater.from(context);
-        }
-
-        public int getCount() {
-            return mData.size();
-        }
-
-        public Object getItem(int arg0) {
-            return null;
-        }
-
-        public long getItemId(int arg0) {
-            return 0;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView info = null;
-            Button viewBtn=null;
-            convertView = mInflater.inflate(R.layout.taskorderitem, null);
-            info = (TextView)convertView.findViewById(R.id.info);
-            info.setText(mData.get(position).get("info").toString());
-            return convertView;
-        }
-    }
 }

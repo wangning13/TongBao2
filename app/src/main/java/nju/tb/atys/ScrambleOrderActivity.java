@@ -21,9 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nju.tb.Adapters.OrderListAdapter;
 import nju.tb.entity.Order;
 import nju.tb.R;
-import nju.tb.constants.ViewHolder;
 
 public class ScrambleOrderActivity extends Activity {
     private ListView lv;
@@ -53,7 +53,7 @@ public class ScrambleOrderActivity extends Activity {
 
         lv=(ListView)findViewById(R.id.listView);
         mData = getData();
-        MyAdapter adapter = new MyAdapter(this);
+        OrderListAdapter adapter = new OrderListAdapter(this,mData);
         lv.setAdapter(adapter);
 
     }
@@ -101,65 +101,4 @@ public class ScrambleOrderActivity extends Activity {
         return list;
     }
 
-    public void showInfo(int position){
-        LayoutInflater inflater = getLayoutInflater();
-        View orderDialogView = inflater.inflate(R.layout.activity_order_detail, null);
-        Order order=getData().get(position).get("info");
-        String detail=order.toStringdetail();
-        ImageView img=new ImageView(ScrambleOrderActivity.this);
-        new AlertDialog.Builder(this).setView(img)
-                .setMessage(detail)
-                .setView(orderDialogView)
-                .setNegativeButton("关闭", null)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .show();
-    }
-
-    public class MyAdapter extends BaseAdapter {
-        private LayoutInflater mInflater;
-
-        public MyAdapter(Context context) {
-            this.mInflater = LayoutInflater.from(context);
-        }
-
-        public int getCount() {
-            return mData.size();
-        }
-
-        public Object getItem(int arg0) {
-            return null;
-        }
-
-        public long getItemId(int arg0) {
-            return 0;
-        }
-
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
-            if (convertView == null) {
-                holder=new ViewHolder();
-                convertView = mInflater.inflate(R.layout.orderitem, null);
-                holder.info = (TextView)convertView.findViewById(R.id.info);
-                holder.info.setText(mData.get(position).get("info").toString());
-                holder.viewBtn = (Button)convertView.findViewById(R.id.view_btn);
-                convertView.setTag(holder);
-
-            }else {
-                holder = (ViewHolder)convertView.getTag();
-            }
-            holder.viewBtn.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    showInfo(position);
-                }
-            });
-            return convertView;
-        }
-
-
-
-    }
 }
