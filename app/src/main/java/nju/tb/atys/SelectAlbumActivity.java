@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,10 +23,12 @@ import nju.tb.Adapters.AlbumListAdapter;
 import nju.tb.Commen.LocalImageHelper;
 
 public class SelectAlbumActivity extends Activity {
-    ListView albumlist;
+    private ListView albumlist;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        //super.oncreate主要是为了重写绘制activity的时候能保存用户上次的状态，加强用户体验，父类已经写好，
+        // （activity会因为内存等原因被销毁，再次显示的时候重建）
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_driver_selectalbum);
         while (!LocalImageHelper.isInited) {
@@ -41,22 +44,22 @@ public class SelectAlbumActivity extends Activity {
         albumlist.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-  //              Log.i("fdsfdsfdsfdsfd发的说法的是非得失",""+position);
                 String folderName = ((TextView) view.findViewById(R.id.album_albumname)).getText().toString();
-//                Log.i("相册名",folderName);
-//                Log.i("position:",position+"");
                 Intent intent = new Intent(SelectAlbumActivity.this, AlbumDetailActivity.class);
                 Bundle bundle = new Bundle();
                 ListSerializable myList = new ListSerializable();
                 myList.setList(data.get(folderName));
-//                Log.i("000000000:::",(myList.getList()==null)+"");
-//                Log.i("111111111111111:::",myList.getList().size()+"");
                 bundle.putSerializable("albumdetail", myList);
-                bundle.putString("foldername",folderName);
+                bundle.putString("foldername", folderName);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     static class ListSerializable implements Serializable {

@@ -30,6 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:layout_marginRight="5dp"
+            android:padding="6dp"
+            android:background="@drawable/alubmdetail_ok_selector"
             android:text="完成"
             android:textColor="#FFFFFF"
             android:textSize="21sp"/>

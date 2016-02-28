@@ -37,6 +37,7 @@ public class AlbumDetailAdatper extends BaseAdapter {
     private int lastClick = isClick;
     private boolean firstClick = true;
     private View clickView = null;
+    private LocalFile clickLocalFile = null;
 
     public AlbumDetailAdatper(Context context, List<LocalFile> files) {
         this.context = context;
@@ -57,6 +58,10 @@ public class AlbumDetailAdatper extends BaseAdapter {
 
     }
 
+    public LocalFile getClickLocalFile() {
+        return clickLocalFile;
+    }
+
     public boolean isFirstClick() {
         return this.firstClick;
     }
@@ -71,6 +76,7 @@ public class AlbumDetailAdatper extends BaseAdapter {
 
     public void setIsClick(int isClick) {
         this.isClick = isClick;
+        clickLocalFile = files.get(isClick);
     }
 
     public int getLastClick() {
@@ -114,8 +120,8 @@ public class AlbumDetailAdatper extends BaseAdapter {
                 displayImageOptions, null);
         if (position == isClick) {
             clickView = convertView;
-            AlbumDetailActivity albumDetailActivity=new AlbumDetailActivity();
-            albumDetailActivity.startAnimation(convertView,true);
+            AlbumDetailActivity albumDetailActivity = new AlbumDetailActivity();
+            albumDetailActivity.startAnimation(convertView, true);
         }
         if (position != isClick) {
             convertView.clearAnimation();

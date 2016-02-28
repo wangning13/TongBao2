@@ -29,7 +29,7 @@ public class HttpRequest {
             httpPost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
             httpResponse = httpClient.execute(httpPost);
         } catch (IOException excetion) {
-
+            excetion.printStackTrace();
         }
         return httpResponse;
     }
