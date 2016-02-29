@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent" >
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,75 +13,71 @@
 
         <RelativeLayout
             android:id="@+id/editinfo_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/frameframe"
             android:clickable="true"
             android:focusable="true"
-            android:background="@drawable/frameframe"
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_margin="10dp"
-            android:layout_height="100dp">
+            android:orientation="horizontal">
 
             <ImageView
-                android:gravity="center_vertical"
                 android:id="@+id/ImageView_add"
-                android:layout_margin="10dp"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:background="@drawable/add_image_bg"/>
+                android:layout_margin="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/add_image_bg"/>
+
             <LinearLayout
 
-                android:layout_marginLeft="100dp"
-                android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
+                android:layout_marginLeft="100dp"
+                android:gravity="center_vertical"
                 android:orientation="vertical"
                 >
+
                 <TextView
                     android:id="@+id/text_name"
-                    android:gravity="bottom"
                     android:layout_width="fill_parent"
                     android:layout_height="60dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:gravity="bottom"
                     android:text="丁丁枳枳"
-                    android:textColor="#1F6EF2"    >
+                    android:textColor="#1F6EF2"
+                    android:textSize="20sp"
+                    android:textStyle="bold">
                 </TextView>
+
                 <TextView
                     android:id="@+id/text_tel"
                     android:layout_width="fill_parent"
                     android:layout_height="60dp"
                     android:gravity="top"
-                    android:textSize="15sp"
                     android:text="电话：18602514017"
-                    android:textColor="#1F6EF2"    >
+                    android:textColor="#1F6EF2"
+                    android:textSize="15sp">
                 </TextView>
             </LinearLayout>
 
             <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="35dp"
-                android:layout_marginBottom="35dp"
-                android:layout_weight="0.5"
-                android:src="@drawable/arrow_right"
-                />
-
+                android:layout_marginTop="25dp"
+                android:background="@drawable/arrow_right"/>
         </RelativeLayout>
 
 
-
-
-
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:layout_margin="10dp"
-        android:background="@drawable/frameframe"
-        android:layout_width="fill_parent"
-        android:layout_height="195dp"
-        >
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="195dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/frameframe"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
 
             <TableLayout
                 android:layout_width="wrap_content"
@@ -92,43 +88,41 @@
 
                     <RelativeLayout
                         android:id="@+id/wallet_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="65dp"
                         android:clickable="true"
                         android:focusable="true"
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="65dp">
+                        android:orientation="horizontal">
 
-                    <ImageView
+                        <ImageView
 
-                            android:layout_margin="10dp"
-                            android:layout_centerVertical="true"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="10dp"
                             android:background="@drawable/wallet"/>
 
-                    <TextView
-                            android:layout_centerVertical="true"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="65dp"
-                            android:padding="20dp"
+                            android:layout_centerVertical="true"
                             android:layout_marginLeft="60dp"
-                            android:textSize="20sp"
+                            android:padding="20dp"
+                            android:text="钱包"
                             android:textColor="#1F6EF2"
-                            android:text="钱包" />
+                            android:textSize="20sp"/>
 
 
                         <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_alignParentRight="true"
-                            android:layout_marginRight="10dp"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="15dp"
-                            android:layout_weight="0.5"
-                            android:src="@drawable/arrow_right"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/arrow_right"
                             />
 
-    </RelativeLayout>
+                    </RelativeLayout>
                 </TableRow>
 
                 <ImageView
@@ -136,98 +130,97 @@
                     android:layout_height="0.5dp"
                     android:background="#1F6EF2"
                     />
+
                 <TableRow
                     android:gravity="center_vertical">
 
                     <RelativeLayout
                         android:id="@+id/news_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="65dp"
                         android:clickable="true"
                         android:focusable="true"
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="65dp">
+                        android:orientation="horizontal">
 
                         <ImageView
 
-                            android:layout_margin="10dp"
-                            android:layout_centerVertical="true"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:background="@drawable/news"/>
-                        <TextView
                             android:layout_centerVertical="true"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/news"/>
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="65dp"
-                            android:textSize="20sp"
-                            android:padding="20dp"
+                            android:layout_centerVertical="true"
                             android:layout_marginLeft="60dp"
+                            android:padding="20dp"
+                            android:text="消息"
                             android:textColor="#1F6EF2"
-                            android:text="消息" />
+                            android:textSize="20sp"/>
 
 
                         <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_alignParentRight="true"
-                            android:layout_marginRight="10dp"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="15dp"
-                            android:layout_weight="0.5"
-                            android:src="@drawable/arrow_right"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/arrow_right"
                             />
-
 
                     </RelativeLayout>
                 </TableRow>
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0.5dp"
                     android:background="#1F6EF2"
                     />
+
                 <TableRow
                     android:gravity="center_vertical">
 
                     <RelativeLayout
                         android:id="@+id/help_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="65dp"
                         android:clickable="true"
                         android:focusable="true"
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="65dp">
+                        android:orientation="horizontal">
 
                         <ImageView
 
-                            android:layout_margin="10dp"
-                            android:layout_centerVertical="true"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:background="@drawable/helpcenter"/>
-                        <TextView
                             android:layout_centerVertical="true"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/helpcenter"/>
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="65dp"
-                            android:padding="20dp"
+                            android:layout_centerVertical="true"
                             android:layout_marginLeft="60dp"
-                            android:textSize="20sp"
+                            android:padding="20dp"
+                            android:text="帮助中心"
                             android:textColor="#1F6EF2"
-                            android:text="帮助中心" />
+                            android:textSize="20sp"/>
 
 
                         <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_alignParentRight="true"
-                            android:layout_marginRight="10dp"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="15dp"
-                            android:layout_weight="0.5"
-                            android:src="@drawable/arrow_right"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/arrow_right"
                             />
-
 
                     </RelativeLayout>
                 </TableRow>
             </TableLayout>
         </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

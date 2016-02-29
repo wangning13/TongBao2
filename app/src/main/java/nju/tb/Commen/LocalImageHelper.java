@@ -89,10 +89,11 @@ public class LocalImageHelper {
                 localFile.setOriginalUri(imageUri);
                 localFile.setThumbnailUri(thumbUri);
                 localFile.setOrientation(imageCursor.getInt(2));
+                localFile.setOriginalFile(file);
                 allLocalFile.add(localFile);
 
                 String folder = file.getParentFile().getName();
-                //           Log.i("名称", folder);
+
                 if (folders.containsKey(folder)) {
                     folders.get(folder).add(localFile);
                 } else {
@@ -136,6 +137,15 @@ public class LocalImageHelper {
         private String originalUri; //存储原图的URI
         private String thumbnailUri; //存储缩略图的URI
         private int orientation; //存储原图的图片旋转角度
+        private File originalFile; //原图的file文件
+
+        public File getOriginalFile() {
+            return originalFile;
+        }
+
+        public void setOriginalFile(File file) {
+            this.originalFile = file;
+        }
 
         public String getOriginalUri() {
             return originalUri;
