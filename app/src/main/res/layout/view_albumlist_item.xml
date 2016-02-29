@@ -29,8 +29,13 @@
         android:gravity="center_vertical|left"
         android:paddingRight="20dp"/>
     <ImageView
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_weight="1.5"
-        android:src="@drawable/arrow_right"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="35dp"
+        android:layout_weight="0.5"
+        android:src="@drawable/arrow_right"
+        />
 </LinearLayout>

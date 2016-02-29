@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,12 +23,30 @@ import nju.tb.Adapters.AlbumListAdapter;
 import nju.tb.Commen.LocalImageHelper;
 
 public class SelectAlbumActivity extends Activity {
+    private TextView toolbar_text;
     ListView albumlist;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_driver_selectalbum);
+
+        //toolbar的标题
+        //回退按钮
+        toolbar_text=(TextView) findViewById(R.id.toolbar_title);
+        toolbar_text.setText("选择相册");
+
+
+        //回退按钮
+        ImageButton titleBackBtn = (ImageButton) findViewById(R.id.head_TitleBackBtn);
+        titleBackBtn.setVisibility(View.VISIBLE);
+        titleBackBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                SelectAlbumActivity.this.finish();
+            }
+        });
+
+
         while (!LocalImageHelper.isInited) {
 
         }

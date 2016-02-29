@@ -4,27 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#1F6EF2"
-            android:gravity="center"
-            android:text="选择相册"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp" />
-
-        <ImageView
-            android:id="@+id/iv_selectalbum_leftarrow"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/arrow_left" />
-    </FrameLayout>
-
+    <include layout="@layout/toolbar" />
     <ListView
         android:id="@+id/lv_selectalbum_albumlist"
         android:layout_width="match_parent"

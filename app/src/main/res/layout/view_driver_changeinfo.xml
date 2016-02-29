@@ -4,37 +4,46 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
+    <android.support.design.widget.AppBarLayout
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <TextView
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:background="#1F6EF2"
-            android:gravity="center"
-            android:text="修改信息"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
-        <ImageView
-            android:id="@+id/iv_changeinfo_leftarrow"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/arrow_left" />
+            <ImageButton
+                android:id="@+id/head_TitleBackBtn"
+                android:gravity="center_vertical"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/arrow"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:layout_gravity="center"
+                android:id="@+id/toolbar_title" />
+            <TextView
+                android:id="@+id/changeinfo_OK"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="center"
+                android:text="完成"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+        </android.support.v7.widget.Toolbar>
 
-        <TextView
-            android:id="@+id/tv_changeinfo_ok"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="right|center_vertical"
-            android:gravity="center"
-            android:text="完成"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-    </FrameLayout>
-
+    </android.support.design.widget.AppBarLayout>
     <LinearLayout
         android:id="@+id/change_layout"
         android:layout_width="match_parent"
@@ -42,7 +51,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/radius_frame"
+        android:background="@drawable/frameframe"
         android:orientation="horizontal">
 
         <ImageView
@@ -59,14 +68,16 @@
             android:layout_weight="4"
             android:gravity="center_vertical|right"
             android:text="修改头像"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <ImageView
-            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scaleType="centerInside"
-            android:src="@drawable/arrow_right" />
+            android:layout_width="0dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/arrow_right"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -75,7 +86,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/radius_frame"
+        android:background="@drawable/frameframe"
         android:orientation="vertical">
 
         <LinearLayout
@@ -90,7 +101,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
                 android:text="姓名："
-                android:textSize="25sp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/et_change_name"
@@ -106,7 +117,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
-            android:background="#0099CC" />
+            android:background="#1F6EF2" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,7 +131,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
                 android:text="手机："
-                android:textSize="25sp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/et_change_tel"

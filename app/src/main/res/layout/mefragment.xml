@@ -59,11 +59,15 @@
 
             <ImageView
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="25dp"
                 android:layout_marginRight="10dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/arrow_right"/>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginBottom="35dp"
+                android:layout_weight="0.5"
+                android:src="@drawable/arrow_right"
+                />
+
         </RelativeLayout>
 
 
@@ -113,14 +117,16 @@
                             android:text="钱包" />
 
 
-                    <ImageView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="10dp"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/arrow_right"
-                         />
+                        <ImageView
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="10dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_weight="0.5"
+                            android:src="@drawable/arrow_right"
+                            />
 
     </RelativeLayout>
                 </TableRow>
@@ -160,13 +166,16 @@
 
 
                         <ImageView
-                            android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
-                            android:layout_margin="10dp"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/arrow_right"
+                            android:layout_marginRight="10dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_weight="0.5"
+                            android:src="@drawable/arrow_right"
                             />
+
 
                     </RelativeLayout>
                 </TableRow>
@@ -205,13 +214,16 @@
 
 
                         <ImageView
-                            android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
-                            android:layout_margin="10dp"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/arrow_right"
+                            android:layout_marginRight="10dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_weight="0.5"
+                            android:src="@drawable/arrow_right"
                             />
+
 
                     </RelativeLayout>
                 </TableRow>

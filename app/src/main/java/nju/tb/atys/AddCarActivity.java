@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,17 +28,38 @@ import java.util.regex.Pattern;
 import nju.tb.R;
 
 public class AddCarActivity extends Activity {
+    private TextView toolbar_text;
     private Spinner selectTypeSpinner;
-    private Button okButton;
+
+    //底部的button完成改成右上角的textview
+    private TextView okaddcar;
 
     @Override
     public void onCreate(Bundle savedInsatancedState) {
         super.onCreate(savedInsatancedState);
         setContentView(R.layout.view_driver_addcar);
+
+
+        //toolbar的标题
+        //回退按钮
+        toolbar_text=(TextView) findViewById(R.id.toolbar_title);
+        toolbar_text.setText("添加车辆");
+
+
+        //回退按钮
+        ImageButton titleBackBtn = (ImageButton) findViewById(R.id.head_TitleBackBtn);
+        titleBackBtn.setVisibility(View.VISIBLE);
+        titleBackBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AddCarActivity.this.finish();
+            }
+        });
+
+
         selectTypeSpinner = (Spinner) findViewById(R.id.addcar_selecttype);
         final EditText carNumberEditText = (EditText) findViewById(R.id.addcar_chepaihao);
         final EditText carPhoneEditText = (EditText) findViewById(R.id.addcar_phone);
-        okButton = (Button) findViewById(R.id.addcar_OK);
+        okaddcar = (TextView) findViewById(R.id.addcar_OK);
 
         final TextView weightTextView = (TextView) findViewById(R.id.addcar_zaizhong); //车辆载重
         final TextView lengthTextView = (TextView) findViewById(R.id.addcar_chechang); //车辆车长
@@ -106,7 +128,7 @@ public class AddCarActivity extends Activity {
         carNumberEditText.addTextChangedListener(new EditChangedListener(carNumberEditText));
         carPhoneEditText.addTextChangedListener(new EditChangedListener(carPhoneEditText));
 
-        okButton.setOnClickListener(new View.OnClickListener() {
+        okaddcar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast toast;
