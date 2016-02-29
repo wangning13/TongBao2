@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -20,12 +21,21 @@ import nju.tb.net.HttpImage;
 public class ChangeInfoActivity extends Activity {
     private LocalImageHelper localImageHelper;
     private LinearLayout changelayout;
-    private ImageView displayPicImageView;
+    private ImageView iconImageView;
+    private Bitmap iconBitmap;
+    private String nickName;
+    private EditText nickNameEditText;
+    private EditText oldPassword;
+    private EditText newPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);
         setContentView(R.layout.view_driver_changeinfo);
+
+        Bundle bundle = getIntent().getExtras();
+        iconBitmap = (Bitmap) bundle.get("iconBitmap");
+        nickName = (String) bundle.get("nickName");
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 123);
         localImageHelper = new LocalImageHelper(this);
@@ -38,7 +48,13 @@ public class ChangeInfoActivity extends Activity {
             }
             ).start();
         }
+
         changelayout = (LinearLayout) findViewById(R.id.change_layout);
+        iconImageView = (ImageView) findViewById(R.id.iv_changeinfo_displaypic);
+        nickNameEditText = (EditText) findViewById(R.id.et_change_name);
+        oldPassword = (EditText) findViewById(R.id.et_oldpassword);
+        newPassword = (EditText) findViewById(R.id.et_newpassword);
+
         changelayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(ChangeInfoActivity.this, SelectAlbumActivity.class);
@@ -50,43 +66,19 @@ public class ChangeInfoActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        displayPicImageView = (ImageView) findViewById(R.id.iv_changeinfo_displaypic);
-        //做测试，url从数据库获取
-        String url = "http://i11.tietuku.com/53bb63223f5ca8dc.jpg";
-        if (url.equals("")) {
-            return;
-        }
-        Bitmap bitmap = null;
-        GetHttpImageThread t = new GetHttpImageThread(url);
-        new Thread(t).start();
-        while (!t.runover) {
+        if (iconBitmap == null) {
 
+        } else {
+            iconImageView.setImageBitmap(iconBitmap);
         }
-        bitmap = t.getBitmap();
-        if (bitmap == null) {
-            return;
+        if (nickName == "") {
+
+        } else {
+            nickNameEditText.setText(nickName);
         }
-        displayPicImageView.setImageBitmap(bitmap);
+
+
     }
 
-    class GetHttpImageThread implements Runnable {
-        private Bitmap bitmap = null;
-        private String url = "";
-        boolean runover = false;
 
-        public GetHttpImageThread(String url) {
-            this.url = url;
-        }
-
-        @Override
-        public void run() {
-            HttpImage httpImage = new HttpImage(ChangeInfoActivity.this);
-            bitmap = httpImage.getHttpBitmap(url);
-            runover = true;
-        }
-
-        public Bitmap getBitmap() {
-            return bitmap;
-        }
-    }
 }

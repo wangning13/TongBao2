@@ -4,6 +4,7 @@ package nju.tb.net;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import org.apache.http.HttpConnection;
 import org.apache.http.HttpEntity;
@@ -63,8 +64,10 @@ public class HttpImage {
             if (response == null) {
                 return "wrong";
             }
-            //  int responseCode=response.getStatusLine().getStatusCode();  获取错误码
-            HttpEntity responseEntity = response.getEntity();
+            int responseCode = response.getStatusLine().getStatusCode(); // 获取错误码
+            if (responseCode != 200) {
+                return "wrong";
+            }
             BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
             StringBuffer stringBuffer = new StringBuffer();

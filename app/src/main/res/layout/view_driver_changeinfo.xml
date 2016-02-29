@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -15,14 +15,14 @@
             android:gravity="center"
             android:text="修改信息"
             android:textColor="#FFFFFF"
-            android:textSize="25sp" />
+            android:textSize="25sp"/>
 
         <ImageView
             android:id="@+id/iv_changeinfo_leftarrow"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
-            android:src="@drawable/arrow_left" />
+            android:src="@drawable/arrow_left"/>
 
         <TextView
             android:id="@+id/tv_changeinfo_ok"
@@ -32,7 +32,7 @@
             android:gravity="center"
             android:text="完成"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
     </FrameLayout>
 
     <LinearLayout
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/radius_frame"
         android:orientation="horizontal">
 
@@ -52,8 +52,8 @@
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/add_image_bg"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/add_image_bg"/>
 
         <TextView
             android:layout_width="0dp"
@@ -61,29 +61,29 @@
             android:layout_weight="4"
             android:gravity="center_vertical|right"
             android:text="修改头像"
-            android:textSize="25sp" />
+            android:textSize="25sp"/>
 
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="centerInside"
-            android:src="@drawable/arrow_right" />
+            android:src="@drawable/arrow_right"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/radius_frame"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
@@ -91,8 +91,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:text="姓名："
-                android:textSize="25sp" />
+                android:text="昵称："
+                android:textSize="25sp"/>
 
             <EditText
                 android:id="@+id/et_change_name"
@@ -102,37 +102,85 @@
                 android:layout_weight="3"
                 android:background="@null"
                 android:gravity="center_vertical|left"
-                android:textSize="25dp" />
+                android:textSize="25dp"/>
         </LinearLayout>
+    </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.8dp"
-            android:background="#0099CC" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:text="如需修改密码，请填写:"
+        android:textColor="#000000"
+        android:textSize="25sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/radius_frame"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:gravity="center_vertical|right"
-                android:text="手机："
-                android:textSize="25sp" />
+                android:text="旧密码："
+                android:textSize="25sp"/>
 
             <EditText
-                android:id="@+id/et_change_tel"
+                android:id="@+id/et_oldpassword"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="3"
                 android:background="@null"
                 android:gravity="center_vertical|left"
-                android:textSize="25dp" />
+                android:singleLine="true"
+                android:textSize="25dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#6699FF"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:gravity="center_vertical|right"
+                android:text="新密码："
+                android:textSize="25sp"/>
+
+            <EditText
+                android:id="@+id/et_newpassword"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="3"
+                android:background="@null"
+                android:gravity="center_vertical|left"
+                android:singleLine="true"
+                android:textSize="25dp"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

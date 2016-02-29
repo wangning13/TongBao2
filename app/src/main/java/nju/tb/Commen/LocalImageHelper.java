@@ -93,7 +93,7 @@ public class LocalImageHelper {
                 allLocalFile.add(localFile);
 
                 String folder = file.getParentFile().getName();
-                //           Log.i("名称", folder);
+
                 if (folders.containsKey(folder)) {
                     folders.get(folder).add(localFile);
                 } else {
