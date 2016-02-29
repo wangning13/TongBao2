@@ -3,6 +3,7 @@ package nju.tb.atys;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -14,8 +15,6 @@ import android.widget.TextView;
 import nju.tb.R;
 
 public class MainActivity extends Activity {
-
-
 
 
     private TextView toolbar_text;
@@ -40,13 +39,11 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar_text=(TextView) findViewById(R.id.toolbar_title);
+        toolbar_text = (TextView) findViewById(R.id.toolbar_title);
         toolbar_text.setText("通宝");
 
         ImageButton titleBackBtn = (ImageButton) findViewById(R.id.head_TitleBackBtn);
         titleBackBtn.setVisibility(View.INVISIBLE);
-
-
 
 
         home_layout = (RelativeLayout) findViewById(R.id.home_layout);
@@ -55,14 +52,12 @@ public class MainActivity extends Activity {
         home_text = (TextView) findViewById(R.id.home_text);
         order_text = (TextView) findViewById(R.id.order_text);
         me_text = (TextView) findViewById(R.id.me_text);
-        ivhome=(ImageView)findViewById(R.id.home_img);
-        ivorder=(ImageView)findViewById(R.id.order_img);
-        ivme=(ImageView)findViewById(R.id.me_img);
+        ivhome = (ImageView) findViewById(R.id.home_img);
+        ivorder = (ImageView) findViewById(R.id.order_img);
+        ivme = (ImageView) findViewById(R.id.me_img);
         fragmentManager = getFragmentManager();
         setTabSelection(0);
         ivhome.setImageDrawable(getResources().getDrawable(R.drawable.home2));
-
-
 
 
         findViewById(R.id.home_layout).setOnClickListener(new View.OnClickListener() {
@@ -88,6 +83,29 @@ public class MainActivity extends Activity {
         });
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Bundle bundle = getIntent().getBundleExtra("ChangeInfoAcitivity");
+        int targetFragment = -1;
+        if (bundle == null) {
+            return;
+        }
+        String updateBitmapPath = bundle.getString("changeInfoBitmap");
+        targetFragment = bundle.getInt("TargetFragment");
+        MeFragment meFragment = new MeFragment();
+        Bundle updateBundle = new Bundle();
+        updateBundle.putString("BitmapPathToUpdate", updateBitmapPath);
+        meFragment.setArguments(updateBundle);
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(meFragment, "update");
+        transaction.commit();
+        setTabSelection(targetFragment);
+    }
+
+
     protected void setTabSelection(int index) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         hideFragments(transaction);

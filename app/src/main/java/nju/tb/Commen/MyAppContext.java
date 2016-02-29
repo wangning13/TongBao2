@@ -29,11 +29,21 @@ public class MyAppContext extends Application {
     private final String DRIVER_DISPLAY_PICTURE_TOKEN =
             "81f5465b9f87dcdc21c19eb29d03b59f96b449da:ZXJERjJIZTR2dzFsOXA1akdqc3ZlUldGNDZ3PQ" +
                     "==:eyJkZWFkbGluZSI6MTQ1NjYzNjc2MSwiYWN0aW9uIjoiZ2V0IiwidWlkIjoiNTUwMTA1IiwiYWlkIjoiMTIwNTU1NiIsImZyb20iOiJmaWxlIn0=";
+    private String phone = "15950562922";
+
     private String nickName = "";  //用户昵称
     private String iconUrl = "1";  //用户头像url
     private int point = 0;    //用户积分
     private int money = 0;    //用户余额
     private String token = "";    //识别用户的token
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
 
     public void setNickName(String nickName) {
         this.nickName = nickName;

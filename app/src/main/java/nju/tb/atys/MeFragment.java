@@ -1,15 +1,18 @@
 package nju.tb.atys;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import nju.tb.Commen.BitmapHelper;
 import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
 import nju.tb.atys.ChangeInfoActivity;
@@ -24,6 +27,7 @@ public class MeFragment extends Fragment {
     private ImageView displayPicImageView;
     private Bitmap iconBitmap;
     private String nickName;
+    private String url;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,9 +44,12 @@ public class MeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangeInfoActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("iconBitmap", iconBitmap);
-                bundle.putString("nickName",nickName );
-                intent.putExtras(bundle);
+//                bundle.putParcelable("iconBitmap", iconBitmap);
+                bundle.putString("nickName", nickName);
+                BitmapHelper bitmapHelper = new BitmapHelper(getActivity());
+                String newPath = bitmapHelper.saveBitmapToSDcard(iconBitmap, url);
+                bundle.putString("path", newPath);
+                intent.putExtra("MeFragment", bundle);
                 startActivity(intent);
             }
         });
@@ -51,45 +58,69 @@ public class MeFragment extends Fragment {
                 startActivity(new Intent(getActivity(), HelpcenterActivity.class));
             }
         });
+
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        MyAppContext myAppContext = (MyAppContext) getActivity().getApplicationContext();
-        nickName = myAppContext.getNickName();
-        String url = myAppContext.getIconUrl();
-        if (url.equals("")) {
-            iconBitmap = null;
-        } else {
-            GetHttpImageThread t = new GetHttpImageThread(url);
-            new Thread(t).start();
-            while (!t.runover) {
+
+        Fragment f = getFragmentManager().findFragmentByTag("update");
+
+        if (f == null) {
+            //以后要进行替换 LOGIN
+            MyAppContext myAppContext = (MyAppContext) getActivity().getApplicationContext();
+            nickName = myAppContext.getNickName();
+            url = myAppContext.getIconUrl();
+            if (url.equals("")) {
+                iconBitmap = null;
+            } else {
+                GetHttpImageThread t = new GetHttpImageThread(url, getActivity());
+                new Thread(t).start();
+                while (!t.runover) {
+
+                }
+                iconBitmap = t.getBitmap();
+                if (iconBitmap == null) {
+                    return;
+                }
 
             }
-            iconBitmap = t.getBitmap();
-            if (iconBitmap == null) {
-                return;
-            }
-            displayPicImageView.setImageBitmap(iconBitmap);
+        } else {
+
+            ////////////////////////////////////////////////////////////
+            String updateBitmapPath = f.getArguments().getString("BitmapPathToUpdate");
+            Log.i("path", updateBitmapPath);
+            BitmapHelper bitmapHelper = new BitmapHelper(getActivity());
+            Log.i("isnull", "" + (bitmapHelper == null));
+            iconBitmap = bitmapHelper.convertToBitmap(updateBitmapPath);
         }
+
+        displayPicImageView.setImageBitmap(iconBitmap);
+
 
     }
 
     class GetHttpImageThread implements Runnable {
         private Bitmap bitmap = null;
-        private String url = "";
+        private String threadurl;
         boolean runover = false;
+        private Context context;
 
-        public GetHttpImageThread(String url) {
-            this.url = url;
+        public GetHttpImageThread(String threadurl, Context context) {
+            this.threadurl = threadurl;
+            this.context = context;
         }
 
         @Override
         public void run() {
-            HttpImage httpImage = new HttpImage(getActivity());
-            bitmap = httpImage.getHttpBitmap(url);
+            HttpImage httpImage = new HttpImage(context);
+            bitmap = httpImage.getHttpBitmap(threadurl);
+            while (bitmap == null) {
+
+            }
             runover = true;
         }
 
