@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
