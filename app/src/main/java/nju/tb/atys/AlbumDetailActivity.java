@@ -31,7 +31,7 @@ public class AlbumDetailActivity extends Activity {
     private MyGridView albumDetailGridView;
     private TextView albumNameTextView;
     private TextView albumDetailOKTextView;
-    private String iconUrl;
+    private String iconUrl="";
     private ImageView returnImageView;
 
     public void setIconUrl(String iconUrl) {
@@ -122,6 +122,7 @@ public class AlbumDetailActivity extends Activity {
         albumDetailOKTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (adapter.getIsClick() < 0) {
                     Toast.makeText(AlbumDetailActivity.this, "未选择图片", Toast.LENGTH_SHORT).show();
                     return;
@@ -136,6 +137,8 @@ public class AlbumDetailActivity extends Activity {
                 String result = commitPicThread.getResult();
                 if (result.equals("wrong")) {
                     Toast.makeText(AlbumDetailActivity.this, "上传失败，请重新上传", Toast.LENGTH_SHORT).show();
+                } else if (result.equals("netwrong")) {
+                    Toast.makeText(AlbumDetailActivity.this, "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
                 } else {
 //                    Log.i("URL", result);
                     setIconUrl(result);

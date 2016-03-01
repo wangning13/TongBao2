@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +40,16 @@ public class ChangeInfoActivity extends Activity {
     private String urlToPush;
     private BitmapHelper bitmapHelper;
 
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                Toast.makeText(ChangeInfoActivity.this, "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);
@@ -48,8 +60,11 @@ public class ChangeInfoActivity extends Activity {
         Bundle bundle = getIntent().getBundleExtra("MeFragment");
         if (bundle != null) {
             ///////////////////////////////////////////////////////////////
-            String path = bundle.getString("path");
-            iconBitmap = bitmapHelper.convertToBitmap(path);
+            if (bundle.keySet().contains("path")) {
+                String path = bundle.getString("path");
+                iconBitmap = bitmapHelper.convertToBitmap(path);
+            }
+
             nickName = (String) bundle.get("nickName");
         }
 
@@ -89,12 +104,15 @@ public class ChangeInfoActivity extends Activity {
         Bundle bundle = getIntent().getBundleExtra("AlbumDetailActivityReturn");
         if (bundle != null) {
             urlToPush = bundle.getString("iconurl");
-            MeFragment.GetHttpImageThread t = new MeFragment().new GetHttpImageThread(urlToPush, this);
-            new Thread(t).start();
-            while (!t.runover) {
+            if (!urlToPush.equals("")) {
+                MeFragment.GetHttpImageThread t = new MeFragment().new GetHttpImageThread(urlToPush, this, handler);
+                new Thread(t).start();
+                while (!t.runover) {
 
+                }
+                iconBitmap = t.getBitmap();
             }
-            iconBitmap = t.getBitmap();
+
 
             if (iconBitmap == null) {
                 return;

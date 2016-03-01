@@ -47,6 +47,10 @@ public class HttpImage {
 
     //post请求 将手机本地图片上传到贴图库，返回图片URL
     public String doUpload(File f, String token) {
+        if (!MyAppContext.getIsConnected()) {
+            return "netwrong";
+        }
+
         HttpPost httpPost = new HttpPost(POST_URL);
 
         FileBody pic = new FileBody(f);
@@ -90,6 +94,9 @@ public class HttpImage {
 
     //根据图片URL，获取图片的bitmap对象
     public Bitmap getHttpBitmap(String url) {
+        if (!MyAppContext.getIsConnected()) {
+            return null;
+        }
         URL bitmapUrl = null;
         Bitmap bitmap = null;
         try {

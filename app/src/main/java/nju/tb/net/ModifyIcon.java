@@ -16,6 +16,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import nju.tb.Commen.MyAppContext;
+
 public class ModifyIcon extends Thread implements Parse.ParseHttp {
     private final String MODIFY_ICON = "http://120.27.112.9:8080/tongbao/user/auth/modifyIcon";
     private int result = -1;
@@ -23,7 +25,7 @@ public class ModifyIcon extends Thread implements Parse.ParseHttp {
     private Context context;
     private String token;
     private String iconUrl;
-    public  boolean runover=false;
+    public boolean runover = false;
 
     public ModifyIcon(Context context, String token, String iconUrl) {
         this.context = context;
@@ -67,11 +69,14 @@ public class ModifyIcon extends Thread implements Parse.ParseHttp {
         params.add(new BasicNameValuePair("iconUrl", iconUrl));
         HttpResponse httpResponse = httpRequest.sendHttpPostRequest(MODIFY_ICON, params);
         while (httpResponse == null) {
-
+            if (!MyAppContext.getIsConnected()) {
+                runover = true;
+                return;
+            }
         }
-
+        runover = true;
         parseHttpResponse(httpResponse);
-        runover=true;
+
     }
 
 

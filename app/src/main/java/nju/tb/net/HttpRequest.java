@@ -5,12 +5,14 @@ import android.content.Context;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.protocol.HTTP;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import nju.tb.Commen.MyAppContext;
@@ -28,8 +30,15 @@ public class HttpRequest {
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
             httpResponse = httpClient.execute(httpPost);
-        } catch (IOException excetion) {
-            excetion.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
         return httpResponse;
     }

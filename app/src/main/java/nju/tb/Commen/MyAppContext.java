@@ -2,6 +2,8 @@ package nju.tb.Commen;
 
 
 import android.app.Application;
+import android.content.Intent;
+import android.telephony.ServiceState;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,6 +13,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +32,18 @@ public class MyAppContext extends Application {
     private final String DRIVER_DISPLAY_PICTURE_TOKEN =
             "81f5465b9f87dcdc21c19eb29d03b59f96b449da:ZXJERjJIZTR2dzFsOXA1akdqc3ZlUldGNDZ3PQ" +
                     "==:eyJkZWFkbGluZSI6MTQ1NjYzNjc2MSwiYWN0aW9uIjoiZ2V0IiwidWlkIjoiNTUwMTA1IiwiYWlkIjoiMTIwNTU1NiIsImZyb20iOiJmaWxlIn0=";
+    private static boolean isConnected = false;
+
+    public static void setIsConnected(boolean b) {
+        isConnected = b;
+    }
+
+    public static boolean getIsConnected() {
+        return isConnected;
+    }
+
     private String phone = "15950562922";
+
 
     private String nickName = "";  //用户昵称
     private String iconUrl = "1";  //用户头像url
@@ -94,6 +108,9 @@ public class MyAppContext extends Application {
     }
 
     public HttpClient getHttpClient() {
+        httpClient.getParams().setIntParameter(HttpConnectionParams.SO_TIMEOUT, 3000);
+        httpClient.getParams().setIntParameter(HttpConnectionParams.CONNECTION_TIMEOUT, 3000);
+
         return this.httpClient;
     }
 
@@ -105,6 +122,7 @@ public class MyAppContext extends Application {
     public void onCreate() {
         super.onCreate();
         isLogIn = false;
+        startService(new Intent(this, nju.tb.services.NetStateService.class));
 
         //test 已登陆
         HttpResponse httpResponse = null;
@@ -144,7 +162,6 @@ public class MyAppContext extends Application {
 
     class LoginThread implements Runnable {
         private HttpResponse httpResponse = null;
-        private boolean runover = false;
 
         @Override
         public void run() {
@@ -155,18 +172,15 @@ public class MyAppContext extends Application {
             httpResponse = request.sendHttpPostRequest("http://120.27.112.9:8080/tongbao/user/login", params);
             // Log.i("state",httpResponse.getStatusLine().getStatusCode()+"");
             while (httpResponse == null) {
+                if (!getIsConnected()) {
+                    return;
+                }
             }
             parseHttpResponse(httpResponse);
 //            Log.i("nickname",getNickName());
 //            Log.i("phone",getIconUrl());
-            runover = true;
         }
 
-        public HttpResponse getHttpResponse() {
-            while (!runover) {
-            }
-            return this.httpResponse;
-        }
     }
 
 }

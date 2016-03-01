@@ -11,7 +11,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
 
 public class MainActivity extends Activity {
@@ -39,6 +41,11 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        if(!MyAppContext.getIsConnected()){
+//            Toast.makeText(this, "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
+//        }
+
         toolbar_text = (TextView) findViewById(R.id.toolbar_title);
         toolbar_text.setText("通宝");
 
