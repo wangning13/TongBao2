@@ -34,6 +34,8 @@ public class MyAppContext extends Application {
                     "==:eyJkZWFkbGluZSI6MTQ1NjYzNjc2MSwiYWN0aW9uIjoiZ2V0IiwidWlkIjoiNTUwMTA1IiwiYWlkIjoiMTIwNTU1NiIsImZyb20iOiJmaWxlIn0=";
     private static boolean isConnected = false;
 
+    private static MyAppContext myAppContext;
+
     public static void setIsConnected(boolean b) {
         isConnected = b;
     }
@@ -42,7 +44,11 @@ public class MyAppContext extends Application {
         return isConnected;
     }
 
-    private String phone = "15950562922";
+    public static MyAppContext getMyAppContext() {
+        return myAppContext;
+    }
+
+    private String phone ;
 
 
     private String nickName = "";  //用户昵称
@@ -59,6 +65,7 @@ public class MyAppContext extends Application {
         return this.phone;
     }
 
+    //昵称
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
@@ -67,6 +74,7 @@ public class MyAppContext extends Application {
         return this.nickName;
     }
 
+    //头像
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
     }
@@ -75,6 +83,7 @@ public class MyAppContext extends Application {
         return this.iconUrl;
     }
 
+    //积分
     public void setPoint(int point) {
         this.point = point;
     }
@@ -83,6 +92,7 @@ public class MyAppContext extends Application {
         return this.point;
     }
 
+    //余额
     public void setMoney(int money) {
         this.money = money;
     }
@@ -91,6 +101,7 @@ public class MyAppContext extends Application {
         return this.money;
     }
 
+    //token
     public void setToken(String token) {
         this.token = token;
     }
@@ -99,6 +110,7 @@ public class MyAppContext extends Application {
         return this.token;
     }
 
+    //登录状态
     public static void setLogIn(boolean logState) {
         isLogIn = logState;
     }
@@ -122,65 +134,10 @@ public class MyAppContext extends Application {
     public void onCreate() {
         super.onCreate();
         isLogIn = false;
+        myAppContext = this;
         startService(new Intent(this, nju.tb.services.NetStateService.class));
 
-        //test 已登陆
-        HttpResponse httpResponse = null;
-        LoginThread loginThread = new LoginThread();
-        new Thread(loginThread).start();
-//        httpResponse = loginThread.getHttpResponse();
-
     }
 
-    private void parseHttpResponse(HttpResponse httpResponse) {
-        HttpEntity entity = httpResponse.getEntity();
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(entity.getContent()));
-            StringBuffer stringBuffer = new StringBuffer();
-            for (String line = in.readLine(); line != null; line = in.readLine()) {
-                stringBuffer.append(line);
-            }
-            JSONObject jsonObject = new JSONObject(stringBuffer.toString());
-            int result = jsonObject.getInt("result");
-            if (result == 0) {
-                Log.i("result", "登陆失败");
-                return;
-            }
-//            Log.i("result",""+result);
-            JSONObject data = jsonObject.getJSONObject("data");
-            setNickName(data.getString("nickName"));
-            setIconUrl(data.getString("iconUrl"));
-            setPoint(data.getInt("point"));
-            setMoney(data.getInt("money"));
-            setToken(data.getString("token"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    class LoginThread implements Runnable {
-        private HttpResponse httpResponse = null;
-
-        @Override
-        public void run() {
-            HttpRequest request = new HttpRequest(MyAppContext.this);
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("phoneNumber", "15851813142"));
-            params.add(new BasicNameValuePair("password", "a"));
-            httpResponse = request.sendHttpPostRequest("http://120.27.112.9:8080/tongbao/user/login", params);
-            // Log.i("state",httpResponse.getStatusLine().getStatusCode()+"");
-            while (httpResponse == null) {
-                if (!getIsConnected()) {
-                    return;
-                }
-            }
-            parseHttpResponse(httpResponse);
-//            Log.i("nickname",getNickName());
-//            Log.i("phone",getIconUrl());
-        }
-
-    }
 
 }

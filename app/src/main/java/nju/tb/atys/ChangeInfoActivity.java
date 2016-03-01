@@ -150,7 +150,7 @@ public class ChangeInfoActivity extends Activity {
 
                 }
                 if (modifyIcon.getResult() == 0) {
-                    Toast.makeText(ChangeInfoActivity.this, "数据库连接中断", Toast.LENGTH_SHORT);
+                    Toast.makeText(ChangeInfoActivity.this, "数据库连接中断", Toast.LENGTH_SHORT).show();
                 }
 
                 if (iconBitmap == null) {

@@ -22,11 +22,7 @@
         <activity
             android:name=".atys.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".atys.ScrambleOrderActivity"
@@ -77,6 +73,14 @@
         <activity android:name=".atys.CertificationActivity"/>
         <activity android:name=".atys.SelectAlbumActivity"/>
         <activity android:name=".atys.AlbumDetailActivity"/>
+        <activity android:name=".atys.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".atys.LoadingActivity"/>
 
         <service android:name=".services.NetStateService"/>
     </application>

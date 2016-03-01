@@ -36,7 +36,13 @@ public class HttpRequest {
         } catch (ClientProtocolException e) {
             e.printStackTrace();
             return null;
-        } catch (IOException e) {
+        }catch(org.apache.http.conn.HttpHostConnectException e){
+            e.printStackTrace();
+            return null;
+        } catch(java.net.ConnectException e){
+            e.printStackTrace();
+            return null;
+        }catch (IOException e) {
             e.printStackTrace();
             return null;
         }
