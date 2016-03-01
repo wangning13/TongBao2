@@ -1,11 +1,13 @@
 package nju.tb.atys;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -66,6 +68,8 @@ public class MainActivity extends Activity {
         setTabSelection(0);
         ivhome.setImageDrawable(getResources().getDrawable(R.drawable.home2));
 
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 123);
 
         findViewById(R.id.home_layout).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
