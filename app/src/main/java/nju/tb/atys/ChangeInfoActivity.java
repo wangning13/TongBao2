@@ -55,19 +55,6 @@ public class ChangeInfoActivity extends Activity {
         super.onCreate(savedInstanceBundle);
         setContentView(R.layout.view_driver_changeinfo);
 
-        bitmapHelper = new BitmapHelper(this);
-
-        Bundle bundle = getIntent().getBundleExtra("MeFragment");
-        if (bundle != null) {
-            ///////////////////////////////////////////////////////////////
-            if (bundle.keySet().contains("path")) {
-                String path = bundle.getString("path");
-                iconBitmap = bitmapHelper.convertToBitmap(path);
-            }
-
-            nickName = (String) bundle.get("nickName");
-        }
-
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 123);
         localImageHelper = new LocalImageHelper(this);
@@ -100,10 +87,21 @@ public class ChangeInfoActivity extends Activity {
     @Override
     public void onStart() {
         super.onStart();
+        bitmapHelper = new BitmapHelper(this);
 
-        Bundle bundle = getIntent().getBundleExtra("AlbumDetailActivityReturn");
+        Bundle bundle = getIntent().getBundleExtra("MeFragment");
         if (bundle != null) {
-            urlToPush = bundle.getString("iconurl");
+            ///////////////////////////////////////////////////////////////
+            if (bundle.keySet().contains("path")) {
+                String path = bundle.getString("path");
+                iconBitmap = bitmapHelper.convertToBitmap(path);
+            }
+
+            nickName = (String) bundle.get("nickName");
+        }
+        Bundle bundle1 = getIntent().getBundleExtra("AlbumDetailActivityReturn");
+        if (bundle1 != null) {
+            urlToPush = bundle1.getString("iconurl");
             if (!urlToPush.equals("")) {
                 MeFragment.GetHttpImageThread t = new MeFragment().new GetHttpImageThread(urlToPush, this, handler);
                 new Thread(t).start();
@@ -117,7 +115,11 @@ public class ChangeInfoActivity extends Activity {
             if (iconBitmap == null) {
                 return;
             }
+        } else {
+            MyAppContext myAppContext = (MyAppContext) getApplicationContext();
+            urlToPush = myAppContext.getIconUrl();
         }
+
     }
 
     @Override
@@ -152,11 +154,16 @@ public class ChangeInfoActivity extends Activity {
                 if (modifyIcon.getResult() == 0) {
                     Toast.makeText(ChangeInfoActivity.this, "数据库连接中断", Toast.LENGTH_SHORT).show();
                 }
+                if (modifyIcon.getResult() == -1 && MyAppContext.getIsConnected() == false) {
+                    Toast.makeText(ChangeInfoActivity.this, "网络不可用，请检查网络设置", Toast.LENGTH_SHORT).show();
+                }
 
                 if (iconBitmap == null) {
                     return;
                 }
 
+                MyAppContext myAppContext = (MyAppContext) getApplicationContext();
+                myAppContext.setIconUrl(urlToPush);
                 Intent intent = new Intent(ChangeInfoActivity.this, MainActivity.class);
                 Bundle bundle = new Bundle();
                 String changeInfoBitmapPath = bitmapHelper.saveBitmapToSDcard(iconBitmap, urlToPush);

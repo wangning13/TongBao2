@@ -2,6 +2,7 @@ package nju.tb.net;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -29,20 +30,25 @@ public class HttpRequest {
         HttpResponse httpResponse = null;
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
-            httpResponse = httpClient.execute(httpPost);
+            if (MyAppContext.getIsConnected()) {
+                httpResponse = httpClient.execute(httpPost);
+            } else {
+                return httpResponse;
+            }
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;
         } catch (ClientProtocolException e) {
             e.printStackTrace();
             return null;
-        }catch(org.apache.http.conn.HttpHostConnectException e){
+        } catch (org.apache.http.conn.HttpHostConnectException e) {
             e.printStackTrace();
             return null;
-        } catch(java.net.ConnectException e){
+        } catch (java.net.ConnectException e) {
             e.printStackTrace();
             return null;
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
         }

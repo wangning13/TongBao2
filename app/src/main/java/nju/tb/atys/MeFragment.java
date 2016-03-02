@@ -64,7 +64,8 @@ public class MeFragment extends Fragment {
                 bundle.putString("nickName", nickName);
                 if (iconBitmap != null) {
                     BitmapHelper bitmapHelper = new BitmapHelper(getActivity());
-                    String newPath = bitmapHelper.saveBitmapToSDcard(iconBitmap, url);
+                    MyAppContext myAppContext = (MyAppContext) getActivity().getApplicationContext();
+                    String newPath = bitmapHelper.saveBitmapToSDcard(iconBitmap, myAppContext.getIconUrl());
                     bundle.putString("path", newPath);
                 }
 

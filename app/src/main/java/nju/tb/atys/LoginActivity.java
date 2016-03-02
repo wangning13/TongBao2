@@ -75,11 +75,17 @@ public class LoginActivity extends Activity {
 
         loginButton.setOnClickListener(new LoginButtonClickListener());
         loginButton.setClickable(false);
+
         Bundle loadingReturn = getIntent().getBundleExtra("LoadingActivity");
         if (loadingReturn != null && loadingReturn.getString("state").equals("fail")) {
             passwordEditText.setText("");
             phoneNumberEditText.setText(loadingReturn.getString("phone"));
             Toast.makeText(this, "账号或密码错误，请重新登录", Toast.LENGTH_SHORT).show();
+        }
+
+        Bundle netReturn = getIntent().getBundleExtra("LoadingActivityNet");
+        if(netReturn!=null){
+            Toast.makeText(this, "网络不可用，请检查网络设置", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -87,10 +93,10 @@ public class LoginActivity extends Activity {
 
         @Override
         public void onClick(View v) {
-            if (!MyAppContext.getIsConnected()) {
-                Toast.makeText(LoginActivity.this, "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
-                return;
-            }
+//            if (!MyAppContext.getIsConnected()) {
+//                Toast.makeText(LoginActivity.this, "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
             String phoneNumber = phoneNumberEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 

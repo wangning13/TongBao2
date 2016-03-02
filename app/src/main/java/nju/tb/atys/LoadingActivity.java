@@ -24,13 +24,22 @@ public class LoadingActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 while (Login.getResult() == -1) {
+                    if (!MyAppContext.getIsConnected()) {
+                        Intent netWrongIntent = new Intent(LoadingActivity.this, LoginActivity.class);
+                        Bundle bundle = new Bundle();
+                        netWrongIntent.putExtra("LoadingActivityNet", bundle);
+                        startActivity(netWrongIntent);
+                        LoadingActivity.this.finish();
+                        break;
+                    }
+
                 }
 
                 if (Login.getResult() == 0) {
                     Intent failureIntent = new Intent(LoadingActivity.this, LoginActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("state", "fail");
-                    bundle.putString("phone",phone);
+                    bundle.putString("phone", phone);
                     failureIntent.putExtra("LoadingActivity", bundle);
                     startActivity(failureIntent);
                 }

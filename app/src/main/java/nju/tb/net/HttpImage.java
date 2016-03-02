@@ -64,6 +64,9 @@ public class HttpImage {
         }
         try {
             httpPost.setEntity(multipartEntity);
+            if (!MyAppContext.getIsConnected()) {
+                return "newwrong";
+            }
             HttpResponse response = httpClient.execute(httpPost);
             if (response == null) {
                 return "wrong";
@@ -102,7 +105,7 @@ public class HttpImage {
         try {
             bitmapUrl = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) bitmapUrl.openConnection();
-            conn.setConnectTimeout(6000);
+            conn.setConnectTimeout(5000);
             conn.setDoInput(true);
             conn.setUseCaches(false);
             conn.connect();
@@ -113,9 +116,9 @@ public class HttpImage {
             e.printStackTrace();
         } catch (IOException ioe) {
             ioe.printStackTrace();
+        } finally {
+            return bitmap;
         }
-
-        return bitmap;
     }
 
 }

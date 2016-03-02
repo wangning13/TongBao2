@@ -23,14 +23,33 @@ public class NetStateService extends Service {
                 ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(context
                         .CONNECTIVITY_SERVICE);
                 NetworkInfo info = connectivityManager.getActiveNetworkInfo();
-                if (info != null && info.isAvailable()) {
+                if (info != null && info.getState() == NetworkInfo.State.CONNECTED) {
                     MyAppContext.setIsConnected(true);
                 } else {
                     MyAppContext.setIsConnected(false);
                 }
+
             }
         }
     };
+
+    public static boolean isWiFiActive(Context inContext) {
+        Context context = inContext.getApplicationContext();
+        ConnectivityManager connectivity = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null) {
+                for (int i = 0; i < info.length; i++) {
+                    if (info[i].getTypeName().equals("WIFI") && info[i].isConnected()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public void onCreate() {
