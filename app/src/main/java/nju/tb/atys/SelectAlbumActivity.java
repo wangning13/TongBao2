@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import nju.tb.Commen.LocalImageHelper;
 
 public class SelectAlbumActivity extends Activity {
     private ListView albumlist;
+    private TextView toolbar_text;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,18 @@ public class SelectAlbumActivity extends Activity {
         // （activity会因为内存等原因被销毁，再次显示的时候重建）
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_driver_selectalbum);
+
+        toolbar_text=(TextView) findViewById(R.id.toolbar_title);
+        toolbar_text.setText("照片");
+
+        ImageButton titleBackBtn = (ImageButton) findViewById(R.id.head_TitleBackBtn);
+        titleBackBtn.setVisibility(View.VISIBLE);
+        titleBackBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                SelectAlbumActivity.this.finish();
+            }
+        });
+
         while (!LocalImageHelper.isInited) {
 
         }
