@@ -10,24 +10,15 @@
         android:background="#1F6EF2">
 
         <RelativeLayout
-            android:id="@+id/login_leftarrow"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/alubmdetail_ok_selector">
-
-            <ImageView
-                android:id="@+id/login_leftarrow_image"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:scaleType="centerInside"
-                android:src="@drawable/arrow_left"/>
+            android:layout_height="match_parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="5dp"
-                android:layout_toRightOf="@id/login_leftarrow_image"
+                android:layout_marginLeft="10dp"
                 android:padding="6dp"
                 android:text="登录"
                 android:textColor="#FFFFFF"

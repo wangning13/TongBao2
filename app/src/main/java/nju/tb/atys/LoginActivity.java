@@ -12,7 +12,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
@@ -22,6 +25,8 @@ public class LoginActivity extends Activity {
     private EditText phoneNumberEditText;
     private EditText passwordEditText;
     private Button loginButton;
+    private TextView toRegister;
+
     private boolean phoneNumberOk = false;
     private boolean passwordOk = false;
 
@@ -46,6 +51,7 @@ public class LoginActivity extends Activity {
         phoneNumberEditText = (EditText) findViewById(R.id.et_login_phonenumber);
         passwordEditText = (EditText) findViewById(R.id.et_login_password);
         loginButton = (Button) findViewById(R.id.login_button);
+        toRegister = (TextView) findViewById(R.id.login_toregister);
 
 
         new Thread(new Runnable() {
@@ -67,6 +73,14 @@ public class LoginActivity extends Activity {
         phoneNumberEditText.addTextChangedListener(new LoginEditTextViewWatcher(11, 11, phoneNumberEditText));
         passwordEditText.addTextChangedListener(new LoginEditTextViewWatcher(8, 255, passwordEditText));
 
+        toRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginToRegister = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(loginToRegister);
+            }
+        });
+
     }
 
     @Override
@@ -84,7 +98,7 @@ public class LoginActivity extends Activity {
         }
 
         Bundle netReturn = getIntent().getBundleExtra("LoadingActivityNet");
-        if(netReturn!=null){
+        if (netReturn != null) {
             Toast.makeText(this, "网络不可用，请检查网络设置", Toast.LENGTH_SHORT).show();
         }
     }
