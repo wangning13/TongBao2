@@ -40,6 +40,7 @@ public class MeFragment extends Fragment {
                 Toast.makeText(getActivity(), "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
                 return;
             } else if (msg.what == 1) {
+                iconBitmap = (Bitmap) msg.obj;
                 displayPicImageView.setImageBitmap((Bitmap) msg.obj);
             }
 
@@ -65,6 +66,7 @@ public class MeFragment extends Fragment {
 //                bundle.putParcelable("iconBitmap", iconBitmap);
                 bundle.putString("nickName", nickName);
                 if (iconBitmap != null) {
+                    Log.i("运行到这里", "");
                     BitmapHelper bitmapHelper = new BitmapHelper(getActivity());
                     MyAppContext myAppContext = (MyAppContext) getActivity().getApplicationContext();
                     String newPath = bitmapHelper.saveBitmapToSDcard(iconBitmap, myAppContext.getIconUrl());
@@ -112,10 +114,11 @@ public class MeFragment extends Fragment {
             String updateBitmapPath = f.getArguments().getString("BitmapPathToUpdate");
             BitmapHelper bitmapHelper = new BitmapHelper(getActivity());
             iconBitmap = bitmapHelper.convertToBitmap(updateBitmapPath);
-        }
-        if (iconBitmap != null) {
             displayPicImageView.setImageBitmap(iconBitmap);
         }
+//        if (iconBitmap != null) {
+//displayPicImageView.setImageBitmap(iconBitmap);
+//        }
 
 
     }

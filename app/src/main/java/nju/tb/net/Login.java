@@ -33,10 +33,10 @@ public class Login extends Thread implements Parse.ParseHttp {
         this.phoneNumber = phoneNumber;
         this.password = password;
         myAppContext = MyAppContext.getMyAppContext();
-        result=-1;
+        result = -1;
     }
 
-    public static  int getResult() {
+    public static int getResult() {
         return result;
     }
 
@@ -57,11 +57,16 @@ public class Login extends Thread implements Parse.ParseHttp {
 
             MyAppContext.setLogIn(true);
             JSONObject data = jsonObject.getJSONObject("data");
-            myAppContext.setNickName(data.getString("nickName"));
+            if (data.getString("nickName") == null) {
+                myAppContext.setNickName("");
+            } else {
+                myAppContext.setNickName(data.getString("nickName"));
+            }
             myAppContext.setIconUrl(data.getString("iconUrl"));
             myAppContext.setPoint(data.getInt("point"));
             myAppContext.setMoney(data.getInt("money"));
             myAppContext.setToken(data.getString("token"));
+//            myAppContext.setIconUrl("http://img4.3lian.com/sucai/img6/230/28s.jpg");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -75,7 +80,7 @@ public class Login extends Thread implements Parse.ParseHttp {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("phoneNumber", phoneNumber));
         params.add(new BasicNameValuePair("password", password));
-        params.add(new BasicNameValuePair("type","1"));
+        params.add(new BasicNameValuePair("type", "1"));
         HttpResponse httpResponse = request.sendHttpPostRequest(LOGIN, params);
         while (httpResponse == null) {
 //            if (!MyAppContext.getIsConnected()) {

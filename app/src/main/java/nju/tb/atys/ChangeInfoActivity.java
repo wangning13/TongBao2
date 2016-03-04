@@ -92,7 +92,6 @@ public class ChangeInfoActivity extends Activity {
 
         Bundle bundle = getIntent().getBundleExtra("MeFragment");
         if (bundle != null) {
-            ///////////////////////////////////////////////////////////////
             if (bundle.keySet().contains("path")) {
                 String path = bundle.getString("path");
                 iconBitmap = bitmapHelper.convertToBitmap(path);
@@ -111,8 +110,6 @@ public class ChangeInfoActivity extends Activity {
 //                }
 //                iconBitmap = t.getBitmap();
             }
-
-
             if (iconBitmap == null) {
                 return;
             }
@@ -128,7 +125,6 @@ public class ChangeInfoActivity extends Activity {
         super.onResume();
 
         bitmapHelper = new BitmapHelper(this);
-
 
         if (iconBitmap == null) {
 
