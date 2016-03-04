@@ -28,6 +28,7 @@ import nju.tb.net.HttpRequest;
 @SuppressWarnings("deprecation")
 public class MyAppContext extends Application {
     private static boolean isLogIn;
+    public static boolean isNetServiceStarted=false;
     private static HttpClient httpClient = new DefaultHttpClient();
     private final String DRIVER_DISPLAY_PICTURE_TOKEN =
             "81f5465b9f87dcdc21c19eb29d03b59f96b449da:ZXJERjJIZTR2dzFsOXA1akdqc3ZlUldGNDZ3PQ" +

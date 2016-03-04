@@ -65,7 +65,7 @@ public class HttpImage {
         try {
             httpPost.setEntity(multipartEntity);
             if (!MyAppContext.getIsConnected()) {
-                return "newwrong";
+                return "netwrong";
             }
             HttpResponse response = httpClient.execute(httpPost);
             if (response == null) {

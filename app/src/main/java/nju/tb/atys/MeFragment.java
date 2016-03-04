@@ -39,8 +39,10 @@ public class MeFragment extends Fragment {
             if (msg.what == 0) {
                 Toast.makeText(getActivity(), "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
                 return;
+            } else if (msg.what == 1) {
+                displayPicImageView.setImageBitmap((Bitmap) msg.obj);
             }
-            super.handleMessage(msg);
+
         }
     };
 
@@ -89,7 +91,6 @@ public class MeFragment extends Fragment {
         Fragment f = getFragmentManager().findFragmentByTag("update");
         if (f == null) {
             //以后要进行替换 LOGIN
-
             MyAppContext myAppContext = (MyAppContext) getActivity().getApplicationContext();
             nickName = myAppContext.getNickName();
             url = myAppContext.getIconUrl();
@@ -98,14 +99,13 @@ public class MeFragment extends Fragment {
             } else {
                 GetHttpImageThread t = new GetHttpImageThread(url, getActivity(), handler);
                 new Thread(t).start();
-                while (!t.runover) {
-
-                }
-                iconBitmap = t.getBitmap();
-                if (iconBitmap == null) {
-                    return;
-                }
-
+//                while (!t.runover) {
+//
+//                }
+//                iconBitmap = t.getBitmap();
+//                if (iconBitmap == null) {
+//                    return;
+//                }
             }
         } else {
             ////////////////////////////////////////////////////////////
@@ -139,7 +139,6 @@ public class MeFragment extends Fragment {
             bitmap = httpImage.getHttpBitmap(threadurl);
             while (bitmap == null) {
                 if (!MyAppContext.getIsConnected()) {
-
                     Message message = new Message();
                     message.what = 0;
                     handler.sendMessage(message);
@@ -148,6 +147,10 @@ public class MeFragment extends Fragment {
                 }
             }
             runover = true;
+
+            Message message1 = handler.obtainMessage(1);
+            message1.obj = bitmap;
+            handler.sendMessage(message1);
         }
 
         public Bitmap getBitmap() {

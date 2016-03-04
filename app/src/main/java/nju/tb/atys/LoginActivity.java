@@ -2,6 +2,7 @@ package nju.tb.atys;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,9 @@ public class LoginActivity extends Activity {
     private EditText passwordEditText;
     private Button loginButton;
     private TextView toRegister;
+    private CheckBox keepPassword;
+
+    private static boolean autoLogin = false;
 
     private boolean phoneNumberOk = false;
     private boolean passwordOk = false;
@@ -52,6 +57,23 @@ public class LoginActivity extends Activity {
         passwordEditText = (EditText) findViewById(R.id.et_login_password);
         loginButton = (Button) findViewById(R.id.login_button);
         toRegister = (TextView) findViewById(R.id.login_toregister);
+        keepPassword = (CheckBox) findViewById(R.id.login_keeppassword);
+
+        SharedPreferences settings = getSharedPreferences("loginSettings", 0);
+        String phone1 = settings.getString("phone", "");
+        String password1 = settings.getString("password", "");
+
+        if (settings != null && !phone1.equals("") && !password1.equals("")) {
+            autoLogin = true;
+//            while(MyAppContext.isNetServiceStarted==false){
+//
+//            }
+            phoneNumberEditText.setText(phone1);
+            passwordEditText.setText(password1);
+            loginButton.setBackgroundResource(R.color.colorGreen);
+            loginButton.setClickable(true);
+
+        }
 
 
         new Thread(new Runnable() {
@@ -88,7 +110,10 @@ public class LoginActivity extends Activity {
         super.onResume();
 
         loginButton.setOnClickListener(new LoginButtonClickListener());
-        loginButton.setClickable(false);
+        if (!autoLogin) {
+            loginButton.setClickable(false);
+        }
+
 
         Bundle loadingReturn = getIntent().getBundleExtra("LoadingActivity");
         if (loadingReturn != null && loadingReturn.getString("state").equals("fail")) {
@@ -101,6 +126,25 @@ public class LoginActivity extends Activity {
         if (netReturn != null) {
             Toast.makeText(this, "网络不可用，请检查网络设置", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (keepPassword.isChecked()) {
+            SharedPreferences loginSettings = getSharedPreferences("loginSettings", 0);
+            if (MyAppContext.isLogIn() && autoLogin == false) {
+                loginSettings.edit().putString("phone", phoneNumberEditText.getText().toString()).putString("password",
+                        passwordEditText.getText().toString()).commit();
+            }
+        } else {
+            SharedPreferences loginSettings = getSharedPreferences("loginSettings", 0);
+            if (autoLogin == true) {
+                loginSettings.edit().clear().commit();
+            }
+        }
+
+        this.finish();
     }
 
     class LoginButtonClickListener implements View.OnClickListener {

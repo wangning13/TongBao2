@@ -227,6 +227,12 @@ public class RegisterActivity extends Activity {
         super.onResume();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SMSSDK.unregisterAllEventHandler();
+    }
+
     class RegisterAcitivityButtonOnclickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {

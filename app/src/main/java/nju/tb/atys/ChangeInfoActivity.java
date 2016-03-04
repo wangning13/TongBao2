@@ -45,8 +45,9 @@ public class ChangeInfoActivity extends Activity {
             if (msg.what == 0) {
                 Toast.makeText(ChangeInfoActivity.this, "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
                 return;
+            } else if (msg.what == 1) {
+                iconImageView.setImageBitmap((Bitmap) msg.obj);
             }
-            super.handleMessage(msg);
         }
     };
 
@@ -105,10 +106,10 @@ public class ChangeInfoActivity extends Activity {
             if (!urlToPush.equals("")) {
                 MeFragment.GetHttpImageThread t = new MeFragment().new GetHttpImageThread(urlToPush, this, handler);
                 new Thread(t).start();
-                while (!t.runover) {
-
-                }
-                iconBitmap = t.getBitmap();
+//                while (!t.runover) {
+//
+//                }
+//                iconBitmap = t.getBitmap();
             }
 
 

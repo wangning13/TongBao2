@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import nju.tb.Commen.MyAppContext;
 
@@ -56,6 +57,7 @@ public class NetStateService extends Service {
         IntentFilter mFilter = new IntentFilter();
         mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(mReceiver, mFilter);
+        MyAppContext.isNetServiceStarted=true;
     }
 
     @Override
