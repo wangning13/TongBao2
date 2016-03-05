@@ -68,10 +68,10 @@ public class OrderListAdapter extends BaseAdapter {
     public void showInfo(int position){
         View orderDialogView = mInflater.inflate(R.layout.activity_order_detail, null);
         Order order=list.get(position).get("info");
-        String detail=order.toStringdetail();
+        String addressTo=order.getAddressTo();
         ImageView img=new ImageView(context);
         new AlertDialog.Builder(context).setView(img)
-                .setMessage(detail)
+                .setMessage("终点："+addressTo)
                 .setView(orderDialogView)
                 .setNegativeButton("关闭", null)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {

@@ -33,6 +33,12 @@
                 android:layout_height="fill_parent"
                 android:maxLength="40"
                 android:hint="出发地"/>
+            <Spinner
+                android:id="@+id/fromAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="3"/>
         </RelativeLayout>
 
 
