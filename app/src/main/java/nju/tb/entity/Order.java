@@ -4,33 +4,92 @@ package nju.tb.entity;
  * Created by Administrator on 2016/1/20.
  */
 public class Order {
-    public Order(String begining, String endding, double distance, String placeorderdate, String departdate, String type, double weight, String remark) {
-        this.begining = begining;
-        this.endding = endding;
-        this.distance = distance;
-        this.placeorderdate = placeorderdate;
-        this.departdate = departdate;
-        this.type = type;
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getAddressFrom() {
+        return addressFrom;
+    }
+
+    public void setAddressFrom(String addressFrom) {
+        this.addressFrom = addressFrom;
+    }
+
+    public String getAddressTo() {
+        return addressTo;
+    }
+
+    public void setAddressTo(String addressTo) {
+        this.addressTo = addressTo;
+    }
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
+    }
+
+    public String getTruckTypes() {
+        return truckTypes;
+    }
+
+    public void setTruckTypes(String truckTypes) {
+        this.truckTypes = truckTypes;
+    }
+
+    public String getFromContactName() {
+        return fromContactName;
+    }
+
+    public void setFromContactName(String fromContactName) {
+        this.fromContactName = fromContactName;
+    }
+
+    public String getToContactName() {
+        return toContactName;
+    }
+
+    public void setToContactName(String toContactName) {
+        this.toContactName = toContactName;
+    }
+
+    public String getLoadTime() {
+        return loadTime;
+    }
+
+    public void setLoadTime(String loadTime) {
+        this.loadTime = loadTime;
+    }
+
+    public String getFromContactPhone() {
+        return fromContactPhone;
+    }
+
+    public void setFromContactPhone(String fromContactPhone) {
+        this.fromContactPhone = fromContactPhone;
+    }
+
+    public String getToContactPhone() {
+        return toContactPhone;
+    }
+
+    public void setToContactPhone(String toContactPhone) {
+        this.toContactPhone = toContactPhone;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
         this.weight = weight;
-        this.remark = remark;
-    }
-
-    private long ordernum;
-    private String placeorderdate;
-    private String departdate;
-    private String begining;
-    private String endding;
-    private String type;
-    private double weight;
-    private double distance;
-    private String remark;
-
-    public long getOrdernum() {
-        return ordernum;
-    }
-
-    public void setOrdernum(long ordernum) {
-        this.ordernum = ordernum;
     }
 
     public double getDistance() {
@@ -41,83 +100,41 @@ public class Order {
         this.distance = distance;
     }
 
-    public String getPlaceorderdate() {
-        return placeorderdate;
-    }
-
-    public void setPlaceorderdate(String placeorderdate) {
-        this.placeorderdate = placeorderdate;
-    }
-    public String getDepartdate() {
-        return departdate;
-    }
-
-    public String getBegining() {
-        return begining;
-    }
-
-    public String getEndding() {
-        return endding;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
     public String getRemark() {
         return remark;
-    }
-
-
-    public void setDepartdate(String departdate) {
-        this.departdate = departdate;
-    }
-
-    public void setBegining(String begining) {
-        this.begining = begining;
-    }
-
-    public void setEndding(String endding) {
-        this.endding = endding;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
     }
 
-    public String toStringdetail(){
-        return "订单号："+getOrdernum()+"\n" +
-                "起点："+getBegining()+"\n" +
-                "终点："+getEndding()+" \n" +
-                "里程数："+getDistance()+"\n" +
-                "发车日期："+getDepartdate()+"\n" +
-                "下单日期："+getPlaceorderdate()+"\n" +
-                "货车类型："+getType()+"\n" +
-                "货物详情："+getRemark()+" "+getWeight()+"吨\n";
+    private int id;
+    private String time;
+    private String addressFrom;
+    private String addressTo;
+    private String money;
+    private String truckTypes;
+    private String fromContactName;
+    private String fromContactPhone;
+    private String toContactName;
+    private String toContactPhone;
+    private String loadTime;
+
+
+
+
+
+
+
+    private double weight;
+    private double distance;
+    private String remark;
+
+    public int getId() {
+        return id;
     }
 
-
-
-    public String toString(){
-        return
-                "起点："+getBegining()+"\n" +
-                "终点："+getEndding()+" \n" +
-                "里程数："+getDistance()+"\n" +
-                "发车日期："+getDepartdate()+"\n" +
-                "货车类型："+getType()+"\n" +
-                "货物详情："+getRemark()+" "+getWeight()+"吨\n";
+    public void setId(int id) {
+        this.id = id;
     }
-
 }

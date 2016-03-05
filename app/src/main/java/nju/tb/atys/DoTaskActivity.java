@@ -25,8 +25,10 @@ import java.util.List;
 import java.util.Map;
 
 import nju.tb.Adapters.TaskListAdapter;
+import nju.tb.Commen.MyAppContext;
 import nju.tb.entity.Order;
 import nju.tb.R;
+import nju.tb.net.ShowMyOrderList;
 
 public class DoTaskActivity extends Activity {
     private ListView lv;
@@ -75,10 +77,10 @@ public class DoTaskActivity extends Activity {
     public void showInfo(int position){
 
         Order order=mData.get(position).get("info");
-        String detail=order.toStringdetail();
+        String fromContactName=order.getFromContactName();
         ImageView img=new ImageView(DoTaskActivity.this);
         new AlertDialog.Builder(this).setView(img)
-                .setMessage(detail)
+                .setMessage("货主姓名："+fromContactName)
                 .setNegativeButton("放弃", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -99,43 +101,22 @@ public class DoTaskActivity extends Activity {
     }
 
     public List<Map<String, Order>> getData() {
+
+        final String USERTOKEN = ((MyAppContext)getApplicationContext()).getToken();
+        ShowMyOrderList sm=new ShowMyOrderList(DoTaskActivity.this,USERTOKEN,"1");
+        sm.start();
+        ArrayList<Order> orderList=sm.getOrderList();
+
+
         List<Map<String, Order>> list = new ArrayList<Map<String, Order>>();
-        Map<String, Order> map = new HashMap<String, Order>();
-        Order data=new Order("南京大学", "玄武湖",455, "2016-01-11","2016-01-12", "卡车", 30,"水车");
-        map.put("info", data);
-        list.add(map);
-        map = new HashMap<String, Order>();
-        data=new Order("东南大学", "玄武湖",655, "2016-01-11","2016-01-12", "卡车", 30,"水车");
-        map.put("info", data);
-        list.add(map);
-        map = new HashMap<String, Order>();
-        data=new Order("新街口", "玄武湖",456, "2016-01-11","2016-01-12", "卡车", 30,"水车");
-        map.put("info", data);
-        list.add(map);
-        map = new HashMap<String, Order>();
-        data=new Order("梅花山", "玄武湖",244, "2016-01-11","2016-01-12", "卡车", 30,"蔬菜");
-        map.put("info",data);
-        list.add(map);
-        map = new HashMap<String, Order>();
-        data=new Order("南审", "玄武湖",666, "2016-01-11","2016-01-12", "卡车", 30,"蔬菜");
-        map.put("info",data);
-        list.add(map);
-        map = new HashMap<String, Order>();
-        data=new Order("新模范马路", "玄武湖",575, "2016-01-11","2016-01-12", "卡车", 30,"蔬菜");
-        map.put("info",data);
-        list.add(map);
-        map = new HashMap<String, Order>();
-        data=new Order("软件大道", "玄武湖",888, "2016-01-11","2016-01-12", "卡车", 30,"蔬菜");
-        map.put("info",data);
-        list.add(map);
-        map = new HashMap<String, Order>();
-        data=new Order("梅花山", "南京南站",459, "2016-01-11","2016-01-12", "卡车", 30,"蔬菜");
-        map.put("info",data);
-        list.add(map);
-        map = new HashMap<String, Order>();
-        data=new Order("小红山", "玄武湖",999, "2016-01-11","2016-01-12", "卡车", 30,"蔬菜");
-        map.put("info",data);
-        list.add(map);
+
+        for(int i=0;i<orderList.size();i++){
+            Map<String, Order> map = new HashMap<String, Order>();
+            Order data=orderList.get(i);
+            map.put("info", data);
+            list.add(map);
+        }
+
         return list;
     }
 

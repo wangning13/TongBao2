@@ -72,6 +72,8 @@
             android:label="@string/title_activity_message"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <activity android:name=".atys.OldOrderContentActivity"/>
         <activity android:name=".atys.MessageContentActivity"/>
         <activity android:name=".atys.CarsManagementActivity"/>
         <activity android:name=".atys.AddCarActivity"/>
