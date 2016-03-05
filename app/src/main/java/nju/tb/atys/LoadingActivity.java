@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
+import nju.tb.net.GetAllTruckTypes;
 import nju.tb.net.Login;
 
 public class LoadingActivity extends Activity {
@@ -45,6 +46,7 @@ public class LoadingActivity extends Activity {
                     startActivity(failureIntent);
                 }
                 if (Login.getResult() == 1) {
+                    new GetAllTruckTypes(LoadingActivity.this).start();//获取车辆类型
                     MyAppContext myAppContext = (MyAppContext) getApplicationContext();
                     myAppContext.setPhone(phone);
                     Intent successIntent = new Intent(LoadingActivity.this, MainActivity.class);

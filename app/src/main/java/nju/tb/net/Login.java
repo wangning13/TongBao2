@@ -83,10 +83,9 @@ public class Login extends Thread implements Parse.ParseHttp {
         params.add(new BasicNameValuePair("type", "1"));
         HttpResponse httpResponse = request.sendHttpPostRequest(LOGIN, params);
         while (httpResponse == null) {
-//            if (!MyAppContext.getIsConnected()) {
-//                return;
-//            }
-
+            if (!MyAppContext.getIsConnected()) {
+                return;
+            }
         }
         parseHttpResponse(httpResponse);
     }

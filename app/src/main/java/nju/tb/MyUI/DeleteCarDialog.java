@@ -33,7 +33,6 @@ public class DeleteCarDialog extends Dialog {
         super.onCreate(savedInstancedState);
         setContentView(R.layout.view_cars_deletecar);
         deleteTextView = (TextView) findViewById(R.id.cars_deletecar);
-
         deleteTextView.setOnClickListener(new DialogOnClickListener());
     }
 

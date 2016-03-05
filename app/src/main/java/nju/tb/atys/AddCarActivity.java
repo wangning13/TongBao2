@@ -2,6 +2,7 @@ package nju.tb.atys;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,24 +26,29 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
+import nju.tb.net.AddTruck;
 
 public class AddCarActivity extends Activity {
     private TextView toolbar_text;
     private Spinner selectTypeSpinner;
-
     //底部的button完成改成右上角的textview
     private TextView okaddcar;
+
+    private List<String> truckTypesList;
+    private int selectedTruckType = 0;
 
     @Override
     public void onCreate(Bundle savedInsatancedState) {
         super.onCreate(savedInsatancedState);
         setContentView(R.layout.view_driver_addcar);
-
+        MyAppContext myAppContext = (MyAppContext) getApplicationContext();
+        truckTypesList = myAppContext.getTruckList();  //车辆类型列表初始化
 
         //toolbar的标题
         //回退按钮
-        toolbar_text=(TextView) findViewById(R.id.toolbar_title);
+        toolbar_text = (TextView) findViewById(R.id.toolbar_title);
         toolbar_text.setText("添加车辆");
 
 
@@ -65,28 +71,24 @@ public class AddCarActivity extends Activity {
         final TextView lengthTextView = (TextView) findViewById(R.id.addcar_chechang); //车辆车长
 
         final List<Map<String, String>> data = new ArrayList<Map<String, String>>();
-        Map<String, String> map1 = new HashMap<String, String>();
-        map1.put("type", "小面包车 50*50 30公斤");
-        Map<String, String> map2 = new HashMap<String, String>();
-        map2.put("type", "中面包车 60*60 40公斤");
-        Map<String, String> map3 = new HashMap<String, String>();
-        map3.put("type", "大面包车 70*70 50公斤");
-        data.add(map1);
-        data.add(map2);
-        data.add(map3);
+        //解析truckTypeslist
+        for (int i = 0; i < truckTypesList.size(); i++) {
+            String temp = truckTypesList.get(i);
+            Map<String, String> map = new HashMap<>();
+            map.put("type", temp.split(" ")[0]);
+            data.add(map);
+        }
 
         selectTypeSpinner.setAdapter(new SimpleAdapter(this, data, R.layout.view_selecttype_item, new
                 String[]{"type"}, new int[]{R.id.item_type}));
         selectTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String type = data.get(position).get("type");
-                String[] arr = type.split(" ");
-                if (arr.length != 3) {
-                    return;
-                }
-                weightTextView.setText(arr[1]);
-                lengthTextView.setText(arr[2]);
+                String type = truckTypesList.get(position);
+                weightTextView.setText(type.split(" ")[1]);
+                lengthTextView.setText("长:" + type.split(" ")[2] + " " + "宽:" + type.split(" ")[3] + " " + "高:" +
+                        type.split(" ")[4]);
+                selectedTruckType = Integer.parseInt(type.split(" ")[5]);
             }
 
             @Override
@@ -157,6 +159,11 @@ public class AddCarActivity extends Activity {
                     return;
                 }
                 //验证完成，继续操作
+                MyAppContext myAppContext = (MyAppContext) getApplicationContext();
+                new AddTruck(AddCarActivity.this, myAppContext.getToken(), carNumberEditText.getText().toString(),
+                        selectedTruckType, carPhoneEditText.getText().toString()).start();
+                Intent intent = new Intent(AddCarActivity.this, CarsManagementActivity.class);
+                startActivity(intent);
             }
         });
 

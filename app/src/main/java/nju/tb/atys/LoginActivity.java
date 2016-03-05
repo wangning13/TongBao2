@@ -21,6 +21,7 @@ import org.w3c.dom.Text;
 
 import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
+import nju.tb.net.GetAllTruckTypes;
 import nju.tb.net.Login;
 
 public class LoginActivity extends Activity {

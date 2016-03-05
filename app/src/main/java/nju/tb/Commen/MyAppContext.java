@@ -23,12 +23,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import nju.tb.net.GetAllTruckTypes;
 import nju.tb.net.HttpRequest;
 
 @SuppressWarnings("deprecation")
 public class MyAppContext extends Application {
     private static boolean isLogIn;
-    public static boolean isNetServiceStarted=false;
+    public static boolean isNetServiceStarted = false;
     private static HttpClient httpClient = new DefaultHttpClient();
     private final String DRIVER_DISPLAY_PICTURE_TOKEN =
             "81f5465b9f87dcdc21c19eb29d03b59f96b449da:ZXJERjJIZTR2dzFsOXA1akdqc3ZlUldGNDZ3PQ" +
@@ -49,8 +50,9 @@ public class MyAppContext extends Application {
         return myAppContext;
     }
 
-    private String phone ;
+    private String phone;
 
+    private List<String> truckTypesList;
 
     private String nickName = "";  //用户昵称
     private String iconUrl = "1";  //用户头像url
@@ -131,12 +133,21 @@ public class MyAppContext extends Application {
         return DRIVER_DISPLAY_PICTURE_TOKEN;
     }
 
+    public void setTruckList(List<String> list) {
+        this.truckTypesList = list;
+    }
+
+    public List<String> getTruckList() {
+        return truckTypesList;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         isLogIn = false;
         myAppContext = this;
-        startService(new Intent(this, nju.tb.services.NetStateService.class));
+        startService(new Intent(this, nju.tb.services.NetStateService.class));  //监控网络
+
 
     }
 

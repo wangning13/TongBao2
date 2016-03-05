@@ -29,10 +29,10 @@ public class HttpRequest {
         HttpPost httpPost = new HttpPost(url);
         HttpResponse httpResponse = null;
         try {
-            Log.i("netstate1",MyAppContext.getIsConnected()+"");
-            httpPost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+            if (params != null) {
+                httpPost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+            }
             if (MyAppContext.getIsConnected()) {
-                Log.i("netstate2",MyAppContext.getIsConnected()+"");
                 httpResponse = httpClient.execute(httpPost);
             } else {
                 return httpResponse;

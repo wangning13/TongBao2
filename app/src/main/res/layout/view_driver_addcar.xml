@@ -6,11 +6,11 @@
 
 
     <android.support.design.widget.AppBarLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -21,60 +21,38 @@
 
             <ImageButton
                 android:id="@+id/head_TitleBackBtn"
-                android:gravity="center_vertical"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:gravity="center_vertical"
                 android:src="@drawable/arrow"
                 />
+
+
             <TextView
+                android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
                 android:layout_gravity="center"
-                android:id="@+id/toolbar_title" />
+                android:textSize="25sp"/>
+
             <TextView
                 android:id="@+id/addcar_OK"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
+                android:padding="10dp"
                 android:text="完成"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp" />
+                android:textSize="22sp"/>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/linearlayout_shape"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="right|center_vertical"
-            android:text="车主姓名:"
-            android:textSize="17sp"/>
-
-        <EditText
-            android:id="@+id/addcar_name"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="3"
-            android:background="@null"
-            android:singleLine="true"
-            android:textCursorDrawable="@null"
-            android:textSize="17sp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="@drawable/linearlayout_shape"
         android:orientation="horizontal">
 
@@ -97,7 +75,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="@drawable/linearlayout_shape"
         android:orientation="horizontal">
 
@@ -117,13 +95,14 @@
             android:layout_weight="3"
             android:background="@null"
             android:singleLine="true"
+            android:paddingLeft="20dp"
             android:textCursorDrawable="@null"
             android:textSize="17sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="@drawable/linearlayout_shape"
         android:orientation="horizontal">
 
@@ -141,13 +120,14 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_weight="3"
+            android:paddingLeft="20dp"
             android:gravity="left|center_vertical"
             android:textSize="17sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="@drawable/linearlayout_shape"
         android:orientation="horizontal">
 
@@ -165,13 +145,14 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_weight="3"
+            android:paddingLeft="20dp"
             android:gravity="left|center_vertical"
             android:textSize="17sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="@drawable/linearlayout_shape"
         android:orientation="horizontal">
 
@@ -185,6 +166,7 @@
 
         <EditText
             android:id="@+id/addcar_phone"
+            android:paddingLeft="20dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
