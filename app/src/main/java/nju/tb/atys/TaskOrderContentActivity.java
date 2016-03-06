@@ -13,9 +13,9 @@ import nju.tb.entity.Order;
 import nju.tb.net.GetOrderDetail;
 
 /**
- * Created by Administrator on 2016/3/5.
+ * Created by Administrator on 2016/3/6.
  */
-public class OldOrderContentActivity extends Activity {
+public class TaskOrderContentActivity  extends Activity {
     private TextView fname1_text;
     private TextView number_text;
     private TextView time_text;
@@ -33,7 +33,7 @@ public class OldOrderContentActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.oldordercontent);
+        setContentView(R.layout.taskordercontent);
 
 
         //toolbar的标题
@@ -45,7 +45,7 @@ public class OldOrderContentActivity extends Activity {
         titleBackBtn.setVisibility(View.VISIBLE);
         titleBackBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                OldOrderContentActivity.this.finish();
+                TaskOrderContentActivity.this.finish();
             }
         });
         fname1_text=(TextView) findViewById(R.id.fname1);
@@ -66,7 +66,7 @@ public class OldOrderContentActivity extends Activity {
         int orderNumber=(int)bundle.get("orderNumber");
 
         final String USERTOKEN = ((MyAppContext)getApplicationContext()).getToken();
-        GetOrderDetail god=new GetOrderDetail( OldOrderContentActivity.this,USERTOKEN,orderNumber+"");
+        GetOrderDetail god=new GetOrderDetail( TaskOrderContentActivity.this,USERTOKEN,orderNumber+"");
         god.start();
         while (god.getResult() == -1) {
             if (!MyAppContext.getIsConnected()) {

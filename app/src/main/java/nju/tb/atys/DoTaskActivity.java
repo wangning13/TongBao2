@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,31 +64,21 @@ public class DoTaskActivity extends Activity {
 
         lv=(ListView)findViewById(R.id.tasklistView);
         mData = getData();
-        final  TaskListAdapter adapter = new TaskListAdapter(this,mData);
+        final  TaskListAdapter adapter = new TaskListAdapter(DoTaskActivity.this,mData);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                showInfo(position);
+                Intent intent = new Intent(DoTaskActivity.this, TaskOrderContentActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("orderNumber", mData.get(position).get("info").getId());
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }
 
-    public void showInfo(int position){
-
-        Order order=mData.get(position).get("info");
-        String fromContactName=order.getFromContactName();
-        ImageView img=new ImageView(DoTaskActivity.this);
-        new AlertDialog.Builder(this).setView(img)
-                .setMessage("货主姓名："+fromContactName)
-                .setNegativeButton("放弃", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .show();
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
@@ -102,10 +93,25 @@ public class DoTaskActivity extends Activity {
 
     public List<Map<String, Order>> getData() {
 
-        final String USERTOKEN = ((MyAppContext)getApplicationContext()).getToken();
+        final String USERTOKEN = ((MyAppContext) getApplicationContext()).getToken();
         ShowMyOrderList sm=new ShowMyOrderList(DoTaskActivity.this,USERTOKEN,"1");
         sm.start();
-        ArrayList<Order> orderList=sm.getOrderList();
+        ArrayList<Order> orderList=new ArrayList<Order>();
+        while (sm.getResult() == -1) {
+            if (!MyAppContext.getIsConnected()) {
+                Log.i("断网了", "断网了");
+                break;
+            }
+        }
+        while(!sm.isRunover()){
+        }
+
+        if (sm.getResult() == 0) {
+        }
+
+        if (sm.getResult() == 1) {
+            orderList = sm.getOrderList();
+        }
 
 
         List<Map<String, Order>> list = new ArrayList<Map<String, Order>>();

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +34,11 @@ import nju.tb.net.ShowMyOrderList;
 
 public class ScrambleOrderActivity extends Activity {
     private ListView lv;
-    private ArrayAdapter<Order> adapter;
 
     private Spinner fromAddressSpinner;
     private TextView toolbar_text;
     private List<Map<String, Order>> mData;
+    private OrderListAdapter adapter;
 
 
     @Override
@@ -112,11 +113,15 @@ public class ScrambleOrderActivity extends Activity {
 //                }
 //            }
 //        });
-
+        Button searchbtn = (Button) findViewById(R.id.search_btn);
         lv=(ListView)findViewById(R.id.listView);
-        mData = getData();
-        OrderListAdapter adapter = new OrderListAdapter(this,mData);
-        lv.setAdapter(adapter);
+        searchbtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            mData.clear();
+            adapter = new OrderListAdapter(ScrambleOrderActivity.this,mData);
+            lv.setAdapter(adapter);
+            }
+        });
 
     }
 
@@ -127,7 +132,24 @@ public class ScrambleOrderActivity extends Activity {
         final String USERTOKEN = ((MyAppContext) getApplicationContext()).getToken();
         ShowAllOrders sa=new ShowAllOrders(ScrambleOrderActivity.this,USERTOKEN,"鼓楼区","玄武区");
         sa.start();
-        ArrayList<Order> orderList=sa.getAllOrders();
+
+        ArrayList<Order> orderList=new ArrayList<Order>();
+        while (sa.getResult() == -1) {
+            if (!MyAppContext.getIsConnected()) {
+                Log.i("断网了", "断网了");
+                break;
+            }
+        }
+        while(!sa.isRunover()){
+        }
+
+        if (sa.getResult() == 0) {
+        }
+
+        if (sa.getResult() == 1) {
+            Log.i("成功了", "成功了");
+            orderList = sa.getAllorders();
+        }
 
 
         List<Map<String, Order>> list = new ArrayList<Map<String, Order>>();

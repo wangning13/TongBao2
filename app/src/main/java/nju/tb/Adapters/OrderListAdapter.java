@@ -49,7 +49,11 @@ public class OrderListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.orderitem, null);
             holder.info = (TextView) convertView.findViewById(R.id.info);
-            holder.info.setText(list.get(position).get("info").toString());
+            if(!list.isEmpty()){
+                holder.info.setText(list.get(position).get("info").toString());
+            }else{
+                holder.info.setText("无");
+            }
             holder.viewBtn = (Button) convertView.findViewById(R.id.view_btn);
             convertView.setTag(holder);
 
@@ -58,7 +62,7 @@ public class OrderListAdapter extends BaseAdapter {
         }
         holder.viewBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showInfo(position);
+//                showInfo(position);
             }
         });
         return convertView;
