@@ -53,8 +53,6 @@ public class AlbumDetailActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_driver_albumdetail);
-        // final String token = ((MyAppContext) getApplicationContext()).getDisplayToken();
-        final String token = ((MyAppContext) getApplicationContext()).getDisplayToken();
 
         albumDetailGridView = (MyGridView) findViewById(R.id.albumdetail_gridview);
         albumNameTextView = (TextView) findViewById(R.id.albumdetail_name);
@@ -108,7 +106,7 @@ public class AlbumDetailActivity extends Activity {
             @Override
             public void run() {
                 albumDetailOKTextView.setClickable(false);
-                result = postImage.doUpload(clickLocalFile.getOriginalFile(), token);
+                result = postImage.doUpload(clickLocalFile.getOriginalFile());
                 runover = true;
             }
 

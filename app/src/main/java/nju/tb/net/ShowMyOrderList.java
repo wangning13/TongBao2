@@ -61,7 +61,6 @@ public class ShowMyOrderList extends Thread implements Parse.ParseHttp {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 stringBuffer.append(line);
             }
-            Log.i("stringBuffer", stringBuffer.toString());
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
             if(result==0){
@@ -98,7 +97,6 @@ public class ShowMyOrderList extends Thread implements Parse.ParseHttp {
                 orderList.add(order);
             }
             runover=true;
-            Log.i("123", orderList.size()+","+result);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

@@ -4,6 +4,9 @@ package nju.tb.atys;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -18,6 +21,7 @@ import nju.tb.Commen.MyAppContext;
 import nju.tb.MyUI.DeleteCarDialog;
 import nju.tb.R;
 import nju.tb.net.GetTruckList;
+import nju.tb.net.RemoveTruck;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +34,46 @@ public class CarsManagementActivity extends Activity {
     private ListView carList;
     private List<String> truckList;
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                MyAppContext myAppContext = (MyAppContext) getApplicationContext();
+                GetTruckList getTruckList = new GetTruckList(CarsManagementActivity.this, myAppContext.getToken());
+                getTruckList.start();
+                while (getTruckList.getResult() == -1) {
+                    if (!MyAppContext.getIsConnected()) {
+                        Toast.makeText(CarsManagementActivity.this, "网络连接不可用，请检查网络设置", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                while (!getTruckList.isRunover()) {
+
+                }
+                if (getTruckList.getResult() == 0) {
+                    Toast.makeText(CarsManagementActivity.this, GetTruckList.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                }
+                if (getTruckList.getResult() == 1) {
+                    //解析数据
+                    truckList = getTruckList.getTruckList();
+                    List<Map<String, String>> adapterData = new ArrayList<Map<String, String>>();
+                    for (String s : truckList) {
+                        Map<String, String> map = new HashMap<>();
+                        map.put("chepaihao", s.split(" ")[1]);
+                        map.put("shenhejieguo", convertState(Integer.parseInt(s.split(" ")[2])));
+                        adapterData.add(map);
+                    }
+                    SimpleAdapter adapter = new SimpleAdapter(CarsManagementActivity.this, adapterData, R.layout
+                            .view_carlist_item, new
+                            String[]{"chepaihao",
+                            "shenhejieguo"}, new int[]{R.id.tv_carlist_item_chepaihao, R.id
+                            .tv_carlist_item_shenhejieguo});
+                    carList.setAdapter(adapter);
+                }
+            }
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +81,10 @@ public class CarsManagementActivity extends Activity {
         carList = (ListView) findViewById(R.id.lv_cars_carlist);
         addcar = (ImageView) findViewById(R.id.iv_cars_addcar);
 
-
         //toolbar的标题
         //回退按钮
         toolbar_text = (TextView) findViewById(R.id.toolbar_title);
         toolbar_text.setText("车辆管理");
-
 
         //回退按钮
         ImageButton titleBackBtn = (ImageButton) findViewById(R.id.head_TitleBackBtn);
@@ -74,24 +116,25 @@ public class CarsManagementActivity extends Activity {
         });
 
         //删除车辆
-//        carList.setOnItemLongClickListener(new ListView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-//                final DeleteCarDialog deleteCarDialog = new DeleteCarDialog(CarsManagementActivity.this);
-//                deleteCarDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                deleteCarDialog.show();
-//                deleteCarDialog.setDeleteCar(new DeleteCarDialog.DeleteCar() {
-//                    @Override
-//                    public void deleteCar() {
-//                        deleteCarDialog.dismiss();
-//                        data.remove(position);
-//                        adapter.notifyDataSetChanged();
-//                    }
-//                });
-//
-//                return true;
-//            }
-//        });
+        carList.setOnItemLongClickListener(new ListView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                final DeleteCarDialog deleteCarDialog = new DeleteCarDialog(CarsManagementActivity.this);
+                deleteCarDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                deleteCarDialog.show();
+                deleteCarDialog.setDeleteCar(new DeleteCarDialog.DeleteCar() {
+                    @Override
+                    public void deleteCar() {
+                        deleteCarDialog.dismiss();
+                        MyAppContext myAppContext = (MyAppContext) getApplicationContext();
+                        new RemoveTruck(CarsManagementActivity.this, myAppContext.getToken(), truckList.get(position)
+                                .split(" ")[1], handler).start();
+                    }
+                });
+
+                return true;
+            }
+        });
     }
 
     @Override

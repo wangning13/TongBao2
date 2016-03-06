@@ -31,9 +31,6 @@ public class MyAppContext extends Application {
     private static boolean isLogIn;
     public static boolean isNetServiceStarted = false;
     private static HttpClient httpClient = new DefaultHttpClient();
-    private final String DRIVER_DISPLAY_PICTURE_TOKEN =
-            "81f5465b9f87dcdc21c19eb29d03b59f96b449da:ZXJERjJIZTR2dzFsOXA1akdqc3ZlUldGNDZ3PQ" +
-                    "==:eyJkZWFkbGluZSI6MTQ1NjYzNjc2MSwiYWN0aW9uIjoiZ2V0IiwidWlkIjoiNTUwMTA1IiwiYWlkIjoiMTIwNTU1NiIsImZyb20iOiJmaWxlIn0=";
     private static boolean isConnected = false;
 
     private static MyAppContext myAppContext;
@@ -127,10 +124,6 @@ public class MyAppContext extends Application {
         httpClient.getParams().setIntParameter(HttpConnectionParams.CONNECTION_TIMEOUT, 3000);
 
         return this.httpClient;
-    }
-
-    public String getDisplayToken() {
-        return DRIVER_DISPLAY_PICTURE_TOKEN;
     }
 
     public void setTruckList(List<String> list) {

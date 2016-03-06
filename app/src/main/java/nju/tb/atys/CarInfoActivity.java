@@ -44,7 +44,7 @@ public class CarInfoActivity extends Activity {
                 linearLayout = (LinearLayout) findViewById(R.id.carinfo_shenhezhangtai);
                 stateImageView = (ImageView) findViewById(R.id.verify_state);
 
-                if (verify_state==3) {
+                if (verify_state==3||verify_state==0) {
                     stateImageView.setVisibility(View.VISIBLE);
                     linearLayout.setOnClickListener(new View.OnClickListener() {
                         @Override

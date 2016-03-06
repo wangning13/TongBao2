@@ -35,8 +35,7 @@ import nju.tb.Commen.MyAppContext;
 
 @SuppressWarnings("deprecation")
 public class HttpImage {
-    private final String POST_URL = "http://up.tietuku.com/";
-    private final String PIC_URL = "http://api.tietuku.com/v1/Pic";
+    private final String POST_URL = "http://120.27.112.9:8080/tongbao/user/uploadPicture";
     private Context context;
     private HttpClient httpClient;
 
@@ -45,8 +44,8 @@ public class HttpImage {
         httpClient = ((MyAppContext) this.context.getApplicationContext()).getHttpClient();
     }
 
-    //post请求 将手机本地图片上传到贴图库，返回图片URL
-    public String doUpload(File f, String token) {
+    //post请求 将手机本地图片上传，返回图片URL
+    public String doUpload(File f) {
         if (!MyAppContext.getIsConnected()) {
             return "netwrong";
         }
@@ -55,25 +54,17 @@ public class HttpImage {
 
         FileBody pic = new FileBody(f);
         MultipartEntity multipartEntity = new MultipartEntity(); //与UrlEncodedFormEntity均继承HttpEnity，此类更适合文件上传
-        try {
-            multipartEntity.addPart("file", pic);
-            multipartEntity.addPart("Token", new StringBody(((MyAppContext) this.context.getApplicationContext())
-                    .getDisplayToken()));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        multipartEntity.addPart("file", pic);
         try {
             httpPost.setEntity(multipartEntity);
             if (!MyAppContext.getIsConnected()) {
                 return "netwrong";
             }
             HttpResponse response = httpClient.execute(httpPost);
-            if (response == null) {
-                return "wrong";
-            }
-            int responseCode = response.getStatusLine().getStatusCode(); // 获取错误码
-            if (responseCode != 200) {
-                return "wrong";
+            while (response == null) {
+                if (!MyAppContext.getIsConnected()) {
+                    return "netwrong";
+                }
             }
             BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
@@ -83,7 +74,8 @@ public class HttpImage {
                 stringBuffer.append(line);
             }
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
-            String linkurl = jsonObject.getString("linkurl");
+            JSONObject data = jsonObject.getJSONObject("data");
+            String linkurl = data.getString("url");
             if (linkurl.equals("")) {
                 return "wrong";
             }

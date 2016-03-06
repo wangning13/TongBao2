@@ -2,6 +2,8 @@ package nju.tb.net;
 
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
@@ -14,37 +16,42 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import nju.tb.Commen.MyAppContext;
 
-public class Login extends Thread implements Parse.ParseHttp {
-    private final String LOGIN = "http://120.27.112.9:8080/tongbao/user/login";
+public class RemoveTruck extends Thread implements Parse.ParseHttp {
+    private final String REMOVETRUCK = "http://120.27.112.9:8080/tongbao/driver/auth/removeTruck";
     private static int result = -1;
     private Context context;
-    private String phoneNumber;
-    private String password;
-    private MyAppContext myAppContext;
+    private String token;
+    private String truckNum;
+    private Handler handler;
+    private static String errorMsg;
 
-    public Login(Context context, String phoneNumber, String password) {
+    public RemoveTruck(Context context, String token, String truckNum, Handler handler) {
         this.context = context;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        myAppContext = MyAppContext.getMyAppContext();
+        this.token = token;
+        this.truckNum = truckNum;
+        this.handler = handler;
         result = -1;
+        errorMsg = "";
     }
 
     public static int getResult() {
         return result;
     }
 
+    public static String getErrorMsg() {
+        return errorMsg;
+    }
+
     @Override
     public void parseHttpResponse(HttpResponse httpResponse) {
-        HttpEntity entity = httpResponse.getEntity();
+        HttpEntity httpEntity = httpResponse.getEntity();
         try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(entity.getContent()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(httpEntity.getContent()));
             StringBuffer stringBuffer = new StringBuffer();
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 stringBuffer.append(line);
@@ -52,20 +59,11 @@ public class Login extends Thread implements Parse.ParseHttp {
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
             if (result == 0) {
+                errorMsg = jsonObject.getString("errorMsg");
                 return;
             }
-
-            MyAppContext.setLogIn(true);
-            JSONObject data = jsonObject.getJSONObject("data");
-            if (data.getString("nickName") == null) {
-                myAppContext.setNickName("");
-            } else {
-                myAppContext.setNickName(data.getString("nickName"));
-            }
-            myAppContext.setIconUrl(data.getString("iconUrl"));
-            myAppContext.setPoint(data.getInt("point"));
-            myAppContext.setMoney(data.getInt("money"));
-            myAppContext.setToken(data.getString("token"));
+            Message message = handler.obtainMessage(0);
+            handler.sendMessage(message);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -77,10 +75,9 @@ public class Login extends Thread implements Parse.ParseHttp {
     public void run() {
         HttpRequest request = new HttpRequest(context);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("phoneNumber", phoneNumber));
-        params.add(new BasicNameValuePair("password", password));
-        params.add(new BasicNameValuePair("type", "1"));
-        HttpResponse httpResponse = request.sendHttpPostRequest(LOGIN, params);
+        params.add(new BasicNameValuePair("token", token));
+        params.add(new BasicNameValuePair("truckNum", truckNum));
+        HttpResponse httpResponse = request.sendHttpPostRequest(REMOVETRUCK, params);
         while (httpResponse == null) {
             if (!MyAppContext.getIsConnected()) {
                 return;
