@@ -26,7 +26,8 @@ public class BitmapHelper {
         if (!file.exists()) {
             file.mkdir();
         }
-        String bitmapType = url.substring(url.lastIndexOf("."));
+//        String bitmapType = url.substring(url.lastIndexOf("."));
+        String bitmapType = "jpeg";
         String newPath = BITMAP_PATH + "/" + phoneNumber + "." + bitmapType;
         file = new File(newPath);
         if (file.exists()) {

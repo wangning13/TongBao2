@@ -1,9 +1,11 @@
 package nju.tb.net;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.apache.http.HttpConnection;
@@ -30,23 +32,34 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import nju.tb.Commen.MyAppContext;
+import nju.tb.entity.ProgressMultipartEntity;
 
 @SuppressWarnings("deprecation")
-public class HttpImage {
-    private final String POST_URL = "http://up.tietuku.com/";
-    private final String PIC_URL = "http://api.tietuku.com/v1/Pic";
+public class HttpImage extends AsyncTask<String, Integer, String> {
+    private final String POST_URL = "http://120.27.112.9:8080/tongbao/user/uploadPicture";
     private Context context;
     private HttpClient httpClient;
+    private File file;
+    private long totalSize;
+    private ProgressDialog pd;
+    private PostOver postOver;
 
-    public HttpImage(Context context) {
+    public HttpImage(Context context, File file) {
         this.context = context;
+        this.file = file;
         httpClient = ((MyAppContext) this.context.getApplicationContext()).getHttpClient();
     }
 
-    //post请求 将手机本地图片上传到贴图库，返回图片URL
-    public String doUpload(File f, String token) {
+    public void setPostOver(PostOver postOver) {
+        this.postOver = postOver;
+    }
+
+    //post请求 将手机本地图片上传，返回图片URL
+    private String doUpload(File f) {
         if (!MyAppContext.getIsConnected()) {
             return "netwrong";
         }
@@ -54,26 +67,27 @@ public class HttpImage {
         HttpPost httpPost = new HttpPost(POST_URL);
 
         FileBody pic = new FileBody(f);
-        MultipartEntity multipartEntity = new MultipartEntity(); //与UrlEncodedFormEntity均继承HttpEnity，此类更适合文件上传
-        try {
-            multipartEntity.addPart("file", pic);
-            multipartEntity.addPart("Token", new StringBody(((MyAppContext) this.context.getApplicationContext())
-                    .getDisplayToken()));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        ProgressMultipartEntity multipartEntity = new ProgressMultipartEntity(
+                new ProgressMultipartEntity.ProgressListener() {
+                    @Override
+                    public void transferred(long num) {
+                        Log.i("222222222222222",num+"");
+                        publishProgress((int) ((num / (float) totalSize) * 100));
+                    }
+                }
+        );
+        multipartEntity.addPart("file", pic);
+        totalSize = multipartEntity.getContentLength();
         try {
             httpPost.setEntity(multipartEntity);
             if (!MyAppContext.getIsConnected()) {
                 return "netwrong";
             }
             HttpResponse response = httpClient.execute(httpPost);
-            if (response == null) {
-                return "wrong";
-            }
-            int responseCode = response.getStatusLine().getStatusCode(); // 获取错误码
-            if (responseCode != 200) {
-                return "wrong";
+            while (response == null) {
+                if (!MyAppContext.getIsConnected()) {
+                    return "netwrong";
+                }
             }
             BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
@@ -83,7 +97,8 @@ public class HttpImage {
                 stringBuffer.append(line);
             }
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
-            String linkurl = jsonObject.getString("linkurl");
+            JSONObject data = jsonObject.getJSONObject("data");
+            String linkurl = data.getString("url");
             if (linkurl.equals("")) {
                 return "wrong";
             }
@@ -94,31 +109,41 @@ public class HttpImage {
         return "wrong";
     }
 
+    @Override
+    protected void onPreExecute() {
+        pd = new ProgressDialog(context);
+        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pd.setMessage("Uploading Picture...");
+        pd.setCancelable(false);
+        pd.show();
+    }
 
-    //根据图片URL，获取图片的bitmap对象
-    public Bitmap getHttpBitmap(String url) {
-        if (!MyAppContext.getIsConnected()) {
-            return null;
-        }
-        URL bitmapUrl = null;
-        Bitmap bitmap = null;
-        try {
-            bitmapUrl = new URL(url);
-            HttpURLConnection conn = (HttpURLConnection) bitmapUrl.openConnection();
-            conn.setConnectTimeout(5000);
-            conn.setDoInput(true);
-            conn.setUseCaches(false);
-            conn.connect();
-            InputStream in = conn.getInputStream();
-            bitmap = BitmapFactory.decodeStream(in);
-            in.close();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            return bitmap;
-        }
+
+    @Override
+    protected String doInBackground(String... params) {
+        String s = doUpload(file);
+        return s;
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... progress) {
+        Log.i("1111111",(int) (progress[0])+"");
+        pd.setProgress((int) (progress[0]));
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        pd.dismiss();
+        postOver.over(result);
+    }
+
+    @Override
+    protected void onCancelled() {
+
+    }
+
+    public interface PostOver {
+        void over(String s);
     }
 
 }

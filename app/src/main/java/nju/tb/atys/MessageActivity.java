@@ -3,6 +3,7 @@ package nju.tb.atys;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Adapter;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import nju.tb.Adapters.MessageListAdapter;
+import nju.tb.entity.MyMessage;
 
 public class MessageActivity extends Activity {
     private ListView messageList;
@@ -34,16 +36,29 @@ public class MessageActivity extends Activity {
     private boolean longClickState = false;
     public List<Integer> selectedId = new ArrayList<Integer>();
     private TextView toolbar_text;
+    private List<MyMessage> myMessageList;
+    private List<Map<String, Object>> data;
+    private MessageListAdapter adapter;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                myMessageList = (List<MyMessage>) msg.obj;
+                data = getData(myMessageList);
+                adapter = getAdapter(data);
+                messageList.setAdapter(adapter);
+            }
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_driver_message);
 
-
-
         //toolbar的标题
-        toolbar_text=(TextView) findViewById(R.id.toolbar_title);
+        toolbar_text = (TextView) findViewById(R.id.toolbar_title);
         toolbar_text.setText("消息");
 
         //回退按钮
@@ -60,56 +75,6 @@ public class MessageActivity extends Activity {
         okButton = (Button) findViewById(R.id.delete_ok);
         deleteLayout = (RelativeLayout) findViewById(R.id.message_delete);
 
-        //测试数据
-        final List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-        Map<String, Object> map1 = new HashMap<String, Object>();
-        map1.put("Source", "通宝小秘书");
-        map1.put("Text", "[货主取消订单啦]\n您在2016-03-22 11:02am接的订单12344321，货主已取消订单。");
-        map1.put("Time", "2016—3-22 2:30pm");
-        map1.put("IsRead", true);
-
-        Map<String, Object> map2 = new HashMap<String, Object>();
-        map2.put("Source", "通宝账单");
-        map2.put("Text", "[运费到账啦]\n您在2016-03-20 09:42am接的订单9876678，运费已经到账。");
-        map2.put("Time", "2016—3-22 2:30pm");
-        map2.put("IsRead", false);
-
-        Map<String, Object> map3 = new HashMap<String, Object>();
-        map3.put("Source", "通宝小秘书");
-        map3.put("Text", "[货主取消订单啦]\n您在2016-03-12 10:44am接的订单5678987，货主已取消订单。");
-        map3.put("Time", "2016—3-12 2:30pm");
-        map3.put("IsRead", false);
-
-        Map<String, Object> map4 = new HashMap<String, Object>();
-        map4.put("Source", "通宝账单");
-        map4.put("Text", "[充值成功]\n您在2016-02-22 8:32am成功充值100元。");
-        map4.put("Time", "2016—2-22 1:30pm");
-        map4.put("IsRead", false);
-
-
-
-        Map<String, Object> map5 = new HashMap<String, Object>();
-        map5.put("Source", "通宝账单");
-        map5.put("Text", "[运费到账啦]\n您在2016-02-20 8:32am接的订单5656454，运费已经到账。");
-        map5.put("Time", "2016—2-22 2:30pm");
-        map5.put("IsRead", false);
-
-        Map<String, Object> map6 = new HashMap<String, Object>();
-        map6.put("Source", "通宝账单");
-        map6.put("Text", "[提现成功]\n您在2016-02-15 8:32am成功提现1000元。");
-        map6.put("Time", "2016—2-15 1:30pm");
-        map6.put("IsRead", false);
-
-
-        data.add(map1);
-        data.add(map2);
-        data.add(map3);
-        data.add(map4);
-        data.add(map5);
-        data.add(map6);
-
-        final MessageListAdapter myAdapter = new MessageListAdapter(this, data);
-        messageList.setAdapter(myAdapter);
         messageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -117,17 +82,18 @@ public class MessageActivity extends Activity {
                     HashMap<String, Object> map = (HashMap<String, Object>) parent.getItemAtPosition(position);
                     boolean is_read = (boolean) map.get("IsRead");
                     if (is_read == false) {
+                        //另起线程上传到数据库，本地直接变化
                         data.get(position).put("IsRead", true);
-                        myAdapter.notifyDataSetChanged();
+                        adapter.notifyDataSetChanged();
                     }
-                    String messageSource=(String)data.get(position).get("Source");
-                    String text=(String)data.get(position).get("Text");
-                    String time=(String) data.get(position).get("Time");
-                    Intent intent=new Intent(MessageActivity.this,MessageContentActivity.class);
-                    Bundle bundle=new Bundle();
-                    bundle.putString("ContentSource",messageSource);
-                    bundle.putString("ContentText",text);
-                    bundle.putString("ContentTime",time);
+                    String messageSource = (String) data.get(position).get("Source");
+                    String text = (String) data.get(position).get("Text");
+                    String time = (String) data.get(position).get("Time");
+                    Intent intent = new Intent(MessageActivity.this, MessageContentActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("ContentSource", messageSource);
+                    bundle.putString("ContentText", text);
+                    bundle.putString("ContentTime", time);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
@@ -137,10 +103,10 @@ public class MessageActivity extends Activity {
         class OnLongClick implements AdapterView.OnItemLongClickListener {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (!longClickState) {
-                    myAdapter.setClickState(true);
+                    adapter.setClickState(true);
                     selectedId.clear();
                     deleteLayout.setVisibility(View.VISIBLE);
-                    messageList.setAdapter(myAdapter);
+                    messageList.setAdapter(adapter);
                     return true;
                 } else {
                     return false;
@@ -152,7 +118,7 @@ public class MessageActivity extends Activity {
         //确认删除按钮的监听事件
         okButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
-                selectedId = myAdapter.getSelectedId();
+                selectedId = adapter.getSelectedId();
                 if (selectedId.size() == 0) {
                     return;
                 }
@@ -173,19 +139,36 @@ public class MessageActivity extends Activity {
                         dataIterator.remove();
                     }
                 }
-                myAdapter.setClickState(false);
-                myAdapter.notifyDataSetChanged();
+                adapter.setClickState(false);
+                adapter.notifyDataSetChanged();
                 deleteLayout.setVisibility(View.GONE);
             }
         });
         //取消按钮的监听事件
         cancelButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
-                myAdapter.setClickState(false);
-                messageList.setAdapter(myAdapter);
+                adapter.setClickState(false);
+                messageList.setAdapter(adapter);
                 deleteLayout.setVisibility(View.GONE);
             }
         });
+    }
+
+    private List<Map<String, Object>> getData(List<MyMessage> list) {
+        List<Map<String, Object>> data = new ArrayList<>();
+        for (MyMessage myMessage : list) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("Source", myMessage.covertTypeToString(myMessage.getType()));
+            map.put("Text", myMessage.getContent());
+            map.put("Time", myMessage.getTime());
+            map.put("IsRead", myMessage.getHasRead());
+            data.add(map);
+        }
+        return data;
+    }
+
+    private MessageListAdapter getAdapter(List<Map<String, Object>> data) {
+        return new MessageListAdapter(MessageActivity.this, data);
     }
 
 }

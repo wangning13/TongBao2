@@ -46,7 +46,8 @@ public class ChangeInfoActivity extends Activity {
                 Toast.makeText(ChangeInfoActivity.this, "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
                 return;
             } else if (msg.what == 1) {
-                iconImageView.setImageBitmap((Bitmap) msg.obj);
+                iconBitmap = (Bitmap) msg.obj;
+                iconImageView.setImageBitmap(iconBitmap);
             }
         }
     };
@@ -154,11 +155,9 @@ public class ChangeInfoActivity extends Activity {
                 if (modifyIcon.getResult() == -1 && MyAppContext.getIsConnected() == false) {
                     Toast.makeText(ChangeInfoActivity.this, "网络不可用，请检查网络设置", Toast.LENGTH_SHORT).show();
                 }
-
                 if (iconBitmap == null) {
                     return;
                 }
-
                 MyAppContext myAppContext = (MyAppContext) getApplicationContext();
                 myAppContext.setIconUrl(urlToPush);
                 Intent intent = new Intent(ChangeInfoActivity.this, MainActivity.class);
