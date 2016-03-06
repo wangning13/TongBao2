@@ -34,6 +34,7 @@ public class AlbumDetailActivity extends Activity {
     private TextView albumDetailOKTextView;
     private String iconUrl = "";
     private ImageView returnImageView;
+    private String sourceActivity;
 
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
@@ -60,7 +61,17 @@ public class AlbumDetailActivity extends Activity {
         albumDetailOKTextView = (TextView) findViewById(R.id.albumdetail_ok);
         returnImageView = (ImageView) findViewById(R.id.iv_albumdetail_leftarrow);
 
-        Bundle bundle = this.getIntent().getExtras();
+
+
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        Bundle bundle1 = getIntent().getBundleExtra("Activity");
+        sourceActivity = bundle1.getString("SourceActivity");
+
+        Bundle bundle = this.getIntent().getBundleExtra("bundle");
         //相册名
         String folderName = bundle.getString("foldername");
         albumNameTextView.setText(folderName);
@@ -94,7 +105,7 @@ public class AlbumDetailActivity extends Activity {
         });
 
 
-        //选择头像完成事件
+        //选择图片完成事件
         albumDetailOKTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,25 +118,31 @@ public class AlbumDetailActivity extends Activity {
 
                 final List<String> list = new ArrayList<String>();
                 HttpImage httpImage = new HttpImage(AlbumDetailActivity.this, clickLocalFile.getOriginalFile());
-                httpImage.setPostOver(new HttpImage.PostOver() {
-                    @Override
-                    public void over(String result) {
-                        if (result.equals("wrong")) {
-                            Toast.makeText(AlbumDetailActivity.this, "上传失败，请重新上传", Toast.LENGTH_SHORT).show();
-                        } else if (result.equals("netwrong")) {
-                            Toast.makeText(AlbumDetailActivity.this, "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
-                        } else {
+                if (sourceActivity.equals("ChangeInfoActivity")) {
+                    httpImage.setPostOver(new HttpImage.PostOver() {
+                        //回调实现，异步任务完成后执行的动作
+                        @Override
+                        public void over(String result) {
+                            if (result.equals("wrong")) {
+                                Toast.makeText(AlbumDetailActivity.this, "上传失败，请重新上传", Toast.LENGTH_SHORT).show();
+                            } else if (result.equals("netwrong")) {
+                                Toast.makeText(AlbumDetailActivity.this, "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
+                            } else {
 //                    Log.i("URL", result);
-                            setIconUrl(result);
+                                setIconUrl(result);
+                            }
+                            albumDetailOKTextView.setClickable(true);
+                            Intent intent = new Intent(AlbumDetailActivity.this, ChangeInfoActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("iconurl", getIconUrl());
+                            intent.putExtra("AlbumDetailActivityReturn", bundle);
+                            startActivity(intent);
                         }
-                        albumDetailOKTextView.setClickable(true);
-                        Intent intent = new Intent(AlbumDetailActivity.this, ChangeInfoActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("iconurl", getIconUrl());
-                        intent.putExtra("AlbumDetailActivityReturn", bundle);
-                        startActivity(intent);
-                    }
-                });
+                    });
+                } else if (sourceActivity.equals("CertificationAcitivity")) {
+
+                }
+
                 httpImage.execute();
 
 
@@ -139,7 +156,6 @@ public class AlbumDetailActivity extends Activity {
                 startActivity(intent);
             }
         });
-
 
     }
 

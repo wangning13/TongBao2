@@ -80,6 +80,9 @@ public class ChangeInfoActivity extends Activity {
         changelayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(ChangeInfoActivity.this, SelectAlbumActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("SourceActivity", "ChangeInfoActivity");
+                intent.putExtra("Activity", bundle);
                 startActivity(intent);
             }
         });

@@ -26,6 +26,7 @@ import nju.tb.Commen.LocalImageHelper;
 public class SelectAlbumActivity extends Activity {
     private ListView albumlist;
     private TextView toolbar_text;
+    private String sourceActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class SelectAlbumActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_driver_selectalbum);
 
-        toolbar_text=(TextView) findViewById(R.id.toolbar_title);
+        toolbar_text = (TextView) findViewById(R.id.toolbar_title);
         toolbar_text.setText("照片");
 
         ImageButton titleBackBtn = (ImageButton) findViewById(R.id.head_TitleBackBtn);
@@ -45,9 +46,18 @@ public class SelectAlbumActivity extends Activity {
             }
         });
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         while (!LocalImageHelper.isInited) {
 
         }
+        Bundle bundle = getIntent().getBundleExtra("Activity");
+        sourceActivity = bundle.getString("SourceActivity");
+
         albumlist = (ListView) findViewById(R.id.lv_selectalbum_albumlist);
         final Map<String, List<LocalImageHelper.LocalFile>> data = LocalImageHelper.getFolders();
         if (data == null) {
@@ -65,15 +75,13 @@ public class SelectAlbumActivity extends Activity {
                 myList.setList(data.get(folderName));
                 bundle.putSerializable("albumdetail", myList);
                 bundle.putString("foldername", folderName);
-                intent.putExtras(bundle);
+                intent.putExtra("bundle", bundle);
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("SourceActivity", sourceActivity);
+                intent.putExtra("Activity", bundle1);
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     static class ListSerializable implements Serializable {

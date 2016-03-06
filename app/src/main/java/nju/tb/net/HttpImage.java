@@ -71,7 +71,6 @@ public class HttpImage extends AsyncTask<String, Integer, String> {
                 new ProgressMultipartEntity.ProgressListener() {
                     @Override
                     public void transferred(long num) {
-                        Log.i("222222222222222",num+"");
                         publishProgress((int) ((num / (float) totalSize) * 100));
                     }
                 }
@@ -127,7 +126,6 @@ public class HttpImage extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onProgressUpdate(Integer... progress) {
-        Log.i("1111111",(int) (progress[0])+"");
         pd.setProgress((int) (progress[0]));
     }
 
