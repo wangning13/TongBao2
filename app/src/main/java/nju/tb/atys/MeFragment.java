@@ -23,6 +23,7 @@ import nju.tb.R;
 import nju.tb.atys.ChangeInfoActivity;
 import nju.tb.atys.HelpcenterActivity;
 import nju.tb.atys.UseWalletActivity;
+import nju.tb.net.GetBitmap;
 import nju.tb.net.HttpImage;
 
 /**
@@ -138,8 +139,7 @@ public class MeFragment extends Fragment {
 
         @Override
         public void run() {
-            HttpImage httpImage = new HttpImage(context);
-            bitmap = httpImage.getHttpBitmap(threadurl);
+            bitmap = GetBitmap.getHttpBitmap(threadurl);
             while (bitmap == null) {
                 if (!MyAppContext.getIsConnected()) {
                     Message message = new Message();

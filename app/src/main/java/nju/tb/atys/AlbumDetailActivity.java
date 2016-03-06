@@ -19,6 +19,7 @@ import nju.tb.Commen.MyAppContext;
 import nju.tb.MyUI.MyGridView;
 import nju.tb.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nju.tb.Adapters.AlbumDetailAdatper;
@@ -31,7 +32,7 @@ public class AlbumDetailActivity extends Activity {
     private MyGridView albumDetailGridView;
     private TextView albumNameTextView;
     private TextView albumDetailOKTextView;
-    private String iconUrl="";
+    private String iconUrl = "";
     private ImageView returnImageView;
 
     public void setIconUrl(String iconUrl) {
@@ -92,29 +93,6 @@ public class AlbumDetailActivity extends Activity {
             }
         });
 
-        class CommitPicThread implements Runnable {
-            private HttpImage postImage;
-            private LocalFile clickLocalFile;
-            private String result;
-            public boolean runover = false;
-
-            public CommitPicThread(HttpImage postImage, LocalFile clickLocalFile) {
-                this.postImage = postImage;
-                this.clickLocalFile = clickLocalFile;
-            }
-
-            @Override
-            public void run() {
-                albumDetailOKTextView.setClickable(false);
-                result = postImage.doUpload(clickLocalFile.getOriginalFile());
-                runover = true;
-            }
-
-            public String getResult() {
-                return result;
-            }
-
-        }
 
         //选择头像完成事件
         albumDetailOKTextView.setOnClickListener(new View.OnClickListener() {
@@ -126,27 +104,31 @@ public class AlbumDetailActivity extends Activity {
                     return;
                 }
                 LocalFile clickLocalFile = adapter.getClickLocalFile();
-                HttpImage httpImage = new HttpImage(AlbumDetailActivity.this);
-                CommitPicThread commitPicThread = new CommitPicThread(httpImage, clickLocalFile);
-                new Thread(commitPicThread).start();
-                while (!commitPicThread.runover) {
 
-                }
-                String result = commitPicThread.getResult();
-                if (result.equals("wrong")) {
-                    Toast.makeText(AlbumDetailActivity.this, "上传失败，请重新上传", Toast.LENGTH_SHORT).show();
-                } else if (result.equals("netwrong")) {
-                    Toast.makeText(AlbumDetailActivity.this, "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
-                } else {
+                final List<String> list = new ArrayList<String>();
+                HttpImage httpImage = new HttpImage(AlbumDetailActivity.this, clickLocalFile.getOriginalFile());
+                httpImage.setPostOver(new HttpImage.PostOver() {
+                    @Override
+                    public void over(String result) {
+                        if (result.equals("wrong")) {
+                            Toast.makeText(AlbumDetailActivity.this, "上传失败，请重新上传", Toast.LENGTH_SHORT).show();
+                        } else if (result.equals("netwrong")) {
+                            Toast.makeText(AlbumDetailActivity.this, "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
+                        } else {
 //                    Log.i("URL", result);
-                    setIconUrl(result);
-                }
-                albumDetailOKTextView.setClickable(true);
-                Intent intent = new Intent(AlbumDetailActivity.this, ChangeInfoActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("iconurl", getIconUrl());
-                intent.putExtra("AlbumDetailActivityReturn", bundle);
-                startActivity(intent);
+                            setIconUrl(result);
+                        }
+                        albumDetailOKTextView.setClickable(true);
+                        Intent intent = new Intent(AlbumDetailActivity.this, ChangeInfoActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("iconurl", getIconUrl());
+                        intent.putExtra("AlbumDetailActivityReturn", bundle);
+                        startActivity(intent);
+                    }
+                });
+                httpImage.execute();
+
+
             }
         });
 
