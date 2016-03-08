@@ -119,12 +119,16 @@ public class Order {
     private String toContactName;
     private String toContactPhone;
     private String loadTime;
+    private String state;
 
 
+    public String getState() {
+        return state;
+    }
 
-
-
-
+    public void setState(String state) {
+        this.state = state;
+    }
 
     private double weight;
     private double distance;

@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,10 +21,12 @@ import nju.tb.entity.Order;
 public class TaskListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<Map<String, Order>> list;
+    private List<Integer> selectedId;
 
     public TaskListAdapter(Context context,List<Map<String, Order>> list) {
         this.mInflater = LayoutInflater.from(context);
         this.list=list;
+        selectedId = new ArrayList<Integer>();
     }
 
     public int getCount() {
@@ -38,12 +41,27 @@ public class TaskListAdapter extends BaseAdapter {
         return 0;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         TextView info = null;
-        Button viewBtn=null;
+        TextView time = null;
+        TextView faddress = null;
+        TextView taddress = null;
         convertView = mInflater.inflate(R.layout.taskorderitem, null);
+        Order order=list.get(position).get("info");
         info = (TextView)convertView.findViewById(R.id.info);
-        info.setText(list.get(position).get("info").toString());
+        info.setText(order.getFromContactName());
+        time = (TextView)convertView.findViewById(R.id.time);
+        String pretime=order.getTime();
+        String ordertime=pretime.substring(0,16);
+        time.setText(ordertime);
+        faddress = (TextView)convertView.findViewById(R.id.faddress);
+        faddress.setText(order.getAddressFrom());
+        taddress = (TextView)convertView.findViewById(R.id.taddress);
+        taddress.setText(order.getAddressTo());
+
         return convertView;
     }
+
+
+
 }

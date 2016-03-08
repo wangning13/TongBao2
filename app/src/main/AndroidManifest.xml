@@ -73,6 +73,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
+        <activity android:name=".atys.TaskOrderContentActivity"/>
         <activity android:name=".atys.OldOrderContentActivity"/>
         <activity android:name=".atys.MessageContentActivity"/>
         <activity android:name=".atys.CarsManagementActivity"/>

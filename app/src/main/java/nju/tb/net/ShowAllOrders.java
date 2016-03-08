@@ -24,13 +24,14 @@ import nju.tb.entity.Order;
  * Created by Administrator on 2016/3/5.
  */
 public class ShowAllOrders extends Thread implements Parse.ParseHttp {
-    private final String SHOW_MYORDERLIST = "http://120.27.112.9:8080/tongbao/driver/auth/showAllOrders";
+    private final String SHOW_ALLORDERS= "http://120.27.112.9:8080/tongbao/driver/auth/showAllOrders";
     private static int result = -1;
     private Context context;
     private String token;
     private String fromAddress;
     private String toAddress;
-    private ArrayList<Order> allorders=new ArrayList<Order>();
+    private static ArrayList<Order> allorders=new ArrayList<Order>();
+    private boolean runover=false;
 
     public ShowAllOrders(Context context, String token,  String fromAddress,String toAddress) {
         this.context = context;
@@ -40,11 +41,16 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
         result = -1;
     }
 
+    public boolean isRunover(){
+        return this.runover;
+    }
+
+
     public static int getResult() {
         return result;
     }
 
-    public ArrayList<Order> getAllOrders(){
+    public static ArrayList<Order> getAllorders(){
         return allorders;
     }
 
@@ -57,8 +63,13 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 stringBuffer.append(line);
             }
+            Log.i("抢单", stringBuffer.toString());
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
+            if(result==0){
+                runover=true;
+                return;
+            }
             JSONArray jsonArray = jsonObject.getJSONArray("data");
 
             for(int i=0;i<jsonArray.length();i++) {
@@ -89,6 +100,7 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
                 allorders.add(order);
             }
             Log.i("allprders", allorders.size() + "," + result);
+            runover=true;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -103,7 +115,7 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
         params.add(new BasicNameValuePair("token", token));
         params.add(new BasicNameValuePair("fromAddress", fromAddress));
         params.add(new BasicNameValuePair("toAddress", toAddress));
-        HttpResponse httpResponse = request.sendHttpPostRequest(SHOW_MYORDERLIST, params);
+        HttpResponse httpResponse = request.sendHttpPostRequest(SHOW_ALLORDERS, params);
         while (httpResponse == null) {
             if (!MyAppContext.getIsConnected()) {
                 return;
