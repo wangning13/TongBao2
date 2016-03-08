@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -20,27 +20,30 @@
 
             <ImageButton
                 android:id="@+id/head_TitleBackBtn"
-                android:gravity="center_vertical"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:gravity="center_vertical"
                 android:src="@drawable/arrow"
                 />
+
             <TextView
+                android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
                 android:layout_gravity="center"
-                android:id="@+id/toolbar_title" />
+                android:textSize="25sp"/>
+
             <TextView
                 android:id="@+id/askforcheck"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginRight="10dp"
                 android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/alubmdetail_ok_selector"
                 android:gravity="center"
                 android:text="提交"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp" />
+                android:textSize="20sp"/>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -60,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/linearlayout_shape"
-                android:orientation="horizontal" />
+                android:orientation="horizontal"/>
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -84,20 +87,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
-                            android:paddingBottom="20dp"
+                            android:paddingBottom="17dp"
                             android:paddingLeft="10dp"
-                            android:paddingTop="20dp"
+                            android:paddingTop="17dp"
                             android:text="证件审核状态："
-                            android:textSize="20sp" />
+                            android:textSize="20sp"/>
 
                         <TextView
                             android:id="@+id/certification_cheliang_state"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
-                            android:paddingBottom="20dp"
-                            android:paddingTop="20dp"
-                            android:textSize="20sp" />
+                            android:paddingBottom="17dp"
+                            android:paddingTop="17dp"
+                            android:textSize="20sp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -110,23 +113,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
-                            android:paddingBottom="20dp"
+                            android:paddingBottom="17dp"
                             android:paddingLeft="10dp"
-                            android:paddingTop="20dp"
+                            android:paddingTop="17dp"
                             android:text="车牌号："
-                            android:textSize="20sp" />
+                            android:textSize="20sp"/>
 
-                        <EditText
+                        <TextView
                             android:id="@+id/certification_chepaihao"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@null"
+                            android:gravity="center_vertical|left"
                             android:paddingBottom="5dp"
                             android:paddingTop="5dp"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"/>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/xingshizhenglinearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/linearlayout_shape"
@@ -136,15 +140,35 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
-                            android:paddingBottom="20dp"
+                            android:paddingBottom="17dp"
                             android:paddingLeft="10dp"
-                            android:paddingTop="20dp"
+                            android:paddingTop="17dp"
                             android:text="行驶证："
-                            android:textSize="20sp" />
-                        <!-- 此处imageview                            -->
+                            android:textSize="20sp"/>
+
+                        <TextView
+                            android:id="@+id/xingshizheng"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical|right"
+                            android:paddingBottom="17dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="17dp"
+                            android:text="上传完成"
+                            android:textSize="20sp"
+                            android:visibility="invisible"/>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:padding="16dp"
+                            android:src="@drawable/arrow_right"/>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/chetouzhaolinearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/linearlayout_shape"
@@ -154,12 +178,31 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
-                            android:paddingBottom="20dp"
+                            android:paddingBottom="17dp"
                             android:paddingLeft="10dp"
-                            android:paddingTop="20dp"
+                            android:paddingTop="17dp"
                             android:text="车头照："
-                            android:textSize="20sp" />
-                        <!--此处imageview                -->
+                            android:textSize="20sp"/>
+
+                        <TextView
+                            android:id="@+id/chetouzhao"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical|right"
+                            android:paddingBottom="17dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="17dp"
+                            android:text="上传完成"
+                            android:textSize="20sp"
+                            android:visibility="invisible"/>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:padding="16dp"
+                            android:src="@drawable/arrow_right"/>
                     </LinearLayout>
                 </LinearLayout>
                 <!-- 实名认证____________________________________________________________ -->
@@ -179,20 +222,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
-                            android:paddingBottom="20dp"
+                            android:paddingBottom="17dp"
                             android:paddingLeft="10dp"
-                            android:paddingTop="20dp"
+                            android:paddingTop="17dp"
                             android:text="证件审核状态："
-                            android:textSize="20sp" />
+                            android:textSize="20sp"/>
 
                         <TextView
                             android:id="@+id/certification_shiming_state"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
-                            android:paddingBottom="20dp"
-                            android:paddingTop="20dp"
-                            android:textSize="20sp" />
+                            android:paddingBottom="17dp"
+                            android:paddingTop="17dp"
+                            android:textSize="20sp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -205,20 +248,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
-                            android:paddingBottom="20dp"
+                            android:paddingBottom="17dp"
                             android:paddingLeft="10dp"
-                            android:paddingTop="20dp"
+                            android:paddingTop="17dp"
                             android:text="真实姓名："
-                            android:textSize="20sp" />
+                            android:textSize="20sp"/>
 
                         <EditText
                             android:id="@+id/certification_zhenshixingming"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@null"
-                            android:paddingBottom="20dp"
-                            android:paddingTop="20dp"
-                            android:textSize="20sp" />
+                            android:paddingBottom="17dp"
+                            android:paddingTop="17dp"
+                            android:textSize="20sp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -231,23 +274,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
-                            android:paddingBottom="20dp"
+                            android:paddingBottom="17dp"
                             android:paddingLeft="10dp"
-                            android:paddingTop="20dp"
+                            android:paddingTop="17dp"
                             android:text="驾驶证号："
-                            android:textSize="20sp" />
+                            android:textSize="20sp"/>
 
                         <EditText
                             android:id="@+id/certification_jiashizhenghao"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@null"
-                            android:paddingBottom="20dp"
-                            android:paddingTop="20dp"
-                            android:textSize="20sp" />
+                            android:paddingBottom="17dp"
+                            android:paddingTop="17dp"
+                            android:textSize="20sp"/>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/jiashizhenglinearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/linearlayout_shape"
@@ -257,12 +301,69 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
-                            android:paddingBottom="20dp"
+                            android:paddingBottom="17dp"
                             android:paddingLeft="10dp"
-                            android:paddingTop="20dp"
-                            android:text="驾驶证："
-                            android:textSize="20sp" />
-                        <!--此处imageview                -->
+                            android:paddingTop="17dp"
+                            android:text="驾驶证照片："
+                            android:textSize="20sp"/>
+
+                        <TextView
+                            android:id="@+id/jiashizheng"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical|right"
+                            android:paddingBottom="17dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="17dp"
+                            android:text="上传完成"
+                            android:textSize="20sp"
+                            android:visibility="invisible"/>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:padding="16dp"
+                            android:src="@drawable/arrow_right"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/jiashirenlinearlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/linearlayout_shape"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|left"
+                            android:paddingBottom="17dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="17dp"
+                            android:text="驾驶人照片："
+                            android:textSize="20sp"/>
+
+                        <TextView
+                            android:id="@+id/jiashiren"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical|right"
+                            android:paddingBottom="17dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="17dp"
+                            android:text="上传完成"
+                            android:textSize="20sp"
+                            android:visibility="invisible"/>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:padding="16dp"
+                            android:src="@drawable/arrow_right"/>
                     </LinearLayout>
 
                 </LinearLayout>

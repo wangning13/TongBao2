@@ -3,6 +3,7 @@ package nju.tb.atys;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,19 +27,26 @@ import nju.tb.Commen.LocalImageHelper;
 import nju.tb.atys.SelectAlbumActivity;
 import nju.tb.net.HttpImage;
 import nju.tb.net.ModifyIcon;
+import nju.tb.net.ModifyNickName;
+import nju.tb.net.ModifyPassword;
 
 public class ChangeInfoActivity extends Activity {
     private LocalImageHelper localImageHelper;
     private LinearLayout changelayout;
     private ImageView iconImageView;
     private Bitmap iconBitmap;
-    private String nickName;
+    private static String nickName;
     private TextView okTextView;
     private EditText nickNameEditText;
-    private EditText oldPassword;
-    private EditText newPassword;
+    private EditText oldPasswordEditText;
+    private EditText newPasswordEditText;
     private String urlToPush;
     private BitmapHelper bitmapHelper;
+    private static String path;
+
+    private static String nickNameEditTextSave;
+    private static String oldPasswordEditTextSave;
+    private static String newPasswordEditTextSave;
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -57,7 +65,6 @@ public class ChangeInfoActivity extends Activity {
         super.onCreate(savedInstanceBundle);
         setContentView(R.layout.view_driver_changeinfo);
 
-
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 123);
         localImageHelper = new LocalImageHelper(this);
         if (!localImageHelper.isInited) {
@@ -73,8 +80,8 @@ public class ChangeInfoActivity extends Activity {
         changelayout = (LinearLayout) findViewById(R.id.change_layout);
         iconImageView = (ImageView) findViewById(R.id.iv_changeinfo_displaypic);
         nickNameEditText = (EditText) findViewById(R.id.et_change_name);
-        oldPassword = (EditText) findViewById(R.id.et_oldpassword);
-        newPassword = (EditText) findViewById(R.id.et_newpassword);
+        oldPasswordEditText = (EditText) findViewById(R.id.et_oldpassword);
+        newPasswordEditText = (EditText) findViewById(R.id.et_newpassword);
         okTextView = (TextView) findViewById(R.id.tv_changeinfo_ok);
 
         changelayout.setOnClickListener(new View.OnClickListener() {
@@ -97,11 +104,28 @@ public class ChangeInfoActivity extends Activity {
         Bundle bundle = getIntent().getBundleExtra("MeFragment");
         if (bundle != null) {
             if (bundle.keySet().contains("path")) {
-                String path = bundle.getString("path");
+                path = bundle.getString("path");
                 iconBitmap = bitmapHelper.convertToBitmap(path);
             }
 
             nickName = (String) bundle.get("nickName");
+            if (!nickName.equals("null")) {
+                nickNameEditText.setHint(nickName);
+                nickNameEditTextSave = nickName;
+            }
+
+            nickNameEditTextSave = "";
+            oldPasswordEditTextSave = "";
+            newPasswordEditTextSave = "";
+        }
+        nickNameEditText.setText(nickNameEditTextSave);
+        oldPasswordEditText.setText(oldPasswordEditTextSave);
+        newPasswordEditText.setText(newPasswordEditTextSave);
+
+        Bundle bundle2 = getIntent().getBundleExtra("SelectAlbumActivity");
+        if (bundle2 != null) {
+            iconBitmap = bitmapHelper.convertToBitmap(path);
+
         }
         Bundle bundle1 = getIntent().getBundleExtra("AlbumDetailActivityReturn");
         if (bundle1 != null) {
@@ -109,10 +133,6 @@ public class ChangeInfoActivity extends Activity {
             if (!urlToPush.equals("")) {
                 MeFragment.GetHttpImageThread t = new MeFragment().new GetHttpImageThread(urlToPush, this, handler);
                 new Thread(t).start();
-//                while (!t.runover) {
-//
-//                }
-//                iconBitmap = t.getBitmap();
             }
             if (iconBitmap == null) {
                 return;
@@ -134,11 +154,6 @@ public class ChangeInfoActivity extends Activity {
 
         } else {
             iconImageView.setImageBitmap(iconBitmap);
-        }
-        if (nickName == "") {
-
-        } else {
-            nickNameEditText.setText(nickName);
         }
 
         final String USERTOKEN = ((MyAppContext) getApplicationContext()).getToken();
@@ -166,11 +181,45 @@ public class ChangeInfoActivity extends Activity {
                 Intent intent = new Intent(ChangeInfoActivity.this, MainActivity.class);
                 Bundle bundle = new Bundle();
                 String changeInfoBitmapPath = bitmapHelper.saveBitmapToSDcard(iconBitmap, urlToPush);
-//                bundle.putParcelable("ChangeInfoActivityBitmap", iconBitmap);
                 bundle.putString("changeInfoBitmap", changeInfoBitmapPath);
                 bundle.putInt("TargetFragment", 2);
                 intent.putExtra("ChangeInfoAcitivity", bundle);
-                startActivity(intent);
+//                startActivity(intent);
+                String editNickName = nickNameEditText.getText().toString();
+                boolean nickNameRunning = false;
+                if (!editNickName.equals(nickName) && !editNickName.equals("")) {
+                    new ModifyNickName(ChangeInfoActivity.this, USERTOKEN, editNickName).start();
+                    nickNameRunning = true;
+                }
+                String op = oldPasswordEditText.getText().toString();
+                int oplength = oldPasswordEditText.getText().length();
+                String np = newPasswordEditText.getText().toString();
+                int nplength = newPasswordEditText.getText().length();
+                boolean isModifyPasswordRunning = false;
+                if (oplength >= 8 && oplength <= 255 && nplength >= 8 && nplength <= 255) {
+                    ModifyPassword m = new ModifyPassword(ChangeInfoActivity.this, USERTOKEN, op, np, nickNameRunning);
+                    m.start();
+                    while (m.getResult() == -1) {
+
+                    }
+                    if (m.getResult() == 0) {
+                        Toast.makeText(ChangeInfoActivity.this, "密码修改失败", Toast.LENGTH_SHORT).show();
+                    }
+                    if (m.getResult() == 1) {
+                        isModifyPasswordRunning = true;
+                    }
+
+                }
+                if (isModifyPasswordRunning) {
+                    MyAppContext.setLogIn(false);
+                    SharedPreferences loginSettings = getSharedPreferences("loginSettings", 0);
+                    loginSettings.edit().putString("password", "").commit();
+                    Intent reLoginIntent = new Intent(ChangeInfoActivity.this, LoginActivity.class);
+                    startActivity(reLoginIntent);
+                } else {
+                    startActivity(intent);
+                }
+
             }
 
 
@@ -178,5 +227,17 @@ public class ChangeInfoActivity extends Activity {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        nickNameEditTextSave = nickNameEditText.getText().toString();
+        oldPasswordEditTextSave = oldPasswordEditText.getText().toString();
+        newPasswordEditTextSave = newPasswordEditText.getText().toString();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
 
 }

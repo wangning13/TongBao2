@@ -43,7 +43,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="60dp"
                     android:gravity="bottom"
-                    android:text="丁丁枳枳"
                     android:textColor="#1F6EF2"
                     android:textSize="20sp"
                     android:textStyle="bold">
@@ -54,7 +53,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="60dp"
                     android:gravity="top"
-                    android:text="电话：18602514017"
+                    android:layout_marginTop="10dp"
                     android:textColor="#1F6EF2"
                     android:textSize="15sp">
                 </TextView>

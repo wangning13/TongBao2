@@ -107,9 +107,11 @@ public class CarsManagementActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int truckId = Integer.parseInt(truckList.get(position).split(" ")[0]);
+                String truckNum = truckList.get(position).split(" ")[1];
                 Intent intent = new Intent(CarsManagementActivity.this, CarInfoActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("truckId", truckId);
+                bundle.putString("truckNum", truckNum);
                 intent.putExtra("truckInfo", bundle);
                 startActivity(intent);
             }

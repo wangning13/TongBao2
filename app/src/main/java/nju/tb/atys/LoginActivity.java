@@ -66,16 +66,19 @@ public class LoginActivity extends Activity {
 
         if (settings != null && !phone1.equals("") && !password1.equals("")) {
             autoLogin = true;
-//            while(MyAppContext.isNetServiceStarted==false){
-//
-//            }
             phoneNumberEditText.setText(phone1);
             passwordEditText.setText(password1);
             loginButton.setBackgroundResource(R.color.colorGreen);
             loginButton.setClickable(true);
 
+        }else{
+            autoLogin=false;
         }
 
+
+        if (phoneNumberEditText.getText().length() == 11) {
+            phoneNumberOk = true;
+        }
 
         new Thread(new Runnable() {
             @Override
@@ -120,6 +123,7 @@ public class LoginActivity extends Activity {
         if (loadingReturn != null && loadingReturn.getString("state").equals("fail")) {
             passwordEditText.setText("");
             phoneNumberEditText.setText(loadingReturn.getString("phone"));
+            autoLogin=false;
             Toast.makeText(this, "账号或密码错误，请重新登录", Toast.LENGTH_SHORT).show();
         }
 
@@ -185,7 +189,6 @@ public class LoginActivity extends Activity {
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
         }
 
         @Override

@@ -26,6 +26,7 @@ public class CarInfoActivity extends Activity {
             phoneNumTextView, stateTextView;
 
     private int verify_state;
+    private String truckNum;
 
     private Handler handler = new Handler() {
         @Override
@@ -44,12 +45,16 @@ public class CarInfoActivity extends Activity {
                 linearLayout = (LinearLayout) findViewById(R.id.carinfo_shenhezhangtai);
                 stateImageView = (ImageView) findViewById(R.id.verify_state);
 
-                if (verify_state==3||verify_state==0) {
+                if (verify_state == 3 || verify_state == 0) {
                     stateImageView.setVisibility(View.VISIBLE);
                     linearLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(CarInfoActivity.this, CertificationActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("truckNum", truckNum);
+                            bundle.putString("state", stateTextView.getText().toString());
+                            intent.putExtra("CarInfoActivity", bundle);
                             startActivity(intent);
                         }
                     });
@@ -59,40 +64,40 @@ public class CarInfoActivity extends Activity {
             }
         }
     };
-                    @Override
-                    public void onCreate (Bundle savedInstanceState){
-                        super.onCreate(savedInstanceState);
-                        setContentView(R.layout.view_driver_personinfo);
-                        Bundle bundle = getIntent().getBundleExtra("truckInfo");
 
-                        MyAppContext myAppContext = (MyAppContext) getApplicationContext();
-                        new GetTruckDetail(this, myAppContext.getToken(), bundle.getInt("truckId"), handler).start();
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.view_driver_personinfo);
+        Bundle bundle = getIntent().getBundleExtra("truckInfo");
+        truckNum = bundle.getString("truckNum");
 
-                        //toolbar的标题
-                        //回退按钮
-                        toolbar_text = (TextView) findViewById(R.id.toolbar_title);
-                        toolbar_text.setText("车主信息");
+        MyAppContext myAppContext = (MyAppContext) getApplicationContext();
+        new GetTruckDetail(this, myAppContext.getToken(), bundle.getInt("truckId"), handler).start();
 
-                        //回退按钮
-                        ImageButton titleBackBtn = (ImageButton) findViewById(R.id.head_TitleBackBtn);
-                        titleBackBtn.setVisibility(View.VISIBLE);
-                        titleBackBtn.setOnClickListener(new View.OnClickListener() {
-                            public void onClick(View v) {
-                                CarInfoActivity.this.finish();
-                            }
-                        });
+        //toolbar的标题
+        //回退按钮
+        toolbar_text = (TextView) findViewById(R.id.toolbar_title);
+        toolbar_text.setText("车主信息");
 
-                        nameTextView = (TextView) findViewById(R.id.tv_info_xingming);
-                        typeTextView = (TextView) findViewById(R.id.tv_info_chexing);
-                        truckNumTextView = (TextView) findViewById(R.id.tv_info_chepaihao);
-                        capacityTextView = (TextView) findViewById(R.id.tv_info_zaizhong);
-                        lengthTextView = (TextView) findViewById(R.id.tv_info_chechang);
-                        phoneNumTextView = (TextView) findViewById(R.id.tv_info_dianhua);
-                        stateTextView = (TextView) findViewById(R.id.tv_info_shenhe);
-
-
-                    }
-
-
-
+        //回退按钮
+        ImageButton titleBackBtn = (ImageButton) findViewById(R.id.head_TitleBackBtn);
+        titleBackBtn.setVisibility(View.VISIBLE);
+        titleBackBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                CarInfoActivity.this.finish();
             }
+        });
+
+        nameTextView = (TextView) findViewById(R.id.tv_info_xingming);
+        typeTextView = (TextView) findViewById(R.id.tv_info_chexing);
+        truckNumTextView = (TextView) findViewById(R.id.tv_info_chepaihao);
+        capacityTextView = (TextView) findViewById(R.id.tv_info_zaizhong);
+        lengthTextView = (TextView) findViewById(R.id.tv_info_chechang);
+        phoneNumTextView = (TextView) findViewById(R.id.tv_info_dianhua);
+        stateTextView = (TextView) findViewById(R.id.tv_info_shenhe);
+
+
+    }
+
+}

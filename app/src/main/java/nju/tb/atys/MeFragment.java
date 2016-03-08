@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.conn.scheme.HostNameResolver;
@@ -26,11 +27,10 @@ import nju.tb.atys.UseWalletActivity;
 import nju.tb.net.GetBitmap;
 import nju.tb.net.HttpImage;
 
-/**
- * Created by Administrator on 2016/1/21.
- */
 public class MeFragment extends Fragment {
     private ImageView displayPicImageView;
+    private TextView nickNameTextView, phoneTextView;
+
     private Bitmap iconBitmap;
     private String nickName;
     private String url;
@@ -53,6 +53,8 @@ public class MeFragment extends Fragment {
         View view = inflater.inflate(R.layout.mefragment, container, false);
 
         displayPicImageView = (ImageView) view.findViewById(R.id.ImageView_add);
+        nickNameTextView = (TextView) view.findViewById(R.id.text_name);
+        phoneTextView = (TextView) view.findViewById(R.id.text_tel);
 
         view.findViewById(R.id.wallet_layout).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -64,10 +66,8 @@ public class MeFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), ChangeInfoActivity.class);
                 Bundle bundle = new Bundle();
-//                bundle.putParcelable("iconBitmap", iconBitmap);
                 bundle.putString("nickName", nickName);
                 if (iconBitmap != null) {
-                    Log.i("运行到这里", "");
                     BitmapHelper bitmapHelper = new BitmapHelper(getActivity());
                     MyAppContext myAppContext = (MyAppContext) getActivity().getApplicationContext();
                     String newPath = bitmapHelper.saveBitmapToSDcard(iconBitmap, myAppContext.getIconUrl());
@@ -84,7 +84,6 @@ public class MeFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
@@ -93,7 +92,6 @@ public class MeFragment extends Fragment {
         super.onResume();
         Fragment f = getFragmentManager().findFragmentByTag("update");
         if (f == null) {
-            //以后要进行替换 LOGIN
             MyAppContext myAppContext = (MyAppContext) getActivity().getApplicationContext();
             nickName = myAppContext.getNickName();
             url = myAppContext.getIconUrl();
@@ -102,25 +100,26 @@ public class MeFragment extends Fragment {
             } else {
                 GetHttpImageThread t = new GetHttpImageThread(url, getActivity(), handler);
                 new Thread(t).start();
-//                while (!t.runover) {
-//
-//                }
-//                iconBitmap = t.getBitmap();
-//                if (iconBitmap == null) {
-//                    return;
-//                }
             }
+            if (!nickName.equals("null")) {
+                nickNameTextView.setText(nickName);
+            }
+            MyAppContext myAppContext1 = MyAppContext.getMyAppContext();
+            phoneTextView.setText("电话:"+myAppContext1.getPhone());
         } else {
-            ////////////////////////////////////////////////////////////
             String updateBitmapPath = f.getArguments().getString("BitmapPathToUpdate");
             BitmapHelper bitmapHelper = new BitmapHelper(getActivity());
             iconBitmap = bitmapHelper.convertToBitmap(updateBitmapPath);
             displayPicImageView.setImageBitmap(iconBitmap);
-        }
-//        if (iconBitmap != null) {
-//displayPicImageView.setImageBitmap(iconBitmap);
-//        }
 
+            MyAppContext myAppContext = (MyAppContext) getActivity().getApplicationContext();
+            nickName = myAppContext.getNickName();
+            if (!nickName.equals("null")) {
+                nickNameTextView.setText(nickName);
+            }
+            MyAppContext myAppContext1 = MyAppContext.getMyAppContext();
+            phoneTextView.setText("电话:"+myAppContext1.getPhone());
+        }
 
     }
 

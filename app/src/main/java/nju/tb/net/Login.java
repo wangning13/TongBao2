@@ -52,6 +52,7 @@ public class Login extends Thread implements Parse.ParseHttp {
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
             if (result == 0) {
+               entity.consumeContent();
                 return;
             }
 
@@ -66,6 +67,7 @@ public class Login extends Thread implements Parse.ParseHttp {
             myAppContext.setPoint(data.getInt("point"));
             myAppContext.setMoney(data.getInt("money"));
             myAppContext.setToken(data.getString("token"));
+            entity.consumeContent();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

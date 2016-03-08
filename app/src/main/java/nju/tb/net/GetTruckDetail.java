@@ -67,6 +67,7 @@ public class GetTruckDetail extends Thread implements Parse.ParseHttp {
             result = jsonObject.getInt("result");
             if (result == 0) {
                 errorMsg = jsonObject.getString("errorMsg");
+                httpEntity.consumeContent();
                 return;
             }
             JSONObject data = jsonObject.getJSONObject("data");
@@ -76,11 +77,12 @@ public class GetTruckDetail extends Thread implements Parse.ParseHttp {
             truckDetail.setLength(data.getInt("length"));
             truckDetail.setCapacity(data.getInt("capacity"));
             truckDetail.setPhoneNum(data.getString("phoneNum"));
-            if(data.getString("realName").equals("null")){
+            if (data.getString("realName").equals("null")) {
                 truckDetail.setRealName("暂无");
-            }else{
+            } else {
                 truckDetail.setRealName(data.getString("realName"));
             }
+            httpEntity.consumeContent();
 
             Message message = handler.obtainMessage(0);
             message.obj = truckDetail;

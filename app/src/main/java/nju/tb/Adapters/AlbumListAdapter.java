@@ -92,6 +92,9 @@ public class AlbumListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        if(!imageLoader.isInited()){
+            imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+        }
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -108,6 +111,7 @@ public class AlbumListAdapter extends BaseAdapter {
         viewHolder.textview.setText(folderName);
         viewHolder.sizeview.setText("(" + files.size() + ")");
         if (files.size() > 0) {
+
             imageLoader.displayImage(files.get(0).getThumbnailUri(), viewHolder.imageview, options, null);
         }
 

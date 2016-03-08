@@ -58,6 +58,10 @@ public class AlbumDetailAdatper extends BaseAdapter {
 
     }
 
+    public void imageLoaderDestroy() {
+        this.imageLoader.destroy();
+    }
+
     public LocalFile getClickLocalFile() {
         return clickLocalFile;
     }

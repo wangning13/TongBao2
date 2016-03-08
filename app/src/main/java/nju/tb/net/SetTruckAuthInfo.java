@@ -1,13 +1,13 @@
 package nju.tb.net;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,22 +19,25 @@ import java.util.List;
 
 import nju.tb.Commen.MyAppContext;
 
-//根据用户token获取一个司机用户名下的所有车辆的列表
-public class GetTruckList extends Thread implements Parse.ParseHttp {
-    private final String GETTRUCKLIST = "http://120.27.112.9:8080/tongbao/driver/auth/getTruckList";
+public class SetTruckAuthInfo extends Thread implements Parse.ParseHttp {
+    private final String SETTRUCKAUTHINFO = "http://120.27.112.9:8080/tongbao/driver/auth/setTruckAuthInfo";
     private static int result = -1;
     private Context context;
     private String token;
+    private String truckNum;
     private static String errorMsg;
-    private List<String> truckList;
-    private boolean runover = false;
+    private String truckHeadPicUrl;
+    private String driverLicensePicUrl;
 
-    public boolean isRunover() {
-        return runover;
-    }
-
-    public List<String> getTruckList() {
-        return this.truckList;
+    public SetTruckAuthInfo(Context context, String token, String truckNum, String truckHeadPicUrl, String
+            driverLicensePicUrl) {
+        this.context = context;
+        this.token = token;
+        this.truckNum = truckNum;
+        this.truckHeadPicUrl = truckHeadPicUrl;
+        this.driverLicensePicUrl = driverLicensePicUrl;
+        result = -1;
+        errorMsg = "";
     }
 
     public static int getResult() {
@@ -43,14 +46,6 @@ public class GetTruckList extends Thread implements Parse.ParseHttp {
 
     public static String getErrorMsg() {
         return errorMsg;
-    }
-
-    public GetTruckList(Context context, String token) {
-        this.context = context;
-        this.token = token;
-        result = -1;
-        errorMsg = "";
-        truckList = new ArrayList<>();
     }
 
     @Override
@@ -64,39 +59,39 @@ public class GetTruckList extends Thread implements Parse.ParseHttp {
             }
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
+            Log.i("result12", result + "");
             if (result == 0) {
                 errorMsg = jsonObject.getString("errorMsg");
-                runover = true;
+                Log.i("MEssge", errorMsg);
                 httpEntity.consumeContent();
                 return;
             }
-            JSONArray jsonArray = jsonObject.getJSONArray("data");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject temp = jsonArray.getJSONObject(i);
-                int id = temp.getInt("id");
-                String truckNum = temp.getString("truckNum");
-                int authState = temp.getInt("authState");
-                truckList.add(id + " " + truckNum + " " + authState);
-            }
-            runover = true;
             httpEntity.consumeContent();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void run() {
+        while (SetRealNameAuthInfo.getResult() == -1) {
+
+        }
         HttpRequest request = new HttpRequest(context);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
+        Log.i("token",token);
+        Log.i("truckNum",truckNum);
+        Log.i("truckHeadPicUrl", truckHeadPicUrl);
+        Log.i("driveLicensePicUrl", driverLicensePicUrl);
         params.add(new BasicNameValuePair("token", token));
-        HttpResponse httpResponse = request.sendHttpPostRequest(GETTRUCKLIST, params);
+        params.add(new BasicNameValuePair("truckNum", truckNum));
+        params.add(new BasicNameValuePair("truckHeadPicUrl", truckHeadPicUrl));
+        params.add(new BasicNameValuePair("driveLicensePicUrl", driverLicensePicUrl));
+        HttpResponse httpResponse = request.sendHttpPostRequest(SETTRUCKAUTHINFO, params);
         while (httpResponse == null) {
             if (!MyAppContext.getIsConnected()) {
-                runover = true;
                 return;
             }
         }

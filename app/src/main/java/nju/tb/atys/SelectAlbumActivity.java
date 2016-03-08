@@ -26,7 +26,7 @@ import nju.tb.Commen.LocalImageHelper;
 public class SelectAlbumActivity extends Activity {
     private ListView albumlist;
     private TextView toolbar_text;
-    private String sourceActivity;
+    private static String sourceActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,15 @@ public class SelectAlbumActivity extends Activity {
         titleBackBtn.setVisibility(View.VISIBLE);
         titleBackBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                SelectAlbumActivity.this.finish();
+                Intent intent;
+                if (sourceActivity.equals("ChangeInfoActivity")) {
+                    intent = new Intent(SelectAlbumActivity.this, ChangeInfoActivity.class);
+                    Bundle bundle=new Bundle();
+                    intent.putExtra("SelectAlbumActivity",bundle);
+                } else {
+                    intent = new Intent(SelectAlbumActivity.this, CertificationActivity.class);
+                }
+                startActivity(intent);
             }
         });
 
@@ -56,8 +64,9 @@ public class SelectAlbumActivity extends Activity {
 
         }
         Bundle bundle = getIntent().getBundleExtra("Activity");
-        sourceActivity = bundle.getString("SourceActivity");
-
+        if (bundle != null) {
+            sourceActivity = bundle.getString("SourceActivity");
+        }
         albumlist = (ListView) findViewById(R.id.lv_selectalbum_albumlist);
         final Map<String, List<LocalImageHelper.LocalFile>> data = LocalImageHelper.getFolders();
         if (data == null) {

@@ -99,8 +99,10 @@ public class HttpImage extends AsyncTask<String, Integer, String> {
             JSONObject data = jsonObject.getJSONObject("data");
             String linkurl = data.getString("url");
             if (linkurl.equals("")) {
+                response.getEntity().consumeContent();
                 return "wrong";
             }
+            response.getEntity().consumeContent();
             return linkurl;
         } catch (Exception e) {
             e.printStackTrace();

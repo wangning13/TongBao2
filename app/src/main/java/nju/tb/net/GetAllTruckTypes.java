@@ -53,6 +53,7 @@ public class GetAllTruckTypes extends Thread implements Parse.ParseHttp {
             result = jsonObject.getInt("result");
             if (result == 0) {
                 errormsg = jsonObject.getString("errorMsg");
+                httpEntity.consumeContent();
                 return;
             }
             List<String> truckTypesList = new ArrayList<>();
@@ -70,6 +71,7 @@ public class GetAllTruckTypes extends Thread implements Parse.ParseHttp {
                 truckTypesList.add(sb.toString());
             }
             myAppContext.setTruckList(truckTypesList);
+            httpEntity.consumeContent();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

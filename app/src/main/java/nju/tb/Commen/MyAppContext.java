@@ -119,7 +119,7 @@ public class MyAppContext extends Application {
         return isLogIn;
     }
 
-    public HttpClient getHttpClient() {
+    public synchronized HttpClient getHttpClient() {
         httpClient.getParams().setIntParameter(HttpConnectionParams.SO_TIMEOUT, 3000);
         httpClient.getParams().setIntParameter(HttpConnectionParams.CONNECTION_TIMEOUT, 3000);
 
