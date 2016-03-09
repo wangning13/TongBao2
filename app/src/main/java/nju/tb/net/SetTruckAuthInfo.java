@@ -59,10 +59,8 @@ public class SetTruckAuthInfo extends Thread implements Parse.ParseHttp {
             }
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
-            Log.i("result12", result + "");
             if (result == 0) {
                 errorMsg = jsonObject.getString("errorMsg");
-                Log.i("MEssge", errorMsg);
                 httpEntity.consumeContent();
                 return;
             }
@@ -81,10 +79,6 @@ public class SetTruckAuthInfo extends Thread implements Parse.ParseHttp {
         }
         HttpRequest request = new HttpRequest(context);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
-        Log.i("token",token);
-        Log.i("truckNum",truckNum);
-        Log.i("truckHeadPicUrl", truckHeadPicUrl);
-        Log.i("driveLicensePicUrl", driverLicensePicUrl);
         params.add(new BasicNameValuePair("token", token));
         params.add(new BasicNameValuePair("truckNum", truckNum));
         params.add(new BasicNameValuePair("truckHeadPicUrl", truckHeadPicUrl));

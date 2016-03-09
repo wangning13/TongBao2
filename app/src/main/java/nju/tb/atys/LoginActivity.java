@@ -32,6 +32,7 @@ public class LoginActivity extends Activity {
     private CheckBox keepPassword;
 
     private static boolean autoLogin = false;
+    private boolean changeLogin = false;
 
     private boolean phoneNumberOk = false;
     private boolean passwordOk = false;
@@ -71,8 +72,8 @@ public class LoginActivity extends Activity {
             loginButton.setBackgroundResource(R.color.colorGreen);
             loginButton.setClickable(true);
 
-        }else{
-            autoLogin=false;
+        } else {
+            autoLogin = false;
         }
 
 
@@ -123,7 +124,7 @@ public class LoginActivity extends Activity {
         if (loadingReturn != null && loadingReturn.getString("state").equals("fail")) {
             passwordEditText.setText("");
             phoneNumberEditText.setText(loadingReturn.getString("phone"));
-            autoLogin=false;
+            autoLogin = false;
             Toast.makeText(this, "账号或密码错误，请重新登录", Toast.LENGTH_SHORT).show();
         }
 
@@ -136,6 +137,11 @@ public class LoginActivity extends Activity {
     @Override
     public void onStop() {
         super.onStop();
+        if (changeLogin) {
+            SharedPreferences loginSettings = getSharedPreferences("loginSettings", 0);
+            loginSettings.edit().clear().commit();
+            autoLogin=false;
+        }
         if (keepPassword.isChecked()) {
             SharedPreferences loginSettings = getSharedPreferences("loginSettings", 0);
             if (MyAppContext.isLogIn() && autoLogin == false) {
@@ -193,6 +199,7 @@ public class LoginActivity extends Activity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+            changeLogin = true;
             Editable editable = editText.getText();
             int length = editable.length();
 
