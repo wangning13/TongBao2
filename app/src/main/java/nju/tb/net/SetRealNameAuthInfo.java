@@ -64,9 +64,11 @@ public class SetRealNameAuthInfo extends Thread implements Parse.ParseHttp {
             }
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
+            Log.i("realname", result + "");
             if (result == 0) {
                 errorMsg = jsonObject.getString("errorMsg");
-               httpEntity.consumeContent();
+                Log.i("realnameerr", errorMsg);
+                httpEntity.consumeContent();
                 return;
             }
             httpEntity.consumeContent();

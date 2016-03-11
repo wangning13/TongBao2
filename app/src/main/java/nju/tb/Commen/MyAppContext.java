@@ -9,11 +9,22 @@ import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnManagerParams;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,7 +41,6 @@ import nju.tb.net.HttpRequest;
 public class MyAppContext extends Application {
     private static boolean isLogIn;
     public static boolean isNetServiceStarted = false;
-    private static HttpClient httpClient = new DefaultHttpClient();
     private static boolean isConnected = false;
 
     private static MyAppContext myAppContext;
@@ -120,10 +130,17 @@ public class MyAppContext extends Application {
     }
 
     public synchronized HttpClient getHttpClient() {
-        httpClient.getParams().setIntParameter(HttpConnectionParams.SO_TIMEOUT, 3000);
-        httpClient.getParams().setIntParameter(HttpConnectionParams.CONNECTION_TIMEOUT, 3000);
-
-        return this.httpClient;
+        HttpParams params=new BasicHttpParams();
+        HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+        HttpProtocolParams.setContentCharset(params, HTTP.DEFAULT_CONTENT_CHARSET);
+        HttpProtocolParams.setUseExpectContinue(params, true);
+        ConnManagerParams.setMaxTotalConnections(params,100);
+        HttpConnectionParams.setConnectionTimeout(params,5000);
+        HttpConnectionParams.setSoTimeout(params,3000);
+        SchemeRegistry schReg = new SchemeRegistry();
+        schReg.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+        ClientConnectionManager conMgr = new ThreadSafeClientConnManager(params, schReg);
+        return new DefaultHttpClient(conMgr, params);
     }
 
     public void setTruckList(List<String> list) {

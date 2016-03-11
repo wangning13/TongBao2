@@ -2,6 +2,7 @@ package nju.tb.net;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -54,15 +55,16 @@ public class AddTruck extends Thread implements Parse.ParseHttp {
             BufferedReader in = new BufferedReader(new InputStreamReader(httpEntity.getContent()));
             StringBuffer stringBuffer = new StringBuffer();
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                stringBuffer.append(in.readLine());
+                stringBuffer.append(line);
             }
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
             if (result == 0) {
                 errorMsg = jsonObject.getString("errorMsg");
-                Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show();
+                httpEntity.consumeContent();
                 return;
             }
+            httpEntity.consumeContent();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

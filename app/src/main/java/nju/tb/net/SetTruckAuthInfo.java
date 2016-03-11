@@ -59,8 +59,10 @@ public class SetTruckAuthInfo extends Thread implements Parse.ParseHttp {
             }
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
+            Log.i("truckresult", result+"");
             if (result == 0) {
                 errorMsg = jsonObject.getString("errorMsg");
+                Log.i("truckerr", errorMsg);
                 httpEntity.consumeContent();
                 return;
             }
