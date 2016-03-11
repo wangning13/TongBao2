@@ -61,7 +61,6 @@ public class GetOrderDetail extends Thread implements Parse.ParseHttp {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 stringBuffer.append(line);
             }
-            Log.i("stringBufferdetail", stringBuffer.toString());
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
             if(result==0){
@@ -69,8 +68,6 @@ public class GetOrderDetail extends Thread implements Parse.ParseHttp {
                 return;
             }
             JSONObject data = jsonObject.getJSONObject("data");
-            Log.i("time", data.getString("time"));
-
 
 
             JSONObject orderjsonobject = jsonObject.getJSONObject("data");

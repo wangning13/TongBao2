@@ -36,11 +36,6 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".atys.OrderDetailActivity"
-            android:label="@string/title_activity_order_detail"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
             android:name=".atys.DoTaskActivity"
             android:label="@string/title_activity_do_task"
             android:theme="@style/AppTheme.NoActionBar">

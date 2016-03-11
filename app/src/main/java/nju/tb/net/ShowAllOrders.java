@@ -72,6 +72,7 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
             }
             JSONArray jsonArray = jsonObject.getJSONArray("data");
 
+            allorders.clear();
             for(int i=0;i<jsonArray.length();i++) {
                 JSONObject orderjsonobject = jsonArray.getJSONObject(i);
                 int id = orderjsonobject.getInt("id");
@@ -99,7 +100,7 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
                 order.setLoadTime(loadTime);
                 allorders.add(order);
             }
-            Log.i("allprders", allorders.size() + "," + result);
+            Log.i("allorders", allorders.size() + "," + result);
             runover=true;
         } catch (IOException e) {
             e.printStackTrace();

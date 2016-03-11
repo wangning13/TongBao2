@@ -37,7 +37,7 @@ public class ScrambleOrderActivity extends Activity {
 
     private Spinner fromAddressSpinner;
     private TextView toolbar_text;
-    private List<Map<String, Order>> mData;
+    private List<Map<String, Order>> mData=new ArrayList<Map<String, Order>>();
     private OrderListAdapter adapter;
 
 
@@ -117,14 +117,13 @@ public class ScrambleOrderActivity extends Activity {
         lv=(ListView)findViewById(R.id.listView);
         searchbtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            mData.clear();
-            adapter = new OrderListAdapter(ScrambleOrderActivity.this,mData);
-            lv.setAdapter(adapter);
+                mData=getData();
+                adapter = new OrderListAdapter(ScrambleOrderActivity.this,mData);
+                lv.setAdapter(adapter);
             }
         });
 
     }
-
 
 
     public List<Map<String, Order>> getData() {
@@ -136,7 +135,6 @@ public class ScrambleOrderActivity extends Activity {
         ArrayList<Order> orderList=new ArrayList<Order>();
         while (sa.getResult() == -1) {
             if (!MyAppContext.getIsConnected()) {
-                Log.i("断网了", "断网了");
                 break;
             }
         }
@@ -147,7 +145,6 @@ public class ScrambleOrderActivity extends Activity {
         }
 
         if (sa.getResult() == 1) {
-            Log.i("成功了", "成功了");
             orderList = sa.getAllorders();
         }
 
