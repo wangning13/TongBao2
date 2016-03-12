@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <resources>
+      <string-array name="districts">
+          <item>玄武区</item>
+          <item>鼓楼区</item>
+          <item>建邺区</item>
+          <item>秦淮区</item>
+          <item>雨花台区</item>
+          <item>浦口区</item>
+          <item>栖霞区</item>
+          <item>江宁区</item>
+          <item>六合区</item>
+          <item>溧水区</item>
+          <item>高淳区</item>
+      </string-array>
+  </resources>

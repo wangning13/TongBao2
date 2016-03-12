@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,11 +35,13 @@ import nju.tb.net.ShowMyOrderList;
 
 public class ScrambleOrderActivity extends Activity {
     private ListView lv;
-
-    private Spinner fromAddressSpinner;
+    private String fromaddress="";
+    private String toaddress="";
+    private Spinner fromspinner;
+    private Spinner tospinner;
     private TextView toolbar_text;
     private List<Map<String, Order>> mData=new ArrayList<Map<String, Order>>();
-    private OrderListAdapter adapter;
+    private OrderListAdapter orderadapter;
 
 
     @Override
@@ -58,78 +61,65 @@ public class ScrambleOrderActivity extends Activity {
         });
 
 
-//        fromAddressSpinner = (Spinner) findViewById(R.id.addcar_selecttype);
-//
-//        final List<Map<String, String>> data = new ArrayList<Map<String, String>>();
-//        Map<String, String> map1 = new HashMap<String, String>();
-//        map1.put("type", "玄武区");
-//        Map<String, String> map2 = new HashMap<String, String>();
-//        map2.put("type", "鼓楼区");
-//        Map<String, String> map3 = new HashMap<String, String>();
-//        map3.put("type", "建邺区");
-//        Map<String, String> map4 = new HashMap<String, String>();
-//        map4.put("type", "秦淮区");
-//        Map<String, String> map5 = new HashMap<String, String>();
-//        map5.put("type", "雨花台区");
-//        Map<String, String> map6 = new HashMap<String, String>();
-//        map6.put("type", "浦口区");
-//        Map<String, String> map7 = new HashMap<String, String>();
-//        map7.put("type", "栖霞区");
-//        Map<String, String> map8 = new HashMap<String, String>();
-//        map8.put("type", "江宁区");
-//        Map<String, String> map9 = new HashMap<String, String>();
-//        map9.put("type", "六合区");
-//        Map<String, String> map10 = new HashMap<String, String>();
-//        map10.put("type", "溧水区");
-//        Map<String, String> map11 = new HashMap<String, String>();
-//        map11.put("type", "高淳区");
-//        data.add(map1);
-//        data.add(map2);
-//        data.add(map3);
-//        data.add(map4);
-//        data.add(map5);
-//        data.add(map6);
-//        data.add(map7);
-//        data.add(map8);
-//        data.add(map9);
-//        data.add(map10);
-//        data.add(map11);
-//
-//        fromAddressSpinner.setAdapter(new SimpleAdapter(this, data, R.layout.view_selecttype_item, new
-//                String[]{"type"}, new int[]{R.id.item_type}));
-//        fromAddressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                String type = data.get(position).get("type");
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                fromAddressSpinner.setSelection(0, true);
-//                String type = data.get(0).get("type");
-//                String[] arr = type.split(" ");
-//                if (arr.length != 3) {
-//                    return;
-//                }
-//            }
-//        });
+        fromspinner = (Spinner) findViewById(R.id.fromAddress);
+        String[] mItems = getResources().getStringArray(R.array.districts);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, mItems);
+        fromspinner .setAdapter(adapter);
+        fromspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int pos, long id) {
+
+                String[] districts = getResources().getStringArray(R.array.districts);
+                fromaddress = districts[pos];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        tospinner = (Spinner) findViewById(R.id.toAddress);
+        ArrayAdapter<String> toadapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, mItems);
+        tospinner .setAdapter(toadapter);
+        tospinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int pos, long id) {
+
+                String[] districts = getResources().getStringArray(R.array.districts);
+                toaddress=districts[pos];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
+
+
+
         Button searchbtn = (Button) findViewById(R.id.search_btn);
         lv=(ListView)findViewById(R.id.listView);
         searchbtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mData=getData();
-                adapter = new OrderListAdapter(ScrambleOrderActivity.this,mData);
-                lv.setAdapter(adapter);
+                mData.clear();
+                mData=getData(fromaddress,toaddress);
+                orderadapter = new OrderListAdapter(ScrambleOrderActivity.this,mData);
+                lv.setAdapter(orderadapter);
             }
         });
 
     }
 
 
-    public List<Map<String, Order>> getData() {
+    public List<Map<String, Order>> getData(String faddress ,String taddress) {
 
         final String USERTOKEN = ((MyAppContext) getApplicationContext()).getToken();
-        ShowAllOrders sa=new ShowAllOrders(ScrambleOrderActivity.this,USERTOKEN,"鼓楼区","玄武区");
+        ShowAllOrders sa=new ShowAllOrders(ScrambleOrderActivity.this,USERTOKEN,faddress,taddress);
+        Log.i("出发地",faddress);
+        Log.i("目的地",taddress);
         sa.start();
 
         ArrayList<Order> orderList=new ArrayList<Order>();
