@@ -20,25 +20,20 @@
         >
         <RelativeLayout
             android:id="@+id/begin_layout"
+            android:background="@drawable/frameframe"
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="3" >
 
-            <EditText
-                android:id="@+id/beginaddress"
-                android:background="@drawable/frameframe"
-                android:layout_weight="1"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:maxLength="40"
-                android:hint="出发地"/>
             <Spinner
                 android:id="@+id/fromAddress"
-                android:layout_width="0dp"
+                android:spinnerMode="dropdown"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="3"/>
+                android:layout_weight="6"
+            />
         </RelativeLayout>
 
 
@@ -66,16 +61,16 @@
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="40dp"
+            android:background="@drawable/frameframe"
             android:layout_weight="3" >
-                <EditText
-                    android:id="@+id/endaddress"
-                    android:layout_weight="1"
-                    android:background="@drawable/frameframe"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:maxLength="40"
-                    android:hint="目的地"/>
-
+            <Spinner
+                android:id="@+id/toAddress"
+                android:spinnerMode="dropdown"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="6"
+                />
         </RelativeLayout>
 
 

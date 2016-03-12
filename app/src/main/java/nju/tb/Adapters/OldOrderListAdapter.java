@@ -24,14 +24,12 @@ import nju.tb.entity.Order;
 public class OldOrderListAdapter  extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<Map<String, Order>> list;
-    private boolean isLongClick;
     private List<Integer> selectedId;
 
     public OldOrderListAdapter(Context context,List<Map<String, Order>> list) {
         this.mInflater = LayoutInflater.from(context);
         this.list=list;
         selectedId = new ArrayList<Integer>();
-        isLongClick = false;
     }
 
     public int getCount() {

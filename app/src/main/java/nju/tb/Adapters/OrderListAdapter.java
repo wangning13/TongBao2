@@ -48,13 +48,20 @@ public class OrderListAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.orderitem, null);
-            holder.info = (TextView) convertView.findViewById(R.id.info);
             if(!list.isEmpty()){
-                holder.info.setText(list.get(position).get("info").toString());
-            }else{
-                holder.info.setText("无");
+                Order order=list.get(position).get("info");
+                holder.info = (TextView)convertView.findViewById(R.id.info);
+                holder.info.setText(order.getFromContactName());
+                holder.time = (TextView)convertView.findViewById(R.id.time);
+                String pretime=order.getTime();
+                String ordertime=pretime.substring(0,16);
+                holder.time.setText(ordertime);
+                holder.faddress = (TextView)convertView.findViewById(R.id.faddress);
+                holder.faddress.setText(order.getAddressFrom());
+                holder.taddress = (TextView)convertView.findViewById(R.id.taddress);
+                holder.taddress.setText(order.getAddressTo());
+                holder.viewBtn = (Button) convertView.findViewById(R.id.view_btn);
             }
-            holder.viewBtn = (Button) convertView.findViewById(R.id.view_btn);
             convertView.setTag(holder);
 
         } else {
@@ -62,7 +69,7 @@ public class OrderListAdapter extends BaseAdapter {
         }
         holder.viewBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                showInfo(position);
+                showInfo(position);
             }
         });
         return convertView;
@@ -71,23 +78,31 @@ public class OrderListAdapter extends BaseAdapter {
 
     public void showInfo(int position){
         View orderDialogView = mInflater.inflate(R.layout.activity_order_detail, null);
+
+        TextView number_text=(TextView) orderDialogView.findViewById(R.id.number);
+        TextView faddress_text=(TextView) orderDialogView.findViewById(R.id.faddress);
+        TextView taddress_text=(TextView) orderDialogView.findViewById(R.id.taddress);
+        TextView loadtime_text=(TextView) orderDialogView.findViewById(R.id.loadtime);
+        TextView money_text=(TextView) orderDialogView.findViewById(R.id.money);
         Order order=list.get(position).get("info");
-        String addressTo=order.getAddressTo();
-        ImageView img=new ImageView(context);
-        new AlertDialog.Builder(context).setView(img)
-                .setMessage("终点："+addressTo)
+
+        number_text.setText(order.getId()+"");
+        faddress_text.setText(order.getAddressFrom());
+        taddress_text.setText(order.getAddressTo());
+        loadtime_text.setText(order.getLoadTime());
+        taddress_text.setText(order.getAddressTo());
+        money_text.setText(order.getMoney());
+
+        new AlertDialog.Builder(context)
                 .setView(orderDialogView)
-                .setNegativeButton("关闭", null)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
                 .show();
     }
 
     public final class ViewHolder{
-        public TextView info;
+        TextView info;
+        TextView time;
+        TextView faddress;
+        TextView taddress;
         public Button viewBtn;
     }
 
