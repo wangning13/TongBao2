@@ -14,6 +14,7 @@ import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
 import nju.tb.entity.Order;
 import nju.tb.net.GetOrderDetail;
+import nju.tb.net.RemoveOrder;
 
 /**
  * Created by Administrator on 2016/3/5.
@@ -110,7 +111,7 @@ public class OldOrderContentActivity extends Activity {
         deletebtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final String USERTOKEN = ((MyAppContext) getApplicationContext()).getToken();
-                DeleteOrder dorder = new DeleteOrder(OldOrderContentActivity.this, USERTOKEN, orderNumber);
+                RemoveOrder dorder = new RemoveOrder(OldOrderContentActivity.this, USERTOKEN, orderNumber);
                 dorder.start();
                 while (!dorder.runover) {
 

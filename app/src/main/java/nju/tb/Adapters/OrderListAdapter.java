@@ -17,6 +17,7 @@ import java.util.Map;
 import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
 import nju.tb.entity.Order;
+import nju.tb.net.ScrambleOrder;
 
 /**
  * Created by Administrator on 2016/2/27.
@@ -105,7 +106,7 @@ public class OrderListAdapter extends BaseAdapter {
         grabbtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final String USERTOKEN = ((MyAppContext) context.getApplicationContext()).getToken();
-                GrabOrder go = new GrabOrder(context, USERTOKEN, order.getId());
+                ScrambleOrder go = new ScrambleOrder(context, USERTOKEN, order.getId());
                 go.start();
                 while (!go.runover) {
 
