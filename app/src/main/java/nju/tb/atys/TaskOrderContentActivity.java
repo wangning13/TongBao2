@@ -12,7 +12,6 @@ import android.widget.Toast;
 import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
 import nju.tb.entity.Order;
-import nju.tb.net.CancelOrder;
 import nju.tb.net.GetOrderDetail;
 
 /**
