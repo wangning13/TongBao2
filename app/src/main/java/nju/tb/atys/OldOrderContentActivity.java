@@ -126,7 +126,7 @@ public class OldOrderContentActivity extends Activity {
                 }
                 if (dorder.getResult() ==1) {
                     Intent intent = new Intent(OldOrderContentActivity.this, MainActivity.class);
-                    intent.putExtra("type", 2);
+                    intent.putExtra("type", 1);
                     startActivity(intent);
                 }
             }
