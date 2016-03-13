@@ -59,7 +59,6 @@ public class OrderFragment extends Fragment {
         ArrayList<Order> orderList=new ArrayList<Order>();
         while (sm.getResult() == -1) {
             if (!MyAppContext.getIsConnected()) {
-                Log.i("断网了", "断网了");
                 break;
             }
         }

@@ -92,7 +92,11 @@ public class MainActivity extends Activity {
                 me_text.setTextColor(Color.parseColor("#1F6EF2"));
             }
         });
+        int type = getIntent().getIntExtra("type", 0);
+        if(type==2){
+            setTabSelection(2);
 
+        }
     }
 
     @Override

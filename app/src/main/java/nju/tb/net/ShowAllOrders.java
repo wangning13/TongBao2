@@ -63,7 +63,6 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 stringBuffer.append(line);
             }
-            Log.i("抢单", stringBuffer.toString());
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
             if(result==0){

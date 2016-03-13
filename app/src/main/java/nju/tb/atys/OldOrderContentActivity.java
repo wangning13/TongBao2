@@ -1,11 +1,14 @@
 package nju.tb.atys;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
@@ -29,6 +32,7 @@ public class OldOrderContentActivity extends Activity {
     private TextView trucktype_text;
     private TextView money_text;
     private TextView toolbar_text;
+    private Button deletebtn;
 
 
     public void onCreate(Bundle savedInstanceState){
@@ -61,9 +65,11 @@ public class OldOrderContentActivity extends Activity {
         taddress_text=(TextView) findViewById(R.id.taddress);
         trucktype_text=(TextView) findViewById(R.id.trucktype);
         money_text=(TextView) findViewById(R.id.money);
+        deletebtn=(Button) findViewById(R.id.delete_btn);
+
 //
         Bundle bundle=getIntent().getExtras();
-        int orderNumber=(int)bundle.get("orderNumber");
+        final int orderNumber=(int)bundle.get("orderNumber");
 
         final String USERTOKEN = ((MyAppContext)getApplicationContext()).getToken();
         GetOrderDetail god=new GetOrderDetail( OldOrderContentActivity.this,USERTOKEN,orderNumber+"");
@@ -98,5 +104,31 @@ public class OldOrderContentActivity extends Activity {
             money_text.setText(order.getMoney());
         }
 
+
+
+
+        deletebtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final String USERTOKEN = ((MyAppContext) getApplicationContext()).getToken();
+                DeleteOrder dorder = new DeleteOrder(OldOrderContentActivity.this, USERTOKEN, orderNumber);
+                dorder.start();
+                while (!dorder.runover) {
+
+                }
+                if (dorder.getResult() ==0) {
+                    Toast.makeText(OldOrderContentActivity.this, dorder.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                    OldOrderContentActivity.this.finish();
+                }
+                if (dorder.getResult() == -1 && MyAppContext.getIsConnected() == false) {
+                    Toast.makeText(OldOrderContentActivity.this, "网络不可用，请检查网络设置", Toast.LENGTH_SHORT).show();
+                    OldOrderContentActivity.this.finish();
+                }
+                if (dorder.getResult() ==1) {
+                    Intent intent = new Intent(OldOrderContentActivity.this, MainActivity.class);
+                    intent.putExtra("type", 2);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 }
