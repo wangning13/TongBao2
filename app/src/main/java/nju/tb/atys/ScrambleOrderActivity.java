@@ -42,6 +42,7 @@ public class ScrambleOrderActivity extends Activity {
     private TextView toolbar_text;
     private List<Map<String, Order>> mData=new ArrayList<Map<String, Order>>();
     private OrderListAdapter orderadapter;
+    private OrderListAdapter initadapter;
 
 
     @Override
@@ -80,6 +81,7 @@ public class ScrambleOrderActivity extends Activity {
         });
 
         tospinner = (Spinner) findViewById(R.id.toAddress);
+
         ArrayAdapter<String> toadapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, mItems);
         tospinner .setAdapter(toadapter);
         tospinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -102,6 +104,10 @@ public class ScrambleOrderActivity extends Activity {
 
         Button searchbtn = (Button) findViewById(R.id.search_btn);
         lv=(ListView)findViewById(R.id.listView);
+        initadapter = new OrderListAdapter(ScrambleOrderActivity.this,getData("",""));
+        lv.setAdapter(initadapter);
+
+
         searchbtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mData.clear();
@@ -112,6 +118,7 @@ public class ScrambleOrderActivity extends Activity {
         });
 
     }
+
 
 
     public List<Map<String, Order>> getData(String faddress ,String taddress) {

@@ -2,23 +2,28 @@ package nju.tb.atys;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import nju.tb.Commen.MyAppContext;
+import java.util.ArrayList;
+import java.util.List;
+
 import nju.tb.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
 
     private TextView toolbar_text;
@@ -28,9 +33,13 @@ public class MainActivity extends Activity {
     private TextView home_text;
     private TextView order_text;
     private TextView me_text;
+    private ViewPager mViewPager;
+    private List<Fragment> fragmentList;
     private HomeFragment fragment1;
     private OrderFragment fragment2;
     private MeFragment fragment3;
+
+    int currenttab=-1;
 
     ImageView ivhome;
     ImageView ivorder;
@@ -55,6 +64,18 @@ public class MainActivity extends Activity {
         titleBackBtn.setVisibility(View.INVISIBLE);
 
 
+        mViewPager=(ViewPager) findViewById(R.id.viewpager);
+        fragmentList=new ArrayList<Fragment>();
+        fragment1 = new HomeFragment();
+        fragment2 = new OrderFragment();
+        fragment3 = new MeFragment();
+        fragmentList.add(fragment1);
+        fragmentList.add(fragment2);
+        fragmentList.add(fragment3);
+        mViewPager.setAdapter(new MyFrageStatePagerAdapter(getSupportFragmentManager()));
+
+
+
         home_layout = (RelativeLayout) findViewById(R.id.home_layout);
         order_layout = (RelativeLayout) findViewById(R.id.order_layout);
         me_layout = (RelativeLayout) findViewById(R.id.me_layout);
@@ -64,35 +85,20 @@ public class MainActivity extends Activity {
         ivhome = (ImageView) findViewById(R.id.home_img);
         ivorder = (ImageView) findViewById(R.id.order_img);
         ivme = (ImageView) findViewById(R.id.me_img);
-        fragmentManager = getFragmentManager();
-        setTabSelection(0);
+        changeView(0);
         ivhome.setImageDrawable(getResources().getDrawable(R.drawable.home2));
 
+        findViewById(R.id.home_layout).setOnClickListener(this);
+        findViewById(R.id.order_layout).setOnClickListener(this);
+        findViewById(R.id.me_layout).setOnClickListener(this);
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 123);
 
-        findViewById(R.id.home_layout).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                setTabSelection(0);
-                ivhome.setImageDrawable(getResources().getDrawable(R.drawable.home2));
-                home_text.setTextColor(Color.parseColor("#1F6EF2"));
-            }
-        });
-        findViewById(R.id.order_layout).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                setTabSelection(1);
-                ivorder.setImageDrawable(getResources().getDrawable(R.drawable.order2));
-                order_text.setTextColor(Color.parseColor("#1F6EF2"));
-            }
-        });
-        findViewById(R.id.me_layout).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                setTabSelection(2);
-                ivme.setImageDrawable(getResources().getDrawable(R.drawable.me2));
-                me_text.setTextColor(Color.parseColor("#1F6EF2"));
-            }
-        });
+        int type = getIntent().getIntExtra("type", 0);
+        if(type==1){
+            changeView(1);
 
+        }
     }
 
     @Override
@@ -109,63 +115,106 @@ public class MainActivity extends Activity {
         Bundle updateBundle = new Bundle();
         updateBundle.putString("BitmapPathToUpdate", updateBitmapPath);
         meFragment.setArguments(updateBundle);
-        FragmentManager manager = getFragmentManager();
+        FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(meFragment, "update");
         transaction.commit();
-        setTabSelection(targetFragment);
+        changeView(targetFragment);
     }
 
 
-    protected void setTabSelection(int index) {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        hideFragments(transaction);
-        switch (index) {
-            case 0:
-                if (fragment1 == null) {
-                    fragment1 = new HomeFragment();
-                    transaction.add(R.id.content, fragment1);
-                } else {
-                    transaction.show(fragment1);
-                }
 
+
+    class MyFrageStatePagerAdapter extends FragmentStatePagerAdapter
+    {
+
+        public MyFrageStatePagerAdapter(FragmentManager fm)
+        {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+
+        /**
+         * 每次更新完成ViewPager的内容后，调用该接口，此处复写主要是为了让导航按钮上层的覆盖层能够动态的移动
+         */
+        @Override
+        public void finishUpdate(ViewGroup container)
+        {
+            super.finishUpdate(container);//这句话要放在最前面，否则会报错
+            //获取当前的视图是位于ViewGroup的第几个位置，用来更新对应的覆盖层所在的位置
+            int currentItem=mViewPager.getCurrentItem();
+            if (currentItem==currenttab)
+            {
+                return ;
+            }
+            changeBtn(currentItem);
+            currenttab=mViewPager.getCurrentItem();
+        }
+
+    }
+
+
+
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.home_layout:
+                changeView(0);
                 break;
-            case 1:
-                if (fragment2 == null) {
-                    fragment2 = new OrderFragment();
-                    transaction.add(R.id.content, fragment2);
-                } else {
-                    transaction.show(fragment2);
-                }
+            case R.id.order_layout:
+                changeView(1);
                 break;
-            case 2:
-                if (fragment3 == null) {
-                    fragment3 = new MeFragment();
-                    transaction.add(R.id.content, fragment3);
-                } else {
-                    transaction.show(fragment3);
-                }
+            case R.id.me_layout:
+                changeView(2);
+                break;
+            default:
                 break;
         }
-        transaction.commit();
     }
 
 
-    private void hideFragments(FragmentTransaction transaction) {
-        if (fragment1 != null) {
-            transaction.hide(fragment1);
+    private void changeBtn(int desTab) {
+        if (desTab == 0) {
+            ivhome.setImageDrawable(getResources().getDrawable(R.drawable.home2));
+            home_text.setTextColor(Color.parseColor("#1F6EF2"));
+        }
+        if (desTab == 1) {
+            ivorder.setImageDrawable(getResources().getDrawable(R.drawable.order2));
+            order_text.setTextColor(Color.parseColor("#1F6EF2"));
+        }
+        if (desTab == 2) {
+            ivme.setImageDrawable(getResources().getDrawable(R.drawable.me2));
+            me_text.setTextColor(Color.parseColor("#1F6EF2"));
+        }
+        if (desTab != 0) {
             ivhome.setImageDrawable(getResources().getDrawable(R.drawable.home1));
             home_text.setTextColor(Color.GRAY);
         }
-        if (fragment2 != null) {
-            transaction.hide(fragment2);
+        if (desTab != 1) {
             ivorder.setImageDrawable(getResources().getDrawable(R.drawable.order1));
             order_text.setTextColor(Color.GRAY);
         }
-        if (fragment3 != null) {
-            transaction.hide(fragment3);
+        if (desTab != 2) {
             ivme.setImageDrawable(getResources().getDrawable(R.drawable.me1));
             me_text.setTextColor(Color.GRAY);
         }
+    }
+
+
+    //手动设置ViewPager要显示的视图
+    private void changeView(int desTab)
+    {
+        changeBtn(desTab);
+        mViewPager.setCurrentItem(desTab, true);
     }
 }

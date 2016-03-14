@@ -2,8 +2,7 @@ package nju.tb.atys;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +58,6 @@ public class OrderFragment extends Fragment {
         ArrayList<Order> orderList=new ArrayList<Order>();
         while (sm.getResult() == -1) {
             if (!MyAppContext.getIsConnected()) {
-                Log.i("断网了", "断网了");
                 break;
             }
         }

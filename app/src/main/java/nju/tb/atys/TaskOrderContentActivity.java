@@ -1,15 +1,18 @@
 package nju.tb.atys;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
 import nju.tb.entity.Order;
+import nju.tb.net.CancelOrder;
 import nju.tb.net.GetOrderDetail;
 
 /**
@@ -29,6 +32,7 @@ public class TaskOrderContentActivity  extends Activity {
     private TextView trucktype_text;
     private TextView money_text;
     private TextView toolbar_text;
+    private Button cancelbtn;
 
 
     public void onCreate(Bundle savedInstanceState){
@@ -61,16 +65,16 @@ public class TaskOrderContentActivity  extends Activity {
         taddress_text=(TextView) findViewById(R.id.taddress);
         trucktype_text=(TextView) findViewById(R.id.trucktype);
         money_text=(TextView) findViewById(R.id.money);
+        cancelbtn=(Button) findViewById(R.id.delete_btn);
 //
         Bundle bundle=getIntent().getExtras();
-        int orderNumber=(int)bundle.get("orderNumber");
+        final int orderNumber=(int)bundle.get("orderNumber");
 
         final String USERTOKEN = ((MyAppContext)getApplicationContext()).getToken();
         GetOrderDetail god=new GetOrderDetail( TaskOrderContentActivity.this,USERTOKEN,orderNumber+"");
         god.start();
         while (god.getResult() == -1) {
             if (!MyAppContext.getIsConnected()) {
-                Log.i("断网了", "断网了");
                 break;
 
             }
@@ -97,6 +101,27 @@ public class TaskOrderContentActivity  extends Activity {
 ////            trucktype_text.setText(order.getTruckTypes());
             money_text.setText(order.getMoney());
         }
+        cancelbtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final String USERTOKEN = ((MyAppContext) getApplicationContext()).getToken();
+                CancelOrder dorder = new CancelOrder(TaskOrderContentActivity.this, USERTOKEN, orderNumber);
+                dorder.start();
+                while (!dorder.runover) {
 
+                }
+                if (dorder.getResult() ==0) {
+                    Toast.makeText(TaskOrderContentActivity.this, dorder.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                    TaskOrderContentActivity.this.finish();
+                }
+                if (dorder.getResult() == -1 && MyAppContext.getIsConnected() == false) {
+                    Toast.makeText(TaskOrderContentActivity.this, "网络不可用，请检查网络设置", Toast.LENGTH_SHORT).show();
+                    TaskOrderContentActivity.this.finish();
+                }
+                if (dorder.getResult() ==1) {
+                    Intent intent = new Intent(TaskOrderContentActivity.this, DoTaskActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 }
