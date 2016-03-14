@@ -2,7 +2,9 @@ package nju.tb.MyUI;
 
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -102,9 +104,9 @@ public class MyXListView extends ListView {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 lastY = ev.getRawY();
-                if(getFirstVisiblePosition()==0){
+                if (getFirstVisiblePosition() == 0) {
                     headerView.setState(MyXListViewHeader.STATE_NORMAL);
-                }else if(getLastVisiblePosition()==totalItemCount-1){
+                } else if (getLastVisiblePosition() == totalItemCount - 1) {
                     footerView.setState(MyXListViewFooter.STATE_NORMAL);
                 }
                 break;
@@ -117,7 +119,7 @@ public class MyXListView extends ListView {
                 } else if (getLastVisiblePosition() == totalItemCount - 1 && (footerView.getBottomMargin() > 0 ||
                         detlaY < 0)) {
                     //footerview显示
-                    updateFooterHeight(detlaY / OFFSET_RADIO);
+                    updateFooterHeight(-detlaY / OFFSET_RADIO);
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -201,11 +203,48 @@ public class MyXListView extends ListView {
         }
     }
 
+    public void setNews(boolean hasNews) {
+        if (!isRefreshing) {
+            return;
+        }
+        isRefreshing = false;
+        if (hasNews) {
+            headerView.setState(MyXListViewHeader.STATE_NORMAL);
+        } else {
+            headerView.setState(MyXListViewHeader.STATE_ALLREADYNEW);
+        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                headerView.hide();
+            }
+        }, 1500);
+    }
+
     public void stopLoadMore() {
         if (isLoadingMore) {
             isLoadingMore = false;
             footerView.setState(MyXListViewFooter.STATE_NORMAL);
         }
+    }
+
+    public void setMore(boolean hasMore) {
+        if (!isLoadingMore) {
+            return;
+        }
+        isLoadingMore = false;
+        if (hasMore) {
+            footerView.setState(MyXListViewFooter.STATE_NORMAL);
+        } else {
+            footerView.setState(MyXListViewFooter.STATE_NOMORE);
+        }
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                footerView.setState(MyXListViewFooter.STATE_NORMAL);
+            }
+        }, 1500);
     }
 
     /**

@@ -90,9 +90,9 @@ public class MessageListAdapter extends BaseAdapter {
             sourceTextView.setText(list.get(position).get("Source").toString());
             textTextView.setText(list.get(position).get("Text").toString());
             timeTextView.setText(list.get(position).get("Time").toString());
-            if (((boolean) list.get(position).get("IsRead")) == true) {
+            if ((int) list.get(position).get("IsRead") == 1) {
                 isReadImageView.setImageBitmap(null);
-            } else if (((boolean) list.get(position).get("IsRead")) == false) {
+            } else if ((int) list.get(position).get("IsRead") == 0) {
                 isReadImageView.setImageResource(R.drawable.redpoint);
             }
         } else {

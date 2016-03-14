@@ -28,7 +28,7 @@ public class MyXListViewFooter extends LinearLayout {
     //没有更多数据状态
     public final static int STATE_NOMORE = 3;
     //通过该relativeLayout的marginbottom来控制
-    private RelativeLayout mContentView;
+    private View mContentView;
     private ProgressBar mProgressBar;
     private TextView mHintView;
 
@@ -51,9 +51,8 @@ public class MyXListViewFooter extends LinearLayout {
         LinearLayout moreView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.view_xlistview_footer,
                 null);
         addView(moreView);
-        moreView.setLayoutParams(new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout
-                .LayoutParams.WRAP_CONTENT));
-        mContentView = (RelativeLayout) findViewById(R.id.xlistview_footer_content);
+        moreView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        mContentView = findViewById(R.id.xlistview_footer_content);
         mProgressBar = (ProgressBar) findViewById(R.id.xlistview_footer_progressbar);
         mHintView = (TextView) findViewById(R.id.xlistview_footer_hint_textview);
     }
@@ -95,13 +94,13 @@ public class MyXListViewFooter extends LinearLayout {
         if (height < 0) {
             return;
         }
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mContentView.getLayoutParams();
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mContentView.getLayoutParams();
         lp.bottomMargin = height;
         mContentView.setLayoutParams(lp);
     }
 
     public int getBottomMargin() {
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mContentView.getLayoutParams();
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mContentView.getLayoutParams();
         return lp.bottomMargin;
     }
 
@@ -109,14 +108,14 @@ public class MyXListViewFooter extends LinearLayout {
      * 隐藏footer
      */
     public void hide() {
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mContentView.getLayoutParams();
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mContentView.getLayoutParams();
         lp.height = 0;
         mContentView.setLayoutParams(lp);
     }
 
     public void show() {
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mContentView.getLayoutParams();
-        lp.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mContentView.getLayoutParams();
+        lp.height = LayoutParams.WRAP_CONTENT;
         mContentView.setLayoutParams(lp);
     }
 }

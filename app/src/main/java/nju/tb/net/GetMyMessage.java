@@ -4,6 +4,7 @@ package nju.tb.net;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -57,6 +58,7 @@ public class GetMyMessage extends Thread implements Parse.ParseHttp {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 stringBuffer.append(line);
             }
+//            Log.i("获取数据","111111111111");
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
             if (result == 0) {

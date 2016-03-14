@@ -168,7 +168,8 @@ public class MyXListViewHeader extends LinearLayout {
      * header隐藏
      */
     public void hide() {
-        container.setVisibility(View.INVISIBLE);
+//        container.setVisibility(View.GONE);
+        setVisiableHeight(0);
     }
 
 }
