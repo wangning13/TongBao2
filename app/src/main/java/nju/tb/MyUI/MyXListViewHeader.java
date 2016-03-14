@@ -20,6 +20,7 @@ public class MyXListViewHeader extends LinearLayout {
     private static final String HINT_NORMAL = "下拉刷新";
     private static final String HINT_READY = "松开刷新数据";
     private static final String HINT_LOADING = "正在加载。。。";
+    private static final String HINT_ALLREADYNEW = "已经是最新消息";
 
     //正常状态
     public final static int STATE_NORMAL = 0;
@@ -27,6 +28,8 @@ public class MyXListViewHeader extends LinearLayout {
     public final static int STATE_READY = 1;
     //松开状态，箭头消失，progressbar出现，执行刷新动作
     public final static int STATE_REFESHING = 2;
+    //刷新之后没有新数据，显示已经是最新消息
+    public final static int STATE_ALLREADYNEW = 3;
     //容器布局 LinearLayout
     private LinearLayout container;
     //箭头图片
@@ -119,6 +122,13 @@ public class MyXListViewHeader extends LinearLayout {
             case STATE_REFESHING:
                 mHintTextView.setText(HINT_LOADING);
                 break;
+            case STATE_ALLREADYNEW:
+                if (mState != STATE_REFESHING) {
+                    return;
+                }
+                mProgressBar.setVisibility(INVISIBLE);
+                mHintTextView.setText(HINT_ALLREADYNEW);
+                break;
         }
 
         mState = state;
@@ -144,7 +154,7 @@ public class MyXListViewHeader extends LinearLayout {
      * @return
      */
     public int getVisiableHeight() {
-        return container.getHeight();
+        return container.getLayoutParams().height;
     }
 
     /**
