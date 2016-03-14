@@ -47,7 +47,7 @@ public class MessageActivity extends Activity {
     private boolean isLoadingMore = false;
     private boolean noNews = false;
     private boolean noMore = false;
-    private static final int VISIABLEITEMCOUNTS = 5;
+    private static final int VISIABLEITEMCOUNTS = 7;
 
     private Handler handler = new Handler() {
         @Override
