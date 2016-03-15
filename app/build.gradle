@@ -4,6 +4,9 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
+    sourceSets.main{
+        jniLibs.srcDirs=['libs']
+    }
     defaultConfig {
         applicationId "nju.tb"
         minSdkVersion 16
@@ -35,6 +38,7 @@ android {
             dirs 'libs'
         }
     }
+    sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/drawable-hdpi'] } }
 }
 
 dependencies {
