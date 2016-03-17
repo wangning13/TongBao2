@@ -45,7 +45,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     ImageView ivorder;
     ImageView ivme;
 
-    private FragmentManager fragmentManager;
 
 
     @Override

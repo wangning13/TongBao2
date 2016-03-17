@@ -33,7 +33,6 @@ import nju.tb.net.ShowMyOrderList;
 
 public class DoTaskActivity extends Activity {
     private ListView lv;
-    private ArrayAdapter<Order> adapter;
 
 
     private TextView toolbar_text;

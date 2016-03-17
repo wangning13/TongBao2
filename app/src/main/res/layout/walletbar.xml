@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/wallet_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginTop="30dp"
+    android:layout_height="60dp"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:weightSum="1">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_margin="10dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center">
+        <RelativeLayout
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+            <Button
+                android:id="@+id/alipay"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="30dip"
+                android:layout_marginRight="0dip"
+                android:gravity="left"
+                android:text="提现到支付宝"
+                android:textSize="20sp"
+                android:background="@drawable/leftshape1"
+                android:layout_gravity="center_horizontal"
+                />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+            <Button
+                android:id="@+id/card"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="0dip"
+                android:layout_marginRight="30dip"
+                android:text="提现到银行卡"
+                android:textSize="20sp"
+                android:background="@drawable/rightshape2"
+                android:gravity="right"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

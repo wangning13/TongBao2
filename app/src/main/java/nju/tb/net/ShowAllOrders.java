@@ -1,6 +1,7 @@
 package nju.tb.net;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
