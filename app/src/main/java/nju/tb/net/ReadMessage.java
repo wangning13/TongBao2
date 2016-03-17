@@ -1,16 +1,11 @@
 package nju.tb.net;
 
-
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,16 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nju.tb.Commen.MyAppContext;
-import nju.tb.entity.MyMessage;
 
-public class GetMyMessage extends Thread implements Parse.ParseHttp {
-    private final String GETMYMESSAGE = "http://120.27.112.9:8080/tongbao/user/auth/getMyMessages";
+public class ReadMessage extends Thread implements Parse.ParseHttp {
+    private final String READMESSAGE = "http://120.27.112.9:8080/tongbao/user/auth/readMessage";
     private static int result = -1;
     private Context context;
-    private List<MyMessage> myMessagesList;
     private String token;
+    private int id;
     private static String errorMsg;
-    private Handler handler;
 
     public static int getResult() {
         return result;
@@ -40,13 +33,12 @@ public class GetMyMessage extends Thread implements Parse.ParseHttp {
         return errorMsg;
     }
 
-    public GetMyMessage(Context context, String token, Handler handler) {
+    public ReadMessage(Context context, String token, int id) {
         this.context = context;
         this.token = token;
-        myMessagesList = new ArrayList<>();
-        errorMsg = "";
+        this.id = id;
         result = -1;
-        this.handler = handler;
+        errorMsg = "";
     }
 
     @Override
@@ -60,29 +52,20 @@ public class GetMyMessage extends Thread implements Parse.ParseHttp {
             }
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
-            if (result == 0) {
+            if (0 == result) {
                 errorMsg = jsonObject.getString("errorMsg");
                 return;
             }
-            JSONArray jsonArray = jsonObject.getJSONArray("data");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject temp = jsonArray.getJSONObject(i);
-                MyMessage myMessage = new MyMessage();
-                myMessage.setId(temp.getInt("id"));
-                myMessage.setType(temp.getInt("type"));
-                myMessage.setContent(temp.getString("content"));
-                myMessage.setHasRead(temp.getInt("hasRead"));
-                myMessage.setTime(temp.getString("time"));
-                myMessage.setObjectId(temp.getInt("objectId"));
-                myMessagesList.add(myMessage);
-            }
-            Message message = handler.obtainMessage(0);
-            message.obj = myMessagesList;
-            handler.sendMessage(message);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                httpEntity.consumeContent();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -91,7 +74,8 @@ public class GetMyMessage extends Thread implements Parse.ParseHttp {
         HttpRequest request = new HttpRequest(context);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token", token));
-        HttpResponse httpResponse = request.sendHttpPostRequest(GETMYMESSAGE, params);
+        params.add(new BasicNameValuePair("id", String.valueOf(id)));
+        HttpResponse httpResponse = request.sendHttpPostRequest(READMESSAGE, params);
         while (httpResponse == null) {
             if (!MyAppContext.getIsConnected()) {
                 return;

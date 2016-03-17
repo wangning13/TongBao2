@@ -16,6 +16,7 @@ import android.widget.TextView;
 import nju.tb.R;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -79,7 +80,7 @@ public class MessageListAdapter extends BaseAdapter {
                 if (isChecked) {
                     selectedId.add(position);
                 } else {
-                    selectedId.remove(position);
+                    remove(selectedId,position);
                 }
             }
         });
@@ -107,5 +108,14 @@ public class MessageListAdapter extends BaseAdapter {
         return convertView;
     }
 
+    private void remove(List<Integer> list,int n){
+        Iterator<Integer> it=list.iterator();
+        while(it.hasNext()){
+            if(it.next()==n){
+                it.remove();
+                break;
+            }
+        }
+    }
 
 }

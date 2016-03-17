@@ -27,10 +27,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import nju.tb.Adapters.MessageListAdapter;
 import nju.tb.entity.MyMessage;
+import nju.tb.net.DeleteMessage;
 import nju.tb.net.GetMyMessage;
+import nju.tb.net.ReadMessage;
 
 public class MessageActivity extends Activity {
     private MyXListView messageList;
@@ -47,7 +52,9 @@ public class MessageActivity extends Activity {
     private boolean isLoadingMore = false;
     private boolean noNews = false;
     private boolean noMore = false;
-    private static final int VISIABLEITEMCOUNTS = 7;
+    private static final int VISIABLEITEMCOUNTS = 6;
+    private ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+    private String token;
 
     private Handler handler = new Handler() {
         @Override
@@ -59,8 +66,8 @@ public class MessageActivity extends Activity {
                         return;
                     }
                     if (myMessageList.size() > VISIABLEITEMCOUNTS) {
-                       data = getData(myMessageList.subList(0, VISIABLEITEMCOUNTS));
-                    }else{
+                        data = getData(myMessageList.subList(0, VISIABLEITEMCOUNTS));
+                    } else {
                         data = getData(myMessageList);
                     }
                     adapter = getAdapter(data);
@@ -79,7 +86,7 @@ public class MessageActivity extends Activity {
                     myMessageList = tempMessageList;
                     if (myMessageList.size() > VISIABLEITEMCOUNTS) {
                         data = getData(myMessageList.subList(0, VISIABLEITEMCOUNTS));
-                    }else{
+                    } else {
                         data = getData(myMessageList);
                     }
                     adapter = getAdapter(data);
@@ -130,6 +137,9 @@ public class MessageActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_driver_message);
+
+        MyAppContext myAppContext1 = (MyAppContext) getApplicationContext();
+        this.token = myAppContext1.getToken();
 
         //toolbar的标题
         toolbar_text = (TextView) findViewById(R.id.toolbar_title);
@@ -192,85 +202,96 @@ public class MessageActivity extends Activity {
 
             }
         });
-        MyAppContext myAppContext = (MyAppContext) getApplicationContext();
+        final MyAppContext myAppContext = (MyAppContext) getApplicationContext();
         new GetMyMessage(this, myAppContext.getToken(), handler).start();
-//        messageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (!longClickState) {
-//                    HashMap<String, Object> map = (HashMap<String, Object>) parent.getItemAtPosition(position);
-//                    boolean is_read = (boolean) map.get("IsRead");
-//                    if (is_read == false) {
-//                        //另起线程上传到数据库，本地直接变化
-//                        data.get(position).put("IsRead", true);
-//                        adapter.notifyDataSetChanged();
-//                    }
-//                    String messageSource = (String) data.get(position).get("Source");
-//                    String text = (String) data.get(position).get("Text");
-//                    String time = (String) data.get(position).get("Time");
-//                    Intent intent = new Intent(MessageActivity.this, MessageContentActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("ContentSource", messageSource);
-//                    bundle.putString("ContentText", text);
-//                    bundle.putString("ContentTime", time);
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
+        messageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!longClickState) {
+                    HashMap<String, Object> map = (HashMap<String, Object>) parent.getItemAtPosition(position);
+                    int is_read = (int) map.get("IsRead");
+                    if (is_read == 0) {
+                        //另起线程上传到数据库，本地直接变化
+                        MyAppContext myAppContext1 = (MyAppContext) getApplicationContext();
+                        new ReadMessage(MessageActivity.this, myAppContext.getToken(), (int) data.get(position - 1)
+                                .get("MessageId")).start();
+                        data.get(position - 1).put("IsRead", 1);
+                        adapter.notifyDataSetChanged();
+                    }
+                    String messageSource = (String) data.get(position).get("Source");
+                    String text = (String) data.get(position).get("Text");
+                    String time = (String) data.get(position).get("Time");
+                    Intent intent = new Intent(MessageActivity.this, MessageContentActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("ContentSource", messageSource);
+                    bundle.putString("ContentText", text);
+                    bundle.putString("ContentTime", time);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            }
+        });
 
-//        class OnLongClick implements AdapterView.OnItemLongClickListener {
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (!longClickState) {
-//                    adapter.setClickState(true);
-//                    selectedId.clear();
-//                    deleteLayout.setVisibility(View.VISIBLE);
-//                    messageList.setAdapter(adapter);
-//                    return true;
-//                } else {
-//                    return false;
-//                }
-//
-//            }
-//        }
-//        messageList.setOnItemLongClickListener(new OnLongClick());
-//        //确认删除按钮的监听事件
-//        okButton.setOnClickListener(new Button.OnClickListener() {
-//            public void onClick(View view) {
-//                selectedId = adapter.getSelectedId();
-//                if (selectedId.size() == 0) {
-//                    return;
-//                }
-//                ArrayList<Boolean> arr = new ArrayList<Boolean>();
-//                for (int i = 0; i < data.size(); i++) {
-//                    arr.add(false);
-//                }
-//                for (int j : selectedId) {
-//                    arr.set(j, true);
-//                }
-//                Iterator dataIterator = data.iterator();
-//                Iterator arrIterator = arr.iterator();
-//                while (arrIterator.hasNext()) {
-//                    boolean b = (boolean) arrIterator.next();
-//                    dataIterator.next();
-//                    if (b) {
-//                        arrIterator.remove();
-//                        dataIterator.remove();
-//                    }
-//                }
-//                adapter.setClickState(false);
-//                adapter.notifyDataSetChanged();
-//                deleteLayout.setVisibility(View.GONE);
-//            }
-//        });
-//        //取消按钮的监听事件
-//        cancelButton.setOnClickListener(new Button.OnClickListener() {
-//            public void onClick(View view) {
-//                adapter.setClickState(false);
-//                messageList.setAdapter(adapter);
-//                deleteLayout.setVisibility(View.GONE);
-//            }
-//        });
+        class OnLongClick implements AdapterView.OnItemLongClickListener {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!longClickState) {
+                    messageList.setPullLoadMoreEnable(false);
+                    messageList.setPullRefreshEnable(false);
+                    adapter.setClickState(true);
+                    selectedId.clear();
+                    deleteLayout.setVisibility(View.VISIBLE);
+                    messageList.setAdapter(adapter);
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+        }
+        messageList.setOnItemLongClickListener(new OnLongClick());
+        //确认删除按钮的监听事件
+        okButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View view) {
+                selectedId = adapter.getSelectedId();
+                if (selectedId.size() == 0) {
+                    return;
+                }
+                ArrayList<Boolean> arr = new ArrayList<Boolean>();
+                for (int i = 0; i < data.size(); i++) {
+                    arr.add(false);
+                }
+                for (int j : selectedId) {
+                    arr.set(j, true);
+                }
+                Iterator dataIterator = data.iterator();
+                Iterator arrIterator = arr.iterator();
+                while (arrIterator.hasNext()) {
+                    boolean b = (boolean) arrIterator.next();
+                    HashMap<String, Object> map = (HashMap<String, Object>) dataIterator.next();
+                    if (b) {
+                        int id = (int) map.get("MessageId");
+                        cachedThreadPool.execute(new DeleteMessage(MessageActivity.this, token, String.valueOf(id)));
+                        arrIterator.remove();
+                        dataIterator.remove();
+                    }
+                }
+                adapter.setClickState(false);
+                adapter.notifyDataSetChanged();
+                deleteLayout.setVisibility(View.GONE);
+                messageList.setPullLoadMoreEnable(true);
+                messageList.setPullRefreshEnable(true);
+            }
+        });
+        //取消按钮的监听事件
+        cancelButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View view) {
+                adapter.setClickState(false);
+                messageList.setAdapter(adapter);
+                deleteLayout.setVisibility(View.GONE);
+                messageList.setPullLoadMoreEnable(true);
+                messageList.setPullRefreshEnable(true);
+            }
+        });
     }
 
     private List<Map<String, Object>> getData(List<MyMessage> list) {
@@ -281,6 +302,7 @@ public class MessageActivity extends Activity {
             map.put("Text", myMessage.getContent());
             map.put("Time", myMessage.getTime());
             map.put("IsRead", myMessage.getHasRead());
+            map.put("MessageId", myMessage.getId());
             data.add(map);
         }
         return data;
