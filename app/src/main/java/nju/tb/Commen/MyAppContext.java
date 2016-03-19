@@ -34,6 +34,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import nju.tb.net.GetAllTruckTypes;
 import nju.tb.net.HttpRequest;
 
@@ -154,6 +155,8 @@ public class MyAppContext extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
         isLogIn = false;
         myAppContext = this;
         startService(new Intent(this, nju.tb.services.NetStateService.class));  //监控网络

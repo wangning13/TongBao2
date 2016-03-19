@@ -45,7 +45,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     ImageView ivorder;
     ImageView ivme;
 
-    private FragmentManager fragmentManager;
 
 
     @Override
@@ -92,7 +91,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         findViewById(R.id.order_layout).setOnClickListener(this);
         findViewById(R.id.me_layout).setOnClickListener(this);
 
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 123);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE
+                , Manifest.permission.WRITE_EXTERNAL_STORAGE
+                , Manifest.permission.WAKE_LOCK
+                , Manifest.permission.READ_PHONE_STATE
+                , Manifest.permission.INTERNET
+        }, 123);
 
         int type = getIntent().getIntExtra("type", 0);
         if(type==1){
