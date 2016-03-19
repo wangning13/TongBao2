@@ -8,4 +8,5 @@
     <color name="stepSelectedGreen">#99CC99</color>
     <color name="colorBlack">#000000</color>
     <color name="newBlue">#99CCFF</color>
+    <color name="vifrification">#00000000</color> <!-- 透明-->
 </resources>
