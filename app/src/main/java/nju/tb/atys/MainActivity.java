@@ -87,9 +87,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         changeView(0);
         ivhome.setImageDrawable(getResources().getDrawable(R.drawable.home2));
 
-        findViewById(R.id.home_layout).setOnClickListener(this);
-        findViewById(R.id.order_layout).setOnClickListener(this);
-        findViewById(R.id.me_layout).setOnClickListener(this);
+        home_layout.setOnClickListener(this);
+        order_layout.setOnClickListener(this);
+        me_layout.setOnClickListener(this);
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE
                 , Manifest.permission.WRITE_EXTERNAL_STORAGE

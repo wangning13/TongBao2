@@ -8,12 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import nju.tb.R;
-import nju.tb.atys.CarsManagementActivity;
-import nju.tb.atys.DoTaskActivity;
-import nju.tb.atys.HelpcenterActivity;
-import nju.tb.atys.MessageActivity;
-import nju.tb.atys.ScrambleOrderActivity;
-import nju.tb.atys.UseWalletActivity;
 
 /**
  * Created by Administrator on 2016/1/21.

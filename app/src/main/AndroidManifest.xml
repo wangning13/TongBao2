@@ -55,11 +55,6 @@
 
         </activity>
         <activity
-            android:name=".atys.ScrambleOrderActivity"
-            android:label="@string/title_activity_order"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
             android:name=".atys.DoTaskActivity"
             android:label="@string/title_activity_do_task"
             android:theme="@style/AppTheme.NoActionBar">
@@ -93,6 +88,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
+        <activity android:name=".atys.ScrambleOrderActivity"/>
         <activity android:name=".atys.TaskOrderContentActivity"/>
         <activity android:name=".atys.OldOrderContentActivity"/>
         <activity android:name=".atys.MessageContentActivity"/>
@@ -213,6 +209,6 @@
         <meta-data android:name="JPUSH_APPKEY" android:value="12be19e543158d0d057b2d09" /> <!--  </>值来自开发者平台取得的AppKey-->
 
 
-   </application>
+    </application>
 
 </manifest>
