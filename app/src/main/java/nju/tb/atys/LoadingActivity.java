@@ -25,7 +25,6 @@ public class LoadingActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 while (Login.getResult() == -1) {
-//                    Log.i("运行到-1","1111111111");
                     if (!MyAppContext.getIsConnected()) {
                         Intent netWrongIntent = new Intent(LoadingActivity.this, LoginActivity.class);
                         Bundle bundle = new Bundle();

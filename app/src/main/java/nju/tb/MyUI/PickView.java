@@ -24,7 +24,7 @@ public class PickView extends View {
     //中间数据停留的地方与viewheight/2的差值可以忽略的极限
     private static final float DIS = 0.0001f;
     //回滚速度
-    private static final float SPEED = 2;
+    private static final float SPEED = 5;
 
     private List<Integer> dataList;
     //处于中间的index
@@ -55,7 +55,7 @@ public class PickView extends View {
     Handler backHandler = new Handler() {
         @Override
         public void handleMessage(Message message) {
-            if (Math.abs(moveLength) < DIS) {
+            if (Math.abs(moveLength) < SPEED) {
                 moveLength = 0;
                 if (backTimerTask != null) {
                     backTimerTask.cancel();
@@ -175,7 +175,7 @@ public class PickView extends View {
      * @param type     :-1表示向上，1表示向下
      */
     private void drawOtherText(Canvas canvas, int position, int type) {
-        float d = (float) (MARGIN_ALPHA * minTextSize * (Math.abs(position - currentIndex) + moveLength));
+        float d = (float) (MARGIN_ALPHA * minTextSize * (Math.abs(position - currentIndex)) + type * moveLength);
         float scale = parabola(viewHeight / 4.0f, d);
         float size = (maxTextSize - minTextSize) * scale + minTextSize;
         paint.setTextSize(size);
@@ -241,14 +241,15 @@ public class PickView extends View {
         if (moveLength > (MARGIN_ALPHA * minTextSize / 2)) {
             if (currentIndex != 0) {
                 currentIndex--;
-                moveLength = 0;
+                //中心position改变，movelength=0的话就会直接移动到中心，没有过程了。
+                moveLength = moveLength - MARGIN_ALPHA * minTextSize;
             }
         }
         //向上
         else if (moveLength < -(MARGIN_ALPHA * minTextSize / 2)) {
             if (currentIndex != dataList.size() - 1) {
                 currentIndex++;
-                moveLength = 0;
+                moveLength = moveLength - MARGIN_ALPHA * minTextSize;
             }
         }
         lastY = event.getY();
@@ -263,6 +264,7 @@ public class PickView extends View {
     private void doTouchUp(MotionEvent event) {
         if (moveLength < DIS) {
             moveLength = 0;
+            invalidate();
             return;
         }
         if (backTimerTask != null) {

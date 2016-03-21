@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
+import nju.tb.entity.Account;
 import nju.tb.net.GetAllTruckTypes;
 import nju.tb.net.HttpRequest;
 
@@ -67,6 +68,16 @@ public class MyAppContext extends Application {
     private int point = 0;    //用户积分
     private int money = 0;    //用户余额
     private String token = "";    //识别用户的token
+
+    private List<Account> accountList; //账单列表
+
+    public void setAccountList(List<Account> list) {
+        this.accountList = list;
+    }
+
+    public List<Account> getAccountList() {
+        return this.accountList;
+    }
 
     public void setPhone(String phone) {
         this.phone = phone;
@@ -131,13 +142,13 @@ public class MyAppContext extends Application {
     }
 
     public synchronized HttpClient getHttpClient() {
-        HttpParams params=new BasicHttpParams();
+        HttpParams params = new BasicHttpParams();
         HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
         HttpProtocolParams.setContentCharset(params, HTTP.DEFAULT_CONTENT_CHARSET);
         HttpProtocolParams.setUseExpectContinue(params, true);
-        ConnManagerParams.setMaxTotalConnections(params,100);
-        HttpConnectionParams.setConnectionTimeout(params,5000);
-        HttpConnectionParams.setSoTimeout(params,3000);
+        ConnManagerParams.setMaxTotalConnections(params, 100);
+        HttpConnectionParams.setConnectionTimeout(params, 5000);
+        HttpConnectionParams.setSoTimeout(params, 3000);
         SchemeRegistry schReg = new SchemeRegistry();
         schReg.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
         ClientConnectionManager conMgr = new ThreadSafeClientConnManager(params, schReg);
@@ -155,8 +166,8 @@ public class MyAppContext extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        JPushInterface.setDebugMode(true);
-        JPushInterface.init(this);
+//        JPushInterface.setDebugMode(true);
+//        JPushInterface.init(this);
         isLogIn = false;
         myAppContext = this;
         startService(new Intent(this, nju.tb.services.NetStateService.class));  //监控网络

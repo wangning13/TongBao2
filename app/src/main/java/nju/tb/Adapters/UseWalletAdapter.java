@@ -53,8 +53,8 @@ public class UseWalletAdapter extends BaseAdapter {
         change.setText(list.get(position).get(1));
         time = (TextView) convertView.findViewById(R.id.time);
         time.setText(list.get(position).get(2));
-        money = (TextView) convertView.findViewById(R.id.money);
-        money.setText(list.get(position).get(3));
+//        money = (TextView) convertView.findViewById(R.id.money);
+//        money.setText(list.get(position).get(3));
 
         return convertView;
     }

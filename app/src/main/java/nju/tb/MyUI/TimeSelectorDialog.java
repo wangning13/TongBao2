@@ -25,12 +25,18 @@ public class TimeSelectorDialog extends Dialog {
     private Window window;
     private TimeSelector timeSelector;
 
+    public TimeSelectorDialog(Context context, int themeResId) {
+        super(context, themeResId);
+    }
+
+
     public TimeSelectorDialog(Context context) {
         super(context);
     }
 
-    public TimeSelectorDialog(Context context, List<Integer> yearList, List<Integer> monthList) {
-        this(context);
+    // 使用不带theme的构造器，获得的dialog边框距离屏幕仍有几毫米的缝隙。
+    public TimeSelectorDialog(Context context,int style, List<Integer> yearList, List<Integer> monthList) {
+        this(context,style);
         this.yearList = yearList;
         this.monthList = monthList;
     }
@@ -41,25 +47,28 @@ public class TimeSelectorDialog extends Dialog {
         okTextView = (TextView) findViewById(R.id.timeselector_dialog_ok);
         yearPickView = (PickView) findViewById(R.id.timeselector_dialog_year);
         monthPickView = (PickView) findViewById(R.id.timeselector_dialog_month);
+        yearPickView.setData(yearList);
+        monthPickView.setData(monthList);
     }
 
     @Override
     public void onCreate(Bundle savedInstancedState) {
         super.onCreate(savedInstancedState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_timeselector_dialog);
 
         init();
-        windowDeploy();
+//        windowDeploy();
         setCanceledOnTouchOutside(true);
 
         cancelTextView.setOnClickListener(new DialogOnclickListener());
         okTextView.setOnClickListener(new DialogOnclickListener());
     }
 
-    public void windowDeploy() {
-        window.setGravity(Gravity.BOTTOM);
-        window.setWindowAnimations(R.style.dialogWindowAnim);
-    }
+//    public void windowDeploy() {
+//        window.setGravity(Gravity.BOTTOM);
+//        window.setWindowAnimations(R.style.dialogWindowAnim);
+//    }
 
 
     class DialogOnclickListener implements View.OnClickListener {
@@ -67,12 +76,12 @@ public class TimeSelectorDialog extends Dialog {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.timeselector_dialog_cancel:
+                    TimeSelectorDialog.this.dismiss();
+                    break;
+                case R.id.timeselector_dialog_ok:
                     int yearPosition = yearPickView.getCurrentIndex();
                     int monthPosition = monthPickView.getCurrentIndex();
                     timeSelector.onSelector(yearPosition, monthPosition);
-                    break;
-                case R.id.timeselector_dialog_ok:
-                    TimeSelectorDialog.this.dismiss();
                     break;
             }
         }
@@ -82,7 +91,7 @@ public class TimeSelectorDialog extends Dialog {
         this.timeSelector = timeSelector;
     }
 
-    interface TimeSelector {
+    public interface TimeSelector {
         void onSelector(int yearPosition, int monthPosition);
     }
 

@@ -8,12 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import nju.tb.R;
-import nju.tb.atys.CarsManagementActivity;
-import nju.tb.atys.DoTaskActivity;
-import nju.tb.atys.HelpcenterActivity;
-import nju.tb.atys.MessageActivity;
-import nju.tb.atys.ScrambleOrderActivity;
-import nju.tb.atys.UseWalletActivity;
 
 /**
  * Created by Administrator on 2016/1/21.
@@ -48,7 +42,7 @@ public class HomeFragment extends Fragment {
         });
         m_vFindWorkFragment.findViewById(R.id.wallet_layout).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(),UseWalletActivity.class);
+                Intent i = new Intent(getActivity(),UserWalletActivity.class);
                 startActivity(i);
             }
         });

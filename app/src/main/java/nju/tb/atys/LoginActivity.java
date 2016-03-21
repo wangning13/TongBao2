@@ -61,6 +61,12 @@ public class LoginActivity extends Activity {
         toRegister = (TextView) findViewById(R.id.login_toregister);
         keepPassword = (CheckBox) findViewById(R.id.login_keeppassword);
 
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         SharedPreferences settings = getSharedPreferences("loginSettings", 0);
         String phone1 = settings.getString("phone", "");
         String password1 = settings.getString("password", "");
@@ -92,11 +98,8 @@ public class LoginActivity extends Activity {
                 }
             }
         }).start();
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+
         phoneNumberEditText.addTextChangedListener(new LoginEditTextViewWatcher(11, 11, phoneNumberEditText));
         passwordEditText.addTextChangedListener(new LoginEditTextViewWatcher(8, 255, passwordEditText));
 
@@ -119,7 +122,6 @@ public class LoginActivity extends Activity {
             loginButton.setClickable(false);
         }
 
-
         Bundle loadingReturn = getIntent().getBundleExtra("LoadingActivity");
         if (loadingReturn != null && loadingReturn.getString("state").equals("fail")) {
             passwordEditText.setText("");
@@ -137,6 +139,7 @@ public class LoginActivity extends Activity {
     @Override
     public void onStop() {
         super.onStop();
+
         if (changeLogin) {
             SharedPreferences loginSettings = getSharedPreferences("loginSettings", 0);
             loginSettings.edit().clear().commit();
@@ -162,10 +165,6 @@ public class LoginActivity extends Activity {
 
         @Override
         public void onClick(View v) {
-//            if (!MyAppContext.getIsConnected()) {
-//                Toast.makeText(LoginActivity.this, "网络未连接，请检查网络设置", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
             String phoneNumber = phoneNumberEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 

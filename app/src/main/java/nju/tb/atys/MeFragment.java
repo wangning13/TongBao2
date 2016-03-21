@@ -2,6 +2,7 @@ package nju.tb.atys;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,24 +11,20 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.conn.scheme.HostNameResolver;
-
 import nju.tb.Commen.BitmapHelper;
 import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
-import nju.tb.atys.ChangeInfoActivity;
-import nju.tb.atys.HelpcenterActivity;
-import nju.tb.atys.UseWalletActivity;
 import nju.tb.net.GetBitmap;
-import nju.tb.net.HttpImage;
 
 public class MeFragment extends Fragment {
     private ImageView displayPicImageView;
     private TextView nickNameTextView, phoneTextView;
+    private Button logoutButton;
 
     private Bitmap iconBitmap;
     private String nickName;
@@ -53,10 +50,11 @@ public class MeFragment extends Fragment {
         displayPicImageView = (ImageView) view.findViewById(R.id.ImageView_add);
         nickNameTextView = (TextView) view.findViewById(R.id.text_name);
         phoneTextView = (TextView) view.findViewById(R.id.text_tel);
+        logoutButton = (Button) view.findViewById(R.id.logout);
 
         view.findViewById(R.id.wallet_layout).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), UseWalletActivity.class));
+                startActivity(new Intent(getActivity(), UserWalletActivity.class));
             }
         });
         view.findViewById(R.id.editinfo_layout).setOnClickListener(new View.OnClickListener() {
@@ -82,6 +80,19 @@ public class MeFragment extends Fragment {
             }
         });
 
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences settings = getActivity().getSharedPreferences("loginSettings", 0);
+                if (settings != null) {
+                    settings.edit().clear().commit();
+                }
+                MyAppContext.setLogIn(false);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -103,7 +114,7 @@ public class MeFragment extends Fragment {
                 nickNameTextView.setText(nickName);
             }
             MyAppContext myAppContext1 = MyAppContext.getMyAppContext();
-            phoneTextView.setText("电话:"+myAppContext1.getPhone());
+            phoneTextView.setText("电话:" + myAppContext1.getPhone());
         } else {
             String updateBitmapPath = f.getArguments().getString("BitmapPathToUpdate");
             BitmapHelper bitmapHelper = new BitmapHelper(getActivity());
@@ -116,7 +127,7 @@ public class MeFragment extends Fragment {
                 nickNameTextView.setText(nickName);
             }
             MyAppContext myAppContext1 = MyAppContext.getMyAppContext();
-            phoneTextView.setText("电话:"+myAppContext1.getPhone());
+            phoneTextView.setText("电话:" + myAppContext1.getPhone());
         }
 
     }

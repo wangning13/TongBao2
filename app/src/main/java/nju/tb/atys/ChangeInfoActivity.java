@@ -189,6 +189,7 @@ public class ChangeInfoActivity extends Activity {
                 boolean nickNameRunning = false;
                 if (!editNickName.equals(nickName) && !editNickName.equals("")) {
                     new ModifyNickName(ChangeInfoActivity.this, USERTOKEN, editNickName).start();
+                    myAppContext.setNickName(editNickName);
                     nickNameRunning = true;
                 }
                 String op = oldPasswordEditText.getText().toString();
