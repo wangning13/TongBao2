@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baidu.mapapi.SDKInitializer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,7 +98,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 , Manifest.permission.WAKE_LOCK
                 , Manifest.permission.READ_PHONE_STATE
                 , Manifest.permission.INTERNET
+                , Manifest.permission.GET_ACCOUNTS
+                , Manifest.permission.ACCESS_NETWORK_STATE
+                , Manifest.permission.INTERNET
+                , Manifest.permission.CHANGE_WIFI_STATE
+                , Manifest.permission.ACCESS_WIFI_STATE
+                , Manifest.permission.READ_PHONE_STATE
+                , Manifest.permission.WRITE_EXTERNAL_STORAGE
+                , Manifest.permission.BROADCAST_STICKY
+                , Manifest.permission.WRITE_SETTINGS
+                , Manifest.permission.READ_PHONE_STATE
         }, 123);
+
+
 
         int type = getIntent().getIntExtra("type", 0);
         if(type==1){

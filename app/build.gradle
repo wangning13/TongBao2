@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+    }
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
-
-    sourceSets.main{
-        jniLibs.srcDirs=['libs']
+    buildToolsVersion '23.0.2'
+    sourceSets.main {
+        jniLibs.srcDirs = ['libs']
     }
     defaultConfig {
         applicationId "nju.tb"
@@ -19,8 +20,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+        }
     }
-
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -38,11 +40,18 @@ android {
             dirs 'libs'
         }
     }
-    sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/drawable-hdpi'] } }
+    sourceSets {
+        main {
+            res.srcDirs = ['src/main/res', 'src/main/res/drawable-hdpi']
+            jni.srcDirs = []
+        }
+    }
+    productFlavors {
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
@@ -56,4 +65,5 @@ dependencies {
     compile files('httpcore-4.3.jar')
     compile files('httpmime-4.3.1.jar')
     compile(name: 'SMSSDK-2.0.2', ext: 'aar')
+    compile files('libs/BaiduLBS_Android.jar')
 }
