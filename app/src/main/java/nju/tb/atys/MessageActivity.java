@@ -52,7 +52,7 @@ public class MessageActivity extends Activity {
     private boolean isLoadingMore = false;
     private boolean noNews = false;
     private boolean noMore = false;
-    private static final int VISIABLEITEMCOUNTS = 6;
+    private static final int VISIABLEITEMCOUNTS = 7;
     private ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
     private String token;
 
@@ -63,11 +63,15 @@ public class MessageActivity extends Activity {
                 if (!isRefreshing && !isLoadingMore) {
                     myMessageList = (List<MyMessage>) msg.obj;
                     if (myMessageList.size() == 0) {
+                        messageList.setAdapter(null);
+                        messageList.setPullLoadMoreEnable(false);
                         return;
                     }
                     if (myMessageList.size() > VISIABLEITEMCOUNTS) {
+                        messageList.setPullLoadMoreEnable(true);
                         data = getData(myMessageList.subList(0, VISIABLEITEMCOUNTS));
                     } else {
+                        messageList.setPullLoadMoreEnable(false);
                         data = getData(myMessageList);
                     }
                     adapter = getAdapter(data);
@@ -78,6 +82,8 @@ public class MessageActivity extends Activity {
                     noNews = false;
                     List<MyMessage> tempMessageList = (List<MyMessage>) msg.obj;
                     if (tempMessageList.size() == 0) {
+                        noNews=true;
+                        isRefreshing = false;
                         return;
                     }
                     if (isListEquals(myMessageList, tempMessageList)) {
@@ -85,8 +91,10 @@ public class MessageActivity extends Activity {
                     }
                     myMessageList = tempMessageList;
                     if (myMessageList.size() > VISIABLEITEMCOUNTS) {
+                        messageList.setPullLoadMoreEnable(true);
                         data = getData(myMessageList.subList(0, VISIABLEITEMCOUNTS));
                     } else {
+                        messageList.setPullLoadMoreEnable(false);
                         data = getData(myMessageList);
                     }
                     adapter = getAdapter(data);
@@ -108,6 +116,7 @@ public class MessageActivity extends Activity {
                     adapter = getAdapter(data);
                     messageList.setAdapter(adapter);
                     if (data.size() > VISIABLEITEMCOUNTS) {
+                        messageList.setPullLoadMoreEnable(true);
                         messageList.setSelection(adapter.getCount() - VISIABLEITEMCOUNTS);
                     }
                     isLoadingMore = false;
@@ -218,9 +227,9 @@ public class MessageActivity extends Activity {
                         data.get(position - 1).put("IsRead", 1);
                         adapter.notifyDataSetChanged();
                     }
-                    String messageSource = (String) data.get(position).get("Source");
-                    String text = (String) data.get(position).get("Text");
-                    String time = (String) data.get(position).get("Time");
+                    String messageSource = (String) data.get(position-1).get("Source");
+                    String text = (String) data.get(position-1).get("Text");
+                    String time = (String) data.get(position-1).get("Time");
                     Intent intent = new Intent(MessageActivity.this, MessageContentActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("ContentSource", messageSource);
