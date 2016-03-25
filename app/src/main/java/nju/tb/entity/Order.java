@@ -1,9 +1,16 @@
 package nju.tb.entity;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/1/20.
  */
-public class Order {
+
+
+
+public class Order implements Serializable {
     public String getTime() {
         return time;
     }

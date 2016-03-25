@@ -31,7 +31,6 @@ public class ScrambleOrderFragment extends Fragment {
     private String toaddress="";
     private Spinner fromspinner;
     private Spinner tospinner;
-    private TextView toolbar_text;
     private List<Map<String, Order>> mData=new ArrayList<Map<String, Order>>();
     private OrderListAdapter orderadapter;
     private OrderListAdapter initadapter;
