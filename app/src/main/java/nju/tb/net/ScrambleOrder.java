@@ -58,7 +58,6 @@ public class ScrambleOrder extends Thread implements Parse.ParseHttp{
                 stringBuffer.append(line);
             }
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
-            Log.i("抢单", stringBuffer.toString());
             result = jsonObject.getInt("result");
             if (result == 0) {
                 errorMsg = jsonObject.getString("errorMsg");

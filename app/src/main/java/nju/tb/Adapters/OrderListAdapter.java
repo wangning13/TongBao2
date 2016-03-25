@@ -1,8 +1,12 @@
 package nju.tb.Adapters;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +20,9 @@ import java.util.Map;
 
 import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
+import nju.tb.atys.GrabOrderContentActivity;
+import nju.tb.atys.ScrambleOrderFragment;
+import nju.tb.atys.TaskOrderContentActivity;
 import nju.tb.entity.Order;
 import nju.tb.net.ScrambleOrder;
 
@@ -79,52 +86,13 @@ public class OrderListAdapter extends BaseAdapter {
 
 
     public void showInfo(int position){
-        View orderDialogView = mInflater.inflate(R.layout.activity_order_detail, null);
-
-        AlertDialog.Builder builder =new AlertDialog.Builder(context);
-        builder.setView(orderDialogView);
-        final Dialog dialog=builder.create();
-        dialog.show();
 
 
-
-        TextView number_text=(TextView) orderDialogView.findViewById(R.id.number);
-        TextView faddress_text=(TextView) orderDialogView.findViewById(R.id.faddress);
-        TextView taddress_text=(TextView) orderDialogView.findViewById(R.id.taddress);
-        TextView loadtime_text=(TextView) orderDialogView.findViewById(R.id.loadtime);
-        TextView money_text=(TextView) orderDialogView.findViewById(R.id.money);
-        Button grabbtn=(Button)orderDialogView.findViewById(R.id.accept_btn);
-        final Order order=list.get(position).get("info");
-
-        number_text.setText(order.getId()+"");
-        faddress_text.setText(order.getAddressFrom());
-        taddress_text.setText(order.getAddressTo());
-        loadtime_text.setText(order.getLoadTime());
-        taddress_text.setText(order.getAddressTo());
-        money_text.setText(order.getMoney());
-
-        grabbtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final String USERTOKEN = ((MyAppContext) context.getApplicationContext()).getToken();
-                ScrambleOrder go = new ScrambleOrder(context, USERTOKEN, order.getId());
-                go.start();
-                while (!go.runover) {
-
-                }
-                if (go.getResult() ==0) {
-                    Toast.makeText(context, go.getErrorMsg(), Toast.LENGTH_SHORT).show();
-                }
-                if (go.getResult() == -1 && MyAppContext.getIsConnected() == false) {
-                    Toast.makeText(context, "网络不可用，请检查网络设置", Toast.LENGTH_SHORT).show();
-                }
-                if (go.getResult() ==1) {
-                    holder.viewBtn.setText("已接单");
-                    holder.viewBtn.setTextColor(android.graphics.Color.RED);
-                }
-                dialog.dismiss();
-            }
-        });
-
+        Intent intent = new Intent(context, GrabOrderContentActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("order", list.get(position).get("info"));
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 
     public final class ViewHolder{

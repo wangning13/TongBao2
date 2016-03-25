@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         });
         m_vFindWorkFragment.findViewById(R.id.help_layout).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(),HelpcenterActivity.class);
+                Intent i = new Intent(getActivity(),GPSActivity.class);
                 startActivity(i);
             }
         });

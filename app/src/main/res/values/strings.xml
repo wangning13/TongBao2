@@ -16,4 +16,6 @@
     <string name="title_activity_helpcenter">HelpcenterActivity</string>
     <string name="title_activity_message">MessageActivity</string>
     <string name="title_activity_nearby">nearbyActivity</string>
+    <string name="title_activity_grab_order_content">GrabOrderContentActivity</string>
+    <string name="title_activity_gps">GPSActivity</string>
 </resources>
