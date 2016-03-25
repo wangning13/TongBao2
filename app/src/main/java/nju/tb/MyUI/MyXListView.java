@@ -100,7 +100,13 @@ public class MyXListView extends ListView {
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         //0是headerview, totalItemCount-1是footerview
-        totalItemCount = getAdapter().getCount();
+        if (getAdapter() == null) {
+            totalItemCount = 2;
+        } else {
+            totalItemCount = getAdapter().getCount();
+
+        }
+
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 lastY = ev.getRawY();
@@ -262,6 +268,7 @@ public class MyXListView extends ListView {
             }
         }
         headerView.setVisiableHeight(height);
+
     }
 
     /**
@@ -291,6 +298,9 @@ public class MyXListView extends ListView {
      * @param delta lasty的差
      */
     private void updateFooterHeight(float delta) {
+        if (!enableLoadMore) {
+            return;
+        }
         int bottomMargin = footerView.getBottomMargin() + (int) delta;
         if (enableLoadMore && !isLoadingMore) {
             if (bottomMargin > PULL_LOAD_MORE_DELTA) {
