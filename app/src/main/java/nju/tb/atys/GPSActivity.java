@@ -53,7 +53,7 @@ public class GPSActivity extends Activity {
                     ActivityCompat.requestPermissions(getParent(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                             123);
                 }
-                manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 10, new LocationListener() {
+                manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 6000, 1, new LocationListener() {
 
                     @Override
                     public void onStatusChanged(String provider, int status, Bundle extras) {

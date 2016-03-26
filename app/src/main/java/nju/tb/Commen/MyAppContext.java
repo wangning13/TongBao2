@@ -171,6 +171,7 @@ public class MyAppContext extends Application {
         isLogIn = false;
         myAppContext = this;
         startService(new Intent(this, nju.tb.services.NetStateService.class));  //监控网络
+        startService(new Intent(this, nju.tb.services.GPSService.class));
 
 
     }
