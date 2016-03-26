@@ -20,7 +20,7 @@ public class GPSService extends Service {
 
     LocationManager manager;
     Location location;
-    double[] latlon={38, 118};
+    double[] latlon;
 
 
     // 实例化自定义的Binder类
@@ -85,8 +85,10 @@ public class GPSService extends Service {
         if(location==null)
         {
         }
-        double[] latlonnow=new double[]{location.getLatitude(),location.getLongitude()};
-        setLatlon(latlonnow);
+        if ( ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+        }
+        location=manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        this.location=location;
 
     }
 
@@ -95,9 +97,6 @@ public class GPSService extends Service {
         return latlonnow;
     }
 
-    public void setLatlon(double[] latlon) {
-        this.latlon = latlon;
-    }
     /**
      * 自定义的Binder类，这个是一个内部类，所以可以知道其外围类的对象，通过这个类，让Activity知道其Service的对象
      */
