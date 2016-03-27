@@ -47,6 +47,7 @@ public class NearbyFragment extends Fragment {
     ServiceConnection mSc;
     double[] location;
     Handler handler;
+    GPSService ss;
 
 
 
@@ -57,24 +58,9 @@ public class NearbyFragment extends Fragment {
         @Override
         public void run() {
             // 需要做的事:发送消息
-            mSc = new ServiceConnection(){
-                @Override
-                public void onServiceConnected(ComponentName name, IBinder service) {
-                    GPSService ss = ((GPSService.LocalBinder) service).getService();
-                    location = ss.getLatlon();
-
-                    Log.i("22",location[0]+","+location[1]);
-                    Message message = new Message();
-                    message.what = 1;
-                    handler.sendMessage(message);
-                }
-                @Override
-                public void onServiceDisconnected(ComponentName name) {
-                }
-            };
-
-            Intent service = new Intent(getActivity().getApplicationContext(),GPSService.class);
-            getActivity().bindService(service, mSc, Context.BIND_AUTO_CREATE);
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
         }
     };
 
@@ -87,7 +73,8 @@ public class NearbyFragment extends Fragment {
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mMapView.onDestroy();
-//        getActivity().unbindService(mSc);
+        task.cancel();
+        getActivity().unbindService(mSc);
     }
     @Override
     public void onResume() {
@@ -107,15 +94,64 @@ public class NearbyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         SDKInitializer.initialize(getActivity().getApplicationContext());
         timer.schedule(task, 1000, 1000); // 1s后执行task,经过1s再次执行
+
+
+
+
+        mSc = new ServiceConnection(){
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                ss = ((GPSService.LocalBinder) service).getService();
+            }
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+            }
+        };
+
+        Intent service = new Intent(getActivity().getApplicationContext(),GPSService.class);
+        getActivity().bindService(service, mSc, Context.BIND_AUTO_CREATE);
         View m_vFindWorkFragment = inflater.inflate(R.layout.nearbyfragment, container, false);
         mMapView = (MapView) m_vFindWorkFragment.findViewById(R.id.bmapView);
         final BaiduMap  mBaiduMap = mMapView.getMap();
         mBaiduMap.setMyLocationEnabled(true);
 
+        LatLng latLng = null;
+        OverlayOptions overlayOptions = null;
+        Marker marker = null;
+        for (Order order : getData("",""))
+        {
+            // 位置
+            latLng = new LatLng(order.getId()*0.004+32.01010d, order.getId()*0.004+118.72333d);
+            // 图标
+            BitmapDescriptor bitmap = BitmapDescriptorFactory
+                    .fromResource(R.drawable.icon_marka);
+            overlayOptions = new MarkerOptions().position(latLng)
+                    .icon(bitmap).zIndex(5);
+            marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
+
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("order", order);
+            marker.setExtraInfo(bundle);
+        }
+        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(final Marker marker) {
+                Log.i("maker", marker.getPosition().latitude + "");
+                Order order = (Order) marker.getExtraInfo().get("order");
+                Intent intent = new Intent(getActivity(), GrabOrderContentActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("order", order);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                return true;
+            }
+        });
         handler = new Handler() {
             public void handleMessage(Message msg) {
                 if (msg.what == 1) {
 
+                    location = ss.getLatlon();
+                    Log.i("999", location[0] + "," + location[1]);
                     Toast.makeText(getActivity(), location[0]+","+location[1], Toast.LENGTH_SHORT).show();
                     LatLng point = new LatLng(location[0],location[1]);
                     MapStatus mMapStatus = new MapStatus.Builder()
@@ -139,37 +175,6 @@ public class NearbyFragment extends Fragment {
                     mBaiduMap.addOverlay(centeroption);
 
 
-                    LatLng latLng = null;
-                    OverlayOptions overlayOptions = null;
-                    Marker marker = null;
-                    for (Order order : getData("",""))
-                    {
-                        // 位置
-                        latLng = new LatLng(order.getId()*0.004+32.01010d, order.getId()*0.004+118.72333d);
-                        // 图标
-                        BitmapDescriptor bitmap = BitmapDescriptorFactory
-                                .fromResource(R.drawable.icon_marka);
-                        overlayOptions = new MarkerOptions().position(latLng)
-                                .icon(bitmap).zIndex(5);
-                        marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
-
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("order", order);
-                        marker.setExtraInfo(bundle);
-                    }
-                    mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
-                        @Override
-                        public boolean onMarkerClick(final Marker marker) {
-                            Log.i("maker", marker.getPosition().latitude + "");
-                            Order order = (Order) marker.getExtraInfo().get("order");
-                            Intent intent = new Intent(getActivity(), GrabOrderContentActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("order", order);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                            return true;
-                        }
-                    });
                 }
                 super.handleMessage(msg);
             };

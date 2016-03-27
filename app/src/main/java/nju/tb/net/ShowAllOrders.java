@@ -100,7 +100,6 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
                 order.setLoadTime(loadTime);
                 allorders.add(order);
             }
-            Log.i("allorders", allorders.size() + "," + result);
             runover=true;
         } catch (IOException e) {
             e.printStackTrace();

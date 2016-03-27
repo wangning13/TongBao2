@@ -108,6 +108,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 , Manifest.permission.BROADCAST_STICKY
                 , Manifest.permission.WRITE_SETTINGS
                 , Manifest.permission.READ_PHONE_STATE
+                , Manifest.permission.ACCESS_COARSE_LOCATION
         }, 123);
 
 

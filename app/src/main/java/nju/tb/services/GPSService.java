@@ -44,7 +44,7 @@ public class GPSService extends Service {
 
         //设置每6秒，每移动一米向LocationProvider获取一次GPS的定位信息
         //当LocationProvider可用，不可用或定位信息改变时，调用updateView,更新显示
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 6000, 1, new LocationListener() {
+        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0.1f, new LocationListener() {
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -80,14 +80,7 @@ public class GPSService extends Service {
     }
     public void updateView(Location location)
     {
-        Log.i("111111111111111111","22222222222222222222222");
-        StringBuffer buffer=new StringBuffer();
-        if(location==null)
-        {
-        }
-        if ( ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
-        }
-        location=manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Log.i("888",location.getLatitude()+","+location.getLongitude());
         this.location=location;
 
     }
