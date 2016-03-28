@@ -34,6 +34,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import nju.tb.Commen.MyAppContext;
+import nju.tb.MyUI.OverlayManager;
 import nju.tb.R;
 import nju.tb.entity.Order;
 import nju.tb.net.ShowAllOrders;
@@ -48,6 +49,7 @@ public class NearbyFragment extends Fragment {
     double[] location;
     Handler handler;
     GPSService ss;
+    OverlayManager olmanager;
 
 
 
@@ -146,10 +148,12 @@ public class NearbyFragment extends Fragment {
                 return true;
             }
         });
+
+
+        final List<OverlayOptions> overlayOptionslist = new ArrayList<OverlayOptions>();
         handler = new Handler() {
             public void handleMessage(Message msg) {
                 if (msg.what == 1) {
-
                     location = ss.getLatlon();
                     Log.i("999", location[0] + "," + location[1]);
                     Toast.makeText(getActivity(), location[0]+","+location[1], Toast.LENGTH_SHORT).show();
@@ -163,22 +167,39 @@ public class NearbyFragment extends Fragment {
                     //改变地图状态
                     mBaiduMap.setMapStatus(mMapStatusUpdate);
 
-
-
-
-
                     BitmapDescriptor centerbitmap = BitmapDescriptorFactory
                             .fromResource(R.drawable.icon_center);
                     OverlayOptions centeroption = new MarkerOptions()
                             .position(point)
                             .icon(centerbitmap);
-                    mBaiduMap.addOverlay(centeroption);
+                    overlayOptionslist.add(centeroption);
+
+                    OverlayManager manager = new OverlayManager(mBaiduMap) {
+                        public List<OverlayOptions> getOverlayOptions() {
+                            return overlayOptionslist;
+                        }
+                    };
+                    manager.addToMap();
 
 
+
+                    int size=overlayOptionslist.size();
+                    Log.i("size", size + "");
+                    if(size!=1){
+                        for(int i=1;i<size;i++){
+                            overlayOptionslist.remove(1);
+                            manager.removeOverlay(1);
+                        }
+                    }
                 }
                 super.handleMessage(msg);
             };
         };
+
+
+
+
+
 
         return m_vFindWorkFragment;
     }
