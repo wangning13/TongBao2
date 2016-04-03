@@ -80,7 +80,6 @@ public class GPSService extends Service {
     }
     public void updateView(Location location)
     {
-        Log.i("888",location.getLatitude()+","+location.getLongitude());
         this.location=location;
 
     }

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import cn.jpush.android.api.JPushInterface;
 import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
 import nju.tb.net.GetAllTruckTypes;
@@ -112,10 +113,17 @@ public class LoginActivity extends Activity {
         });
 
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
     @Override
     public void onResume() {
         super.onResume();
+        JPushInterface.onResume(this);
+
 
         loginButton.setOnClickListener(new LoginButtonClickListener());
         if (!autoLogin) {

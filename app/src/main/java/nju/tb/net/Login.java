@@ -67,6 +67,7 @@ public class Login extends Thread implements Parse.ParseHttp {
             myAppContext.setPoint(data.getInt("point"));
             myAppContext.setMoney(data.getInt("money"));
             myAppContext.setToken(data.getString("token"));
+            myAppContext.setId(data.getString("id"));
             entity.consumeContent();
         } catch (IOException e) {
             e.printStackTrace();

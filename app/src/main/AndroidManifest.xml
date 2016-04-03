@@ -175,7 +175,7 @@
 
         <!-- User defined.  For test only  用户自定义的广播接收器 -->
         <receiver
-            android:name="com.example.jpushdemo.MyReceiver"
+            android:name=".receiver.MyReceiver"
             android:enabled="true"
             android:exported="false" >
             <intent-filter>
@@ -217,6 +217,7 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
     </application>
 
 </manifest>

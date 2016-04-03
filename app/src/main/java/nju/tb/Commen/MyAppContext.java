@@ -70,6 +70,7 @@ public class MyAppContext extends Application {
     private int point = 0;    //用户积分
     private int money = 0;    //用户余额
     private String token = "";    //识别用户的token
+    private String id = "";    //识别用户的token
 
     private List<Account> accountList; //账单列表
 
@@ -134,6 +135,14 @@ public class MyAppContext extends Application {
         return this.token;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     //登录状态
     public static void setLogIn(boolean logState) {
         isLogIn = logState;
@@ -168,8 +177,8 @@ public class MyAppContext extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        JPushInterface.setDebugMode(true);
-//        JPushInterface.init(this);
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
         isLogIn = false;
         myAppContext = this;
         startService(new Intent(this, nju.tb.services.NetStateService.class));  //监控网络

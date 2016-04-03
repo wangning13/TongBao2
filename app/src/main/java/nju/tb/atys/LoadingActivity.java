@@ -7,6 +7,11 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
 import nju.tb.net.GetAllTruckTypes;
@@ -45,9 +50,28 @@ public class LoadingActivity extends Activity {
                     startActivity(failureIntent);
                 }
                 if (Login.getResult() == 1) {
+
                     new GetAllTruckTypes(LoadingActivity.this).start();//获取车辆类型
                     MyAppContext myAppContext = (MyAppContext) getApplicationContext();
                     myAppContext.setPhone(phone);
+
+                    Set<String> tags=new HashSet<String>();
+                    tags.add("driver");
+                    String id=myAppContext.getId();
+                    JPushInterface.setAliasAndTags(getApplicationContext(), id, tags, new TagAliasCallback() {
+                        @Override
+                        public void gotResult(int responseCode, String alias, Set<String> tags) {
+                            // TODO
+                            if (responseCode == 0) {
+                                Log.i("tags", tags.toString());
+                            }
+                        }
+                    });
+
+
+
+
+
                     Intent successIntent = new Intent(LoadingActivity.this, MainActivity.class);
                     startActivity(successIntent);
                 }
