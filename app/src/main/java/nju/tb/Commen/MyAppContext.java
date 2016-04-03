@@ -3,6 +3,8 @@ package nju.tb.Commen;
 
 import android.app.Application;
 import android.content.Intent;
+import android.location.LocationManager;
+import android.provider.Settings;
 import android.telephony.ServiceState;
 import android.util.Log;
 import android.widget.Toast;
@@ -171,7 +173,10 @@ public class MyAppContext extends Application {
         isLogIn = false;
         myAppContext = this;
         startService(new Intent(this, nju.tb.services.NetStateService.class));  //监控网络
-        startService(new Intent(this, nju.tb.services.GPSService.class));
+        boolean gpsEnabled = Settings.Secure.isLocationProviderEnabled( getContentResolver(), LocationManager.GPS_PROVIDER );
+        if(gpsEnabled){
+            startService(new Intent(this, nju.tb.services.GPSService.class));
+        }
 
 
     }

@@ -155,43 +155,47 @@ public class NearbyFragment extends Fragment {
             public void handleMessage(Message msg) {
                 if (msg.what == 1) {
                     location = ss.getLatlon();
-                    Log.i("999", location[0] + "," + location[1]);
-                    Toast.makeText(getActivity(), location[0]+","+location[1], Toast.LENGTH_SHORT).show();
-                    LatLng point = new LatLng(location[0],location[1]);
-                    MapStatus mMapStatus = new MapStatus.Builder()
-                            .target(point)
-                            .zoom(15)
-                            .build();
+                    if(location==null){
+                        Toast.makeText(getActivity(), "服务不可用", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Log.i("999", location[0] + "," + location[1]);
+                        Toast.makeText(getActivity(), location[0]+","+location[1], Toast.LENGTH_SHORT).show();
+                        LatLng point = new LatLng(location[0],location[1]);
+                        MapStatus mMapStatus = new MapStatus.Builder()
+                                .target(point)
+                                .zoom(15)
+                                .build();
 
-                    MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
-                    //改变地图状态
-                    mBaiduMap.setMapStatus(mMapStatusUpdate);
+                        MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+                        //改变地图状态
+                        mBaiduMap.setMapStatus(mMapStatusUpdate);
 
-                    BitmapDescriptor centerbitmap = BitmapDescriptorFactory
-                            .fromResource(R.drawable.icon_center);
-                    OverlayOptions centeroption = new MarkerOptions()
-                            .position(point)
-                            .icon(centerbitmap);
-                    overlayOptionslist.add(centeroption);
+                        BitmapDescriptor centerbitmap = BitmapDescriptorFactory
+                                .fromResource(R.drawable.icon_center);
+                        OverlayOptions centeroption = new MarkerOptions()
+                                .position(point)
+                                .icon(centerbitmap);
+                        overlayOptionslist.add(centeroption);
 
-                    OverlayManager manager = new OverlayManager(mBaiduMap) {
-                        public List<OverlayOptions> getOverlayOptions() {
-                            return overlayOptionslist;
-                        }
-                    };
-                    manager.addToMap();
+                        OverlayManager manager = new OverlayManager(mBaiduMap) {
+                            public List<OverlayOptions> getOverlayOptions() {
+                                return overlayOptionslist;
+                            }
+                        };
+                        manager.addToMap();
 
 
 
-                    int size=overlayOptionslist.size();
-                    Log.i("size", size + "");
-                    if(size!=1){
-                        for(int i=1;i<size;i++){
-                            overlayOptionslist.remove(1);
-                            manager.removeOverlay(1);
+                        int size=overlayOptionslist.size();
+                        Log.i("size", size + "");
+                        if(size!=1){
+                            for(int i=1;i<size;i++){
+                                overlayOptionslist.remove(1);
+                                manager.removeOverlay(1);
+                            }
                         }
                     }
-                }
+                    }
                 super.handleMessage(msg);
             };
         };
