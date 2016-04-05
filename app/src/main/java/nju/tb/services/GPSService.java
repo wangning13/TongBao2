@@ -85,6 +85,11 @@ public class GPSService extends Service {
     }
 
     public double[] getLatlon() {
+
+        if(location==null)
+        {
+            return null;
+        }
         double[] latlonnow=new double[]{location.getLatitude(),location.getLongitude()};
         return latlonnow;
     }
