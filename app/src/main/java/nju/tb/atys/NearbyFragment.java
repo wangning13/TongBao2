@@ -156,7 +156,7 @@ public class NearbyFragment extends Fragment {
                 if (msg.what == 1) {
                     location = ss.getLatlon();
                     if(location==null){
-                        Toast.makeText(getActivity(), "服务不可用", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "GPS服务不可用", Toast.LENGTH_SHORT).show();
                     }else{
                         Log.i("999", location[0] + "," + location[1]);
                         Toast.makeText(getActivity(), location[0]+","+location[1], Toast.LENGTH_SHORT).show();

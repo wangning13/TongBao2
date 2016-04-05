@@ -38,10 +38,7 @@ public class GPSService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         manager=(LocationManager)getSystemService(LOCATION_SERVICE);
         //从GPS_PROVIDER获取最近的定位信息\
-        if ( ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
-        }
         location=manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
         //设置每6秒，每移动一米向LocationProvider获取一次GPS的定位信息
         //当LocationProvider可用，不可用或定位信息改变时，调用updateView,更新显示
         manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0.01f, new LocationListener() {

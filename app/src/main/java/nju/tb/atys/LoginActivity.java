@@ -1,11 +1,13 @@
 package nju.tb.atys;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextWatcher;
@@ -62,6 +64,25 @@ public class LoginActivity extends Activity {
         toRegister = (TextView) findViewById(R.id.login_toregister);
         keepPassword = (CheckBox) findViewById(R.id.login_keeppassword);
 
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE
+                , Manifest.permission.WRITE_EXTERNAL_STORAGE
+                , Manifest.permission.WAKE_LOCK
+                , Manifest.permission.READ_PHONE_STATE
+                , Manifest.permission.INTERNET
+                , Manifest.permission.GET_ACCOUNTS
+                , Manifest.permission.ACCESS_NETWORK_STATE
+                , Manifest.permission.INTERNET
+                , Manifest.permission.CHANGE_WIFI_STATE
+                , Manifest.permission.ACCESS_WIFI_STATE
+                , Manifest.permission.READ_PHONE_STATE
+                , Manifest.permission.WRITE_EXTERNAL_STORAGE
+                , Manifest.permission.BROADCAST_STICKY
+                , Manifest.permission.WRITE_SETTINGS
+                , Manifest.permission.READ_PHONE_STATE
+                , Manifest.permission.ACCESS_COARSE_LOCATION
+                , Manifest.permission.ACCESS_FINE_LOCATION
+                , Manifest.permission.ACCESS_FINE_LOCATION
+        }, 123);
 
     }
 
