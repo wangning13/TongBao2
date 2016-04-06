@@ -13,8 +13,17 @@ import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.InterruptedIOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import nju.tb.Commen.MyAppContext;
+import nju.tb.atys.MainActivity;
+import nju.tb.net.RemoveOrder;
+import nju.tb.net.UpdateMyPostion;
 
 public class GPSService extends Service {
 
@@ -41,7 +50,7 @@ public class GPSService extends Service {
         location=manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         //设置每6秒，每移动一米向LocationProvider获取一次GPS的定位信息
         //当LocationProvider可用，不可用或定位信息改变时，调用updateView,更新显示
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0.01f, new LocationListener() {
+        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000,10, new LocationListener() {
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -78,6 +87,21 @@ public class GPSService extends Service {
     public void updateView(Location location)
     {
         this.location=location;
+
+        final String USERTOKEN = ((MyAppContext) getApplicationContext()).getToken();
+        Date date = new Date();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        UpdateMyPostion ump = new UpdateMyPostion(getApplicationContext(), USERTOKEN,df.format(date) ,location.getLatitude()+"",location.getLongitude()+"");
+        ump.start();
+        while (!ump.runover) {
+
+        }
+        if (ump.getResult() ==0) {
+            Toast.makeText(getApplicationContext(), ump.getErrorMsg(), Toast.LENGTH_SHORT).show();
+        }
+        if (ump.getResult() == -1 && MyAppContext.getIsConnected() == false) {
+            Toast.makeText(getApplicationContext(), "网络不可用，请检查网络设置", Toast.LENGTH_SHORT).show();
+        }
 
     }
 

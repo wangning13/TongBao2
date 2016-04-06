@@ -80,7 +80,15 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
                 String addressFrom=orderjsonobject.getString("addressFrom");
                 String addressTo=orderjsonobject.getString("addressTo");
                 String money=orderjsonobject.getString("money");
-                String truckTypes=orderjsonobject.getString("truckTypes");
+                String truckTypes="";
+                if(!orderjsonobject.getString("truckTypes").equals("null")){
+                    JSONArray typeArray = orderjsonobject.getJSONArray("truckTypes");
+                    for (int j =0;j<typeArray.length();j++)
+                    {
+                        JSONObject jsonObjectSon= (JSONObject)typeArray.opt(j);
+                        truckTypes=truckTypes+jsonObjectSon;
+                    }
+                }
                 String fromContactName=orderjsonobject.getString("fromContactName");
                 String fromContactPhone=orderjsonobject.getString("fromContactPhone");
                 String toContactName=orderjsonobject.getString("toContactName");

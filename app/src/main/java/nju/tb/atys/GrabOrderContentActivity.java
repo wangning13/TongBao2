@@ -86,7 +86,7 @@ public class GrabOrderContentActivity extends AppCompatActivity {
         tphone_text.setText(order.getToContactPhone());
         loadtime_text.setText(order.getLoadTime());
         taddress_text.setText(order.getAddressTo());
-////            trucktype_text.setText(order.getTruckTypes());
+        trucktype_text.setText(order.getTruckTypes());
         money_text.setText(order.getMoney());
 //
         grabbtn.setOnClickListener(new View.OnClickListener() {
