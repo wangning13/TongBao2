@@ -95,7 +95,7 @@ public class NearbyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         SDKInitializer.initialize(getActivity().getApplicationContext());
-        timer.schedule(task, 1000, 1000); // 1s后执行task,经过1s再次执行
+        timer.schedule(task, 1000, 300000); // 1s后执行task,经过1s再次执行
 
 
 

@@ -61,7 +61,7 @@ public class GetOrderDetail extends Thread implements Parse.ParseHttp {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 stringBuffer.append(line);
             }
-            Log.i("string:",stringBuffer.toString());
+//            Log.i("string:",stringBuffer.toString());
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
             if(result==0){
@@ -77,7 +77,7 @@ public class GetOrderDetail extends Thread implements Parse.ParseHttp {
             String addressFrom=orderjsonobject.getString("addressFrom");
             String addressTo=orderjsonobject.getString("addressTo");
             String money=orderjsonobject.getString("money");
-            String truckTypes=orderjsonobject.getString("truckTypes");
+           String truckTypes=orderjsonobject.getString("truckTypes");
             String fromContactName=orderjsonobject.getString("fromContactName");
             String fromContactPhone=orderjsonobject.getString("fromContactPhone");
             String toContactName=orderjsonobject.getString("toContactName");

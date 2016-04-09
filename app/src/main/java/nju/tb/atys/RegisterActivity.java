@@ -307,6 +307,7 @@ public class RegisterActivity extends Activity {
                             nowStep = "over";
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(intent);
+                            RegisterActivity.this.finish();
                         }
                     }, 1500);
                     break;
@@ -314,6 +315,7 @@ public class RegisterActivity extends Activity {
                     nowStep = "over";
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    RegisterActivity.this.finish();
                     break;
             }
 

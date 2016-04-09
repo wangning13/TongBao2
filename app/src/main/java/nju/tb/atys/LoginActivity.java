@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -84,6 +85,8 @@ public class LoginActivity extends Activity {
                 , Manifest.permission.ACCESS_FINE_LOCATION
         }, 123);
 
+
+
     }
 
     @Override
@@ -138,6 +141,7 @@ public class LoginActivity extends Activity {
     protected void onPause() {
         super.onPause();
         JPushInterface.onPause(this);
+//        LoginActivity.this.finish();
     }
 
     @Override
@@ -189,7 +193,14 @@ public class LoginActivity extends Activity {
 
         this.finish();
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            return  true;
+        }
+        return  super.onKeyDown(keyCode, event);
 
+    }
     class LoginButtonClickListener implements View.OnClickListener {
 
         @Override

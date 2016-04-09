@@ -132,6 +132,11 @@ public class BillActivity extends Activity {
         lv.setAdapter(adapter);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        this.finish();
+    }
     /**
      * 设置dialog位置和大小
      *

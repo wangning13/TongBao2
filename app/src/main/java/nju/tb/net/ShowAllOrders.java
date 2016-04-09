@@ -64,6 +64,7 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 stringBuffer.append(line);
             }
+            Log.i("1111111111",stringBuffer.toString());
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
             if(result==0){
@@ -81,14 +82,14 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
                 String addressTo=orderjsonobject.getString("addressTo");
                 String money=orderjsonobject.getString("money");
                 String truckTypes="";
-                if(!orderjsonobject.getString("truckTypes").equals("null")){
-                    JSONArray typeArray = orderjsonobject.getJSONArray("truckTypes");
-                    for (int j =0;j<typeArray.length();j++)
-                    {
-                        JSONObject jsonObjectSon= (JSONObject)typeArray.opt(j);
-                        truckTypes=truckTypes+jsonObjectSon;
-                    }
-                }
+//                if(!orderjsonobject.getString("truckTypes").equals("null")){
+//                    JSONArray typeArray = orderjsonobject.getJSONArray("truckTypes");
+//                    for (int j =0;j<typeArray.length();j++)
+//                    {
+//                        JSONObject jsonObjectSon= (JSONObject)typeArray.opt(j);
+//                        truckTypes=truckTypes+jsonObjectSon;
+//                    }
+//                }
                 String fromContactName=orderjsonobject.getString("fromContactName");
                 String fromContactPhone=orderjsonobject.getString("fromContactPhone");
                 String toContactName=orderjsonobject.getString("toContactName");

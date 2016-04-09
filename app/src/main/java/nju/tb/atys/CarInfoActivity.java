@@ -99,5 +99,9 @@ public class CarInfoActivity extends Activity {
 
 
     }
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.finish();
+    }
 }

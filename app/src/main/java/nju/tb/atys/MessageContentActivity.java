@@ -18,6 +18,7 @@ public class MessageContentActivity extends Activity{
     private TextView toolbar_text;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -47,5 +48,12 @@ public class MessageContentActivity extends Activity{
 
         textTextView.setText(contentText);
         timeTextView.setText(contentTime);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.finish();
     }
 }

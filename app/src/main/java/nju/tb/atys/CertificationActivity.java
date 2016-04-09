@@ -224,6 +224,7 @@ public class CertificationActivity extends TabActivity {
         super.onPause();
         realNameEditTextSave = realNameEditText.getText().toString();
         driverLicenseNumEditTextSave = driverLicenseNumEditText.getText().toString();
+        this.finish();
     }
 
 

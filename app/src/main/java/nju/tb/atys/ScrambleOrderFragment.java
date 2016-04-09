@@ -100,8 +100,6 @@ public class ScrambleOrderFragment extends Fragment {
 
         final String USERTOKEN = ((MyAppContext) getActivity().getApplicationContext()).getToken();
         ShowAllOrders sa=new ShowAllOrders(getActivity(),USERTOKEN,faddress,taddress);
-        Log.i("出发地",faddress);
-        Log.i("目的地",taddress);
         sa.start();
 
         ArrayList<Order> orderList=new ArrayList<Order>();

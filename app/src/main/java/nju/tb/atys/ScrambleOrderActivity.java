@@ -149,4 +149,10 @@ public class ScrambleOrderActivity extends FragmentActivity implements View.OnCl
         changeBtn(desTab);
         soViewPager.setCurrentItem(desTab, true);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.finish();
+    }
 }

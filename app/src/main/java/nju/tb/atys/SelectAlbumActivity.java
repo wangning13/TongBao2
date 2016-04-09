@@ -51,6 +51,7 @@ public class SelectAlbumActivity extends Activity {
                     intent = new Intent(SelectAlbumActivity.this, CertificationActivity.class);
                 }
                 startActivity(intent);
+                SelectAlbumActivity.this.finish();
             }
         });
 
@@ -93,6 +94,11 @@ public class SelectAlbumActivity extends Activity {
         });
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.finish();
+    }
     static class ListSerializable implements Serializable {
         private ArrayList<LocalImageHelper.LocalFile> list;
 

@@ -29,10 +29,11 @@
         android:layout_marginLeft="1dp" />
     <TextView android:id="@+id/tv_carlist_item_shenhejieguo"
         android:layout_height="50dp"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_toRightOf="@id/tv_carlist_item_chepaihao"
         android:textSize="20sp"
         android:layout_alignTop="@id/tv_carlist_item_chepaihao"
-        android:gravity="center_vertical"
-        android:layout_marginLeft="25dp"/>
+        android:gravity="right|center_vertical"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"/>
 </RelativeLayout>

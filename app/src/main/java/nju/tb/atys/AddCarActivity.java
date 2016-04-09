@@ -216,4 +216,10 @@ public class AddCarActivity extends Activity {
         return result;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.finish();
+    }
+
 }

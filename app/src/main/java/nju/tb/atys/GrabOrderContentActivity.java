@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -95,8 +96,8 @@ public class GrabOrderContentActivity extends AppCompatActivity {
                 ScrambleOrder go = new ScrambleOrder(GrabOrderContentActivity.this, USERTOKEN, order.getId());
                 go.start();
                 while (!go.runover) {
-
                 }
+                Log.i("11111111111",go.getResult()+"");
                 if (go.getResult() ==0) {
                     Toast.makeText(GrabOrderContentActivity.this, go.getErrorMsg(), Toast.LENGTH_SHORT).show();
                 }
@@ -116,4 +117,9 @@ public class GrabOrderContentActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.finish();
+    }
 }

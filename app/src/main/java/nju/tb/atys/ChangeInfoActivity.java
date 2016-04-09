@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -64,6 +65,14 @@ public class ChangeInfoActivity extends Activity {
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);
         setContentView(R.layout.view_driver_changeinfo);
+
+        ImageView titleBackBtn = (ImageView) findViewById(R.id.iv_changeinfo_leftarrow);
+        titleBackBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ChangeInfoActivity.this.finish();
+            }
+        });
+
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 123);
         localImageHelper = new LocalImageHelper(this);
@@ -221,10 +230,14 @@ public class ChangeInfoActivity extends Activity {
                     startActivity(intent);
                 }
 
+
+               ChangeInfoActivity.this.finish();
             }
 
 
         });
+
+
 
     }
 

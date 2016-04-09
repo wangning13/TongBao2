@@ -80,4 +80,10 @@ public class LoadingActivity extends Activity {
 
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.finish();
+    }
 }

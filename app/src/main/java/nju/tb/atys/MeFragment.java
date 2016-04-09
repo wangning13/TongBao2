@@ -90,6 +90,8 @@ public class MeFragment extends Fragment {
                 MyAppContext.setLogIn(false);
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
+
+
             }
         });
 

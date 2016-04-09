@@ -94,7 +94,11 @@ public class WithdrawActivity extends FragmentActivity implements View.OnClickLi
         }
 
     }
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.finish();
+    }
 
     //手动设置ViewPager要显示的视图
     private void changeView(int desTab)
@@ -102,31 +106,6 @@ public class WithdrawActivity extends FragmentActivity implements View.OnClickLi
         changeBtn(desTab);
         wViewPager.setCurrentItem(desTab, true);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

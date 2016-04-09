@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import cn.jpush.android.api.JPushInterface;
 import nju.tb.Commen.MyAppContext;
 import nju.tb.MyUI.MyXListView;
 import nju.tb.R;
@@ -354,4 +355,9 @@ public class MessageActivity extends Activity {
         return true;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.finish();
+    }
 }

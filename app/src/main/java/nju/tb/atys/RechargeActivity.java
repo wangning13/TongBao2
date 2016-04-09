@@ -95,7 +95,11 @@ public class RechargeActivity extends Activity {
         });
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.finish();
+    }
     class CheckBoxOnSelectListener implements CompoundButton.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
