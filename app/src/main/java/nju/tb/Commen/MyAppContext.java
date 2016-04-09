@@ -174,6 +174,7 @@ public class MyAppContext extends Application {
         return truckTypesList;
     }
 
+
     @Override
     public void onCreate() {
         super.onCreate();

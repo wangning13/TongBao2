@@ -97,7 +97,6 @@ public class GrabOrderContentActivity extends AppCompatActivity {
                 go.start();
                 while (!go.runover) {
                 }
-                Log.i("11111111111",go.getResult()+"");
                 if (go.getResult() ==0) {
                     Toast.makeText(GrabOrderContentActivity.this, go.getErrorMsg(), Toast.LENGTH_SHORT).show();
                 }

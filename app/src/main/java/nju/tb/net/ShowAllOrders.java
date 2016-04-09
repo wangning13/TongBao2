@@ -33,8 +33,10 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
     private String toAddress;
     private static ArrayList<Order> allorders=new ArrayList<Order>();
     private boolean runover=false;
+    private MyAppContext myAppContext;
 
     public ShowAllOrders(Context context, String token,  String fromAddress,String toAddress) {
+        myAppContext = MyAppContext.getMyAppContext();
         this.context = context;
         this.token = token;
         this.fromAddress = fromAddress;
@@ -46,6 +48,18 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
         return this.runover;
     }
 
+    public String typeToName(String type){
+        String name="";
+        List<String> list=myAppContext.getTruckList();
+        for(int i=0;i<list.size();i++){
+            String truck=list.get(i);
+            String[] strArr = truck.split(" ");
+            if(type.equals(strArr[5]+"")){
+                name=strArr[0];
+            }
+        }
+        return name;
+    }
 
     public static int getResult() {
         return result;
@@ -54,6 +68,7 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
     public static ArrayList<Order> getAllorders(){
         return allorders;
     }
+
 
     @Override
     public void parseHttpResponse(HttpResponse httpResponse) {
@@ -82,14 +97,14 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
                 String addressTo=orderjsonobject.getString("addressTo");
                 String money=orderjsonobject.getString("money");
                 String truckTypes="";
-//                if(!orderjsonobject.getString("truckTypes").equals("null")){
-//                    JSONArray typeArray = orderjsonobject.getJSONArray("truckTypes");
-//                    for (int j =0;j<typeArray.length();j++)
-//                    {
-//                        JSONObject jsonObjectSon= (JSONObject)typeArray.opt(j);
-//                        truckTypes=truckTypes+jsonObjectSon;
-//                    }
-//                }
+                JSONArray array=orderjsonobject.getJSONArray("truckTypes");
+                for (int j =0;j<array.length()-1;j++)
+                {
+                    String type=array.get(j).toString();
+                    String name=typeToName(type);
+                    truckTypes=truckTypes+name+" ";
+                }
+                Log.i("3333333333",truckTypes);
                 String fromContactName=orderjsonobject.getString("fromContactName");
                 String fromContactPhone=orderjsonobject.getString("fromContactPhone");
                 String toContactName=orderjsonobject.getString("toContactName");

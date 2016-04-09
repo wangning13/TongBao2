@@ -39,7 +39,6 @@ public class GetAllTruckTypes extends Thread implements Parse.ParseHttp {
         return errormsg;
     }
 
-
     @Override
     public void parseHttpResponse(HttpResponse httpResponse) {
         HttpEntity httpEntity = httpResponse.getEntity();
