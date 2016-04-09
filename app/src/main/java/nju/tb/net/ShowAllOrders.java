@@ -110,6 +110,8 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
                 String toContactName=orderjsonobject.getString("toContactName");
                 String toContactPhone=orderjsonobject.getString("toContactPhone");
                 String loadTime=orderjsonobject.getString("loadTime");
+                String lat=orderjsonobject.getString("lat");
+                String lng=orderjsonobject.getString("lng");
                 Order order=new Order();
                 order.setId(id);
                 order.setTime(time);
@@ -122,6 +124,8 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
                 order.setToContactName(toContactName);
                 order.setToContactPhone(toContactPhone);
                 order.setLoadTime(loadTime);
+                order.setLat(lat);
+                order.setLng(lng);
                 allorders.add(order);
             }
             runover=true;

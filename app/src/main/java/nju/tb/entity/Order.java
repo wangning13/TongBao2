@@ -126,7 +126,26 @@ public class Order implements Serializable {
     private String toContactName;
     private String toContactPhone;
     private String loadTime;
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
     private String state;
+    private String lat;
+    private String  lng;
 
 
     public String getState() {

@@ -123,7 +123,7 @@ public class NearbyFragment extends Fragment {
         for (Order order : getData("",""))
         {
             // 位置
-            latLng = new LatLng(order.getId()*0.004+32.01010d, order.getId()*0.004+118.72333d);
+            latLng = new LatLng(Double.parseDouble(order.getLat()), Double.parseDouble(order.getLng()));
             // 图标
             BitmapDescriptor bitmap = BitmapDescriptorFactory
                     .fromResource(R.drawable.icon_marka);
