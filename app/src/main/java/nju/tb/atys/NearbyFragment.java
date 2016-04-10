@@ -53,8 +53,6 @@ public class NearbyFragment extends Fragment {
 
 
 
-
-    Timer timer = new Timer();
     TimerTask task1 = new TimerTask() {
 
         @Override
@@ -106,8 +104,10 @@ public class NearbyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         SDKInitializer.initialize(getActivity().getApplicationContext());
-        timer.schedule(task1, 1000, 300000); // 0.5s后执行task,经过5min再次执行
-        timer.schedule(task2, 1000, 300000); // 0.5s后执行task,经过5min再次执行
+
+        Timer timer = new Timer();
+        timer.schedule(task1, 500, 300000); // 0.5s后执行task,经过5min再次执行
+        timer.schedule(task2, 500, 300000); // 0.5s后执行task,经过5min再次执行
         mSc = new ServiceConnection(){
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
@@ -169,7 +169,6 @@ public class NearbyFragment extends Fragment {
                     if(location==null){
                         Toast.makeText(getActivity(), "GPS服务不可用", Toast.LENGTH_SHORT).show();
                     }else{
-                        Log.i("999", location[0] + "," + location[1]);
                         Toast.makeText(getActivity(), location[0]+","+location[1], Toast.LENGTH_SHORT).show();
                         LatLng point = new LatLng(location[0],location[1]);
                         MapStatus mMapStatus = new MapStatus.Builder()
