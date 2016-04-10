@@ -55,13 +55,23 @@ public class NearbyFragment extends Fragment {
 
 
     Timer timer = new Timer();
-    TimerTask task = new TimerTask() {
+    TimerTask task1 = new TimerTask() {
 
         @Override
         public void run() {
             // 需要做的事:发送消息
             Message message = new Message();
             message.what = 1;
+            handler.sendMessage(message);
+        }
+    };
+    TimerTask task2 = new TimerTask() {
+
+        @Override
+        public void run() {
+            // 需要做的事:发送消息
+            Message message = new Message();
+            message.what =2;
             handler.sendMessage(message);
         }
     };
@@ -75,7 +85,8 @@ public class NearbyFragment extends Fragment {
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mMapView.onDestroy();
-        task.cancel();
+        task1.cancel();
+        task2.cancel();
         getActivity().unbindService(mSc);
     }
     @Override
@@ -95,11 +106,8 @@ public class NearbyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         SDKInitializer.initialize(getActivity().getApplicationContext());
-        timer.schedule(task, 1000, 300000); // 1s后执行task,经过1s再次执行
-
-
-
-
+        timer.schedule(task1, 1000, 300000); // 0.5s后执行task,经过5min再次执行
+        timer.schedule(task2, 1000, 300000); // 0.5s后执行task,经过5min再次执行
         mSc = new ServiceConnection(){
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
@@ -117,42 +125,45 @@ public class NearbyFragment extends Fragment {
         final BaiduMap  mBaiduMap = mMapView.getMap();
         mBaiduMap.setMyLocationEnabled(true);
 
-        LatLng latLng = null;
-        OverlayOptions overlayOptions = null;
-        Marker marker = null;
-        for (Order order : getData("",""))
-        {
-            // 位置
-            latLng = new LatLng(Double.parseDouble(order.getLat()), Double.parseDouble(order.getLng()));
-            // 图标
-            BitmapDescriptor bitmap = BitmapDescriptorFactory
-                    .fromResource(R.drawable.icon_marka);
-            overlayOptions = new MarkerOptions().position(latLng)
-                    .icon(bitmap).zIndex(5);
-            marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
-
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("order", order);
-            marker.setExtraInfo(bundle);
-        }
-        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(final Marker marker) {
-                Log.i("maker", marker.getPosition().latitude + "");
-                Order order = (Order) marker.getExtraInfo().get("order");
-                Intent intent = new Intent(getActivity(), GrabOrderContentActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("order", order);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                return true;
-            }
-        });
 
 
         final List<OverlayOptions> overlayOptionslist = new ArrayList<OverlayOptions>();
         handler = new Handler() {
             public void handleMessage(Message msg) {
+                if(msg.what==2){
+                    LatLng latLng = null;
+                    OverlayOptions overlayOptions = null;
+                    Marker marker = null;
+                    for (Order order : getData("",""))
+                    {
+                        // 位置
+                        latLng = new LatLng(Double.parseDouble(order.getLat()), Double.parseDouble(order.getLng()));
+                        // 图标
+                        BitmapDescriptor bitmap = BitmapDescriptorFactory
+                                .fromResource(R.drawable.icon_marka);
+                        overlayOptions = new MarkerOptions().position(latLng)
+                                .icon(bitmap).zIndex(5);
+                        marker = (Marker) (mBaiduMap.addOverlay(overlayOptions));
+
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("order", order);
+                        marker.setExtraInfo(bundle);
+                    }
+                    mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+                        @Override
+                        public boolean onMarkerClick(final Marker marker) {
+                            Log.i("maker", marker.getPosition().latitude + "");
+                            Order order = (Order) marker.getExtraInfo().get("order");
+                            Intent intent = new Intent(getActivity(), GrabOrderContentActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("order", order);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            return true;
+                        }
+                    });
+
+                }
                 if (msg.what == 1) {
                     location = ss.getLatlon();
                     if(location==null){
