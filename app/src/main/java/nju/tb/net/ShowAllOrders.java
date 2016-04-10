@@ -2,6 +2,7 @@ package nju.tb.net;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
@@ -34,13 +35,16 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
     private static ArrayList<Order> allorders=new ArrayList<Order>();
     private boolean runover=false;
     private MyAppContext myAppContext;
+    private Handler handler;
 
-    public ShowAllOrders(Context context, String token,  String fromAddress,String toAddress) {
+    public ShowAllOrders(Context context, String token,  String fromAddress,String toAddress,Handler handler) {
         myAppContext = MyAppContext.getMyAppContext();
         this.context = context;
         this.token = token;
+        allorders = new ArrayList<>();
         this.fromAddress = fromAddress;
         this.toAddress=toAddress;
+        this.handler=handler;
         result = -1;
     }
 
@@ -128,6 +132,9 @@ public class ShowAllOrders extends Thread implements Parse.ParseHttp {
                 order.setLng(lng);
                 allorders.add(order);
             }
+            Message message = handler.obtainMessage(0);
+            message.obj = allorders;
+            handler.sendMessage(message);
             runover=true;
         } catch (IOException e) {
             e.printStackTrace();

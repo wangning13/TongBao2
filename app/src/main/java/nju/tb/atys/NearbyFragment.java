@@ -222,7 +222,7 @@ public class NearbyFragment extends Fragment {
     public List<Order> getData(String faddress ,String taddress) {
 
         final String USERTOKEN = ((MyAppContext) getActivity().getApplicationContext()).getToken();
-        ShowAllOrders sa=new ShowAllOrders(getActivity(),USERTOKEN,faddress,taddress);
+        ShowAllOrders sa=new ShowAllOrders(getActivity(),USERTOKEN,faddress,taddress,handler);
         sa.start();
 
         ArrayList<Order> orderList=new ArrayList<Order>();
