@@ -70,10 +70,14 @@ public class CarInfoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_driver_personinfo);
         Bundle bundle = getIntent().getBundleExtra("truckInfo");
+        int truckId=bundle.getInt("truckId");
+        if(bundle.getString("truckNum")==null){
+            truckNum=getNum(truckId);
+        }
         truckNum = bundle.getString("truckNum");
 
         MyAppContext myAppContext = (MyAppContext) getApplicationContext();
-        new GetTruckDetail(this, myAppContext.getToken(), bundle.getInt("truckId"), handler).start();
+        new GetTruckDetail(this, myAppContext.getToken(), truckId, handler).start();
 
         //toolbar的标题
         //回退按钮
@@ -103,5 +107,30 @@ public class CarInfoActivity extends Activity {
     protected void onPause() {
         super.onPause();
         this.finish();
+    }
+
+
+    public String getNum(int id) {
+        String num="";
+
+        final String USERTOKEN = ((MyAppContext) getApplicationContext()).getToken();
+        GetTruckDetail gtd=new GetTruckDetail(this,USERTOKEN,id,handler);
+        gtd.start();
+
+        while (gtd.getResult() == -1) {
+            if (!MyAppContext.getIsConnected()) {
+                break;
+            }
+        }
+
+        if (gtd.getResult() == 0) {
+        }
+
+        if (gtd.getResult() == 1) {
+            TruckDetail td= gtd.getTruckDetail();
+            num=td.getTruckNum();
+        }
+
+        return num;
     }
 }

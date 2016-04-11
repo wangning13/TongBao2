@@ -58,6 +58,7 @@ public class LoadingActivity extends Activity {
                     Set<String> tags=new HashSet<String>();
                     tags.add("driver");
                     String id=myAppContext.getId();
+                    Log.i("别名","别名:"+id);
                     JPushInterface.setAliasAndTags(getApplicationContext(), id, tags, new TagAliasCallback() {
                         @Override
                         public void gotResult(int responseCode, String alias, Set<String> tags) {
