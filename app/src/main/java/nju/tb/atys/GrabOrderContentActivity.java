@@ -54,8 +54,7 @@ public class GrabOrderContentActivity extends AppCompatActivity {
         titleBackBtn.setVisibility(View.VISIBLE);
         titleBackBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent= new Intent(GrabOrderContentActivity.this,MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Intent intent= new Intent(GrabOrderContentActivity.this,ScrambleOrderActivity.class);
                 startActivity(intent);
             }
         });

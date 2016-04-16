@@ -44,6 +44,11 @@ public class DoTaskActivity extends Activity {
 
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        this.finish();
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_do_task);

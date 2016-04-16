@@ -61,7 +61,7 @@ public class GetOrderDetail extends Thread implements Parse.ParseHttp {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 stringBuffer.append(line);
             }
-//            Log.i("string:",stringBuffer.toString());
+            Log.i("string:",stringBuffer.toString());
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
             if(result==0){

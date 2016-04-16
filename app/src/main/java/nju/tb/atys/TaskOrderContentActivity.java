@@ -33,6 +33,11 @@ public class TaskOrderContentActivity  extends Activity {
     private TextView money_text;
     private TextView toolbar_text;
     private Button cancelbtn;
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.finish();
+    }
 
 
     public void onCreate(Bundle savedInstanceState){
