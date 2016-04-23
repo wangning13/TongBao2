@@ -15,7 +15,7 @@
 
 
 
-    <android.support.v4.view.ViewPager
+    <nju.tb.MyUI.MyViewPager
         android:id="@+id/soviewpager"
         android:layout_marginBottom="2dp"
         android:layout_weight="1"

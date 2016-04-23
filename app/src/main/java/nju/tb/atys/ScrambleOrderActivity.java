@@ -5,14 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import nju.tb.MyUI.MyViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class ScrambleOrderActivity extends FragmentActivity implements View.OnCl
     private RelativeLayout nb_layout;
     private TextView so_text;
     private TextView nb_text;
-    private ViewPager soViewPager;
+    private MyViewPager soViewPager;
     private List<Fragment> fragmentList;
     private ScrambleOrderFragment fragment1;
     private NearbyFragment fragment2;
@@ -55,7 +55,8 @@ public class ScrambleOrderActivity extends FragmentActivity implements View.OnCl
 
 //
 //
-        soViewPager=(ViewPager) findViewById(R.id.soviewpager);
+        soViewPager=(MyViewPager) findViewById(R.id.soviewpager);
+        soViewPager.setScanScroll(false);
         fragmentList=new ArrayList<Fragment>();
         fragment1 = new ScrambleOrderFragment();
         fragment2 = new NearbyFragment();
@@ -77,7 +78,7 @@ public class ScrambleOrderActivity extends FragmentActivity implements View.OnCl
     }
 
 
-    class MyFrageStatePagerAdapter extends FragmentStatePagerAdapter
+    class MyFrageStatePagerAdapter extends FragmentPagerAdapter
     {
 
         public MyFrageStatePagerAdapter(FragmentManager fm)
