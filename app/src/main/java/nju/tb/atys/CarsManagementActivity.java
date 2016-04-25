@@ -187,4 +187,12 @@ public class CarsManagementActivity extends Activity {
         }
         return null;
     }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.finish();
+    }
+
 }
