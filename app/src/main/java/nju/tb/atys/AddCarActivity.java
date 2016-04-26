@@ -58,6 +58,8 @@ public class AddCarActivity extends Activity {
         titleBackBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 AddCarActivity.this.finish();
+                Intent intent = new Intent(AddCarActivity.this, CarsManagementActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -162,8 +164,8 @@ public class AddCarActivity extends Activity {
                 MyAppContext myAppContext = (MyAppContext) getApplicationContext();
                 new AddTruck(AddCarActivity.this, myAppContext.getToken(), carNumberEditText.getText().toString(),
                         selectedTruckType, carPhoneEditText.getText().toString()).start();
-                Intent intent = new Intent(AddCarActivity.this, CarsManagementActivity.class);
-                startActivity(intent);
+                toast = Toast.makeText(AddCarActivity.this, "添加成功", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
 
