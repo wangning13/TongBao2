@@ -62,22 +62,28 @@ public class GetOrderDetail extends Thread implements Parse.ParseHttp {
                 stringBuffer.append(line);
             }
             Log.i("string:",stringBuffer.toString());
+            if(!stringBuffer.toString().contains("result")){
+                result=-2;
+                runover=true;
+                return;
+            }
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
             if(result==0){
                 runover=true;
                 return;
             }
-            JSONObject data = jsonObject.getJSONObject("data");
-
-
             JSONObject orderjsonobject = jsonObject.getJSONObject("data");
+            JSONArray types = orderjsonobject.getJSONArray("truckTypes");
+            String typesatring="";
+            for(int i=0;i<types.length();i++){
+                typesatring+=types.get(i)+" ";
+            }
             int id = orderjsonobject.getInt("id");
             String time=orderjsonobject.getString("time");
             String addressFrom=orderjsonobject.getString("addressFrom");
             String addressTo=orderjsonobject.getString("addressTo");
             String money=orderjsonobject.getString("money");
-           String truckTypes=orderjsonobject.getString("truckTypes");
             String fromContactName=orderjsonobject.getString("fromContactName");
             String fromContactPhone=orderjsonobject.getString("fromContactPhone");
             String toContactName=orderjsonobject.getString("toContactName");
@@ -89,7 +95,7 @@ public class GetOrderDetail extends Thread implements Parse.ParseHttp {
             order.setAddressFrom(addressFrom);
             order.setAddressTo(addressTo);
             order.setMoney(money);
-            order.setTruckTypes(truckTypes);
+            order.setTruckTypes(typesatring);
             order.setFromContactName(fromContactName);
             order.setFromContactPhone(fromContactPhone);
             order.setToContactName(toContactName);
@@ -110,6 +116,8 @@ public class GetOrderDetail extends Thread implements Parse.ParseHttp {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token", token));
         params.add(new BasicNameValuePair("id", id));
+        Log.i("token",token);
+        Log.i("id",id);
         HttpResponse httpResponse = request.sendHttpPostRequest(GET_ORDER_DETAIL, params);
         while (httpResponse == null) {
             if (!MyAppContext.getIsConnected()) {

@@ -33,6 +33,7 @@ public class OldOrderContentActivity extends Activity {
     private TextView trucktype_text;
     private TextView money_text;
     private TextView toolbar_text;
+    private TextView state_text;
     private Button deletebtn;
 
 
@@ -63,6 +64,7 @@ public class OldOrderContentActivity extends Activity {
         tname_text=(TextView) findViewById(R.id.tname);
         tphone_text=(TextView) findViewById(R.id.tphone);
         loadtime_text=(TextView) findViewById(R.id.loadtime);
+        state_text=(TextView) findViewById(R.id.state);
         taddress_text=(TextView) findViewById(R.id.taddress);
         trucktype_text=(TextView) findViewById(R.id.trucktype);
         money_text=(TextView) findViewById(R.id.money);
@@ -85,7 +87,8 @@ public class OldOrderContentActivity extends Activity {
         while(!god.isRunover()){
         }
 
-        if (god.getResult() == 0) {
+        if (god.getResult() == -2) {
+            Toast.makeText(OldOrderContentActivity.this, "订单信息有误", Toast.LENGTH_SHORT).show();
         }
 
         if (god.getResult() == 1) {
@@ -101,8 +104,9 @@ public class OldOrderContentActivity extends Activity {
             tphone_text.setText(order.getToContactPhone());
             loadtime_text.setText(order.getLoadTime());
             taddress_text.setText(order.getAddressTo());
-////            trucktype_text.setText(order.getTruckTypes());
+            trucktype_text.setText(order.getTruckTypes());
             money_text.setText(order.getMoney());
+            state_text.setText(order.getState());
         }
 
 
