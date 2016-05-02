@@ -24,15 +24,10 @@ import nju.tb.R;
 public class ScrambleOrderActivity extends FragmentActivity implements View.OnClickListener {
 
 
-    private TextView toolbar_text;
-    private RelativeLayout so_layout;
-    private RelativeLayout nb_layout;
     private TextView so_text;
     private TextView nb_text;
     private MyViewPager soViewPager;
     private List<Fragment> fragmentList;
-    private ScrambleOrderFragment fragment1;
-    private NearbyFragment fragment2;
 
     int currenttab=-1;
 
@@ -42,7 +37,7 @@ public class ScrambleOrderActivity extends FragmentActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scrambleorderactivity);
 //
-        toolbar_text = (TextView) findViewById(R.id.toolbar_title);
+        TextView toolbar_text = (TextView) findViewById(R.id.toolbar_title);
         toolbar_text.setText("抢单");
 
         ImageButton titleBackBtn = (ImageButton) findViewById(R.id.head_TitleBackBtn);
@@ -58,16 +53,16 @@ public class ScrambleOrderActivity extends FragmentActivity implements View.OnCl
         soViewPager=(MyViewPager) findViewById(R.id.soviewpager);
         soViewPager.setScanScroll(false);
         fragmentList=new ArrayList<Fragment>();
-        fragment1 = new ScrambleOrderFragment();
-        fragment2 = new NearbyFragment();
+        ScrambleOrderFragment fragment1 = new ScrambleOrderFragment();
+        NearbyFragment fragment2 = new NearbyFragment();
         fragmentList.add(fragment1);
         fragmentList.add(fragment2);
         soViewPager.setAdapter(new MyFrageStatePagerAdapter(getSupportFragmentManager()));
 ////
 ////
 //
-        so_layout = (RelativeLayout) findViewById(R.id.so_layout);
-        nb_layout = (RelativeLayout) findViewById(R.id.nb_layout);
+        RelativeLayout so_layout = (RelativeLayout) findViewById(R.id.so_layout);
+        RelativeLayout nb_layout = (RelativeLayout) findViewById(R.id.nb_layout);
         so_text = (TextView) findViewById(R.id.so_text);
         nb_text = (TextView) findViewById(R.id.nb_text);
         changeView(0);
