@@ -103,7 +103,7 @@ public class TaskOrderContentActivity  extends Activity {
             tphone_text.setText(order.getToContactPhone());
             loadtime_text.setText(order.getLoadTime());
             taddress_text.setText(order.getAddressTo());
-////            trucktype_text.setText(order.getTruckTypes());
+            trucktype_text.setText(order.getTruckTypes());
             money_text.setText(order.getMoney());
         }
         cancelbtn.setOnClickListener(new View.OnClickListener() {
