@@ -33,7 +33,6 @@ public class OldOrderContentActivity extends Activity {
     private TextView trucktype_text;
     private TextView money_text;
     private TextView toolbar_text;
-    private TextView state_text;
     private Button deletebtn;
 
 
@@ -64,7 +63,6 @@ public class OldOrderContentActivity extends Activity {
         tname_text=(TextView) findViewById(R.id.tname);
         tphone_text=(TextView) findViewById(R.id.tphone);
         loadtime_text=(TextView) findViewById(R.id.loadtime);
-        state_text=(TextView) findViewById(R.id.state);
         taddress_text=(TextView) findViewById(R.id.taddress);
         trucktype_text=(TextView) findViewById(R.id.trucktype);
         money_text=(TextView) findViewById(R.id.money);
@@ -106,7 +104,6 @@ public class OldOrderContentActivity extends Activity {
             taddress_text.setText(order.getAddressTo());
             trucktype_text.setText(order.getTruckTypes());
             money_text.setText(order.getMoney());
-            state_text.setText(order.getState());
         }
 
 

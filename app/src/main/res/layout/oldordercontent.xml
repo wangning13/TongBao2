@@ -228,7 +228,7 @@
                     android:id="@+id/state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="null"
+                    android:text="已经完成"
                     android:textSize="18sp" />
             </LinearLayout>
             <LinearLayout
