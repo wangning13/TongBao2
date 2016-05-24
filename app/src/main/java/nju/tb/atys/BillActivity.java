@@ -94,6 +94,7 @@ public class BillActivity extends Activity {
                         currentMonth = MONTH_ARR[monthPosition];
                         yearTextView.setText(String.valueOf(currentYear));
                         monthTextView.setText(String.valueOf(currentMonth));
+                        List
                         mData = getData(getListByYearMonth(myAppContext.getAccountList(), currentYear, currentMonth));
                         incomeTextView.setText(String.valueOf(totalIncome));
                         payTextView.setText(String.valueOf(totalPay));
@@ -202,6 +203,7 @@ public class BillActivity extends Activity {
                 continue;
             }
             temp.add(account.getAddressFrom() + "--" + account.getAddressTo());
+            returnList.add(temp);
         }
 
         return returnList;

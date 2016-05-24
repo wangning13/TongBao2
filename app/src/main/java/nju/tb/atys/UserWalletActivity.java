@@ -57,6 +57,9 @@ public class UserWalletActivity extends Activity {
         titleBackBtn.setVisibility(View.VISIBLE);
         titleBackBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                Intent intent = new Intent(UserWalletActivity.this, MainActivity.class);
+                startActivity(intent);
                 UserWalletActivity.this.finish();
             }
         });
@@ -154,6 +157,7 @@ public class UserWalletActivity extends Activity {
                 continue;
             }
             temp.add(account.getAddressFrom() + "--" + account.getAddressTo());
+            returnList.add(temp);
         }
 
         return returnList;
