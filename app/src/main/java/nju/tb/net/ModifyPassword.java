@@ -19,7 +19,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class ModifyPassword extends Thread implements Parse.ParseHttp {
-    private final String MODIFYPASSWORD = "http://120.27.112.9:8080/tongbao/user/auth/modifyPassword";
+    private final String MODIFYPASSWORD = Net.URL_PREFIX + "/user/auth/modifyPassword";
     private static int result = -1;
     private Context context;
     private String token;

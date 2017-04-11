@@ -19,7 +19,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class ModifyIcon extends Thread implements Parse.ParseHttp {
-    private final String MODIFY_ICON = "http://120.27.112.9:8080/tongbao/user/auth/modifyIcon";
+    private final String MODIFY_ICON = Net.URL_PREFIX + "/user/auth/modifyIcon";
     private int result = -1;
     private String errorMsg = "";
     private Context context;

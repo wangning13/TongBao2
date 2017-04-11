@@ -19,7 +19,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class HasRegister extends Thread implements Parse.ParseHttp {
-    private final String HASREGISTER = "http://120.27.112.9:8080/tongbao/user/hasRegister";
+    private final String HASREGISTER = Net.URL_PREFIX + "/user/hasRegister";
     private static int result = -1;
     private Context context;
     private String phoneNumber;

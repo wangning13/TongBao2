@@ -24,7 +24,7 @@ import nju.tb.entity.Order;
  * Created by Administrator on 2016/3/5.
  */
 public class GetOrderDetail extends Thread implements Parse.ParseHttp {
-    private final String GET_ORDER_DETAIL = "http://120.27.112.9:8080/tongbao/driver/auth/getOrderDetail";
+    private final String GET_ORDER_DETAIL = Net.URL_PREFIX + "/driver/auth/getOrderDetail";
     private static int result = -1;
     private Context context;
     private String token;

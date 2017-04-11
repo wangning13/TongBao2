@@ -32,7 +32,7 @@
     <application
         android:name=".Commen.MyAppContext"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
@@ -199,7 +199,7 @@
             android:value="12be19e543158d0d057b2d09" /> <!-- </>值来自开发者平台取得的AppKey -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="xpijInwyAiVpWRWMoGZafyyG" />
+            android:value="eH2NRBHcgbYLgpBMpwAyb3Fl6vKSKSAF" />
 
         <activity
             android:name=".atys.GrabOrderContentActivity"

@@ -20,7 +20,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class DeleteMessage implements Runnable,Parse.ParseHttp {
-    private final String DELETEMESSAGE = "http://120.27.112.9:8080/tongbao/user/auth/deleteMessage";
+    private final String DELETEMESSAGE = Net.URL_PREFIX + "/user/auth/deleteMessage";
     private static int result = -1;
     private Context context;
     private String token;

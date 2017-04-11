@@ -1,7 +1,6 @@
 package nju.tb.net;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -21,7 +20,7 @@ import nju.tb.Commen.MyAppContext;
 
 //根据用户token获取一个司机用户名下的所有车辆的列表
 public class GetTruckList extends Thread implements Parse.ParseHttp {
-    private final String GETTRUCKLIST = "http://120.27.112.9:8080/tongbao/driver/auth/getTruckList";
+    private final String GETTRUCKLIST = Net.URL_PREFIX + "/driver/auth/getTruckList";
     private static int result = -1;
     private Context context;
     private String token;

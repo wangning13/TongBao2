@@ -22,7 +22,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class RemoveTruck extends Thread implements Parse.ParseHttp {
-    private final String REMOVETRUCK = "http://120.27.112.9:8080/tongbao/driver/auth/removeTruck";
+    private final String REMOVETRUCK = Net.URL_PREFIX + "/driver/auth/removeTruck";
     private static int result = -1;
     private Context context;
     private String token;

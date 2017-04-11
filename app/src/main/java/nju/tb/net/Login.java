@@ -21,7 +21,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class Login extends Thread implements Parse.ParseHttp {
-    private final String LOGIN = "http://120.27.112.9:8080/tongbao/user/login";
+    private final String LOGIN = Net.URL_PREFIX + "/user/login";
     private static int result = -1;
     private Context context;
     private String phoneNumber;

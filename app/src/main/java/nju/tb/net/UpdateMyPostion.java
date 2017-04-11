@@ -22,7 +22,7 @@ import nju.tb.Commen.MyAppContext;
  * Created by Administrator on 2016/4/6.
  */
 public class UpdateMyPostion extends Thread implements Parse.ParseHttp{
-    private final String UPDATE_MY_POSITION = "http://120.27.112.9:8080/tongbao/driver/auth/updateMyPostion";
+    private final String UPDATE_MY_POSITION = Net.URL_PREFIX + "/driver/auth/updateMyPostion";
     private static int result = -1;
     private Context context;
     private String token;

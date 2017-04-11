@@ -22,7 +22,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class Recharge extends Thread implements Parse.ParseHttp {
-    private final String RECHARGE = "http://120.27.112.9:8080/tongbao/user/auth/recharge";
+    private final String RECHARGE = Net.URL_PREFIX + "/user/auth/recharge";
     private static int result = -1;
     private Context context;
     private String token;

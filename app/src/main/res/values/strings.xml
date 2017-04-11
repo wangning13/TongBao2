@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TongBao</string>
+    <string name="app_name">通宝司机版</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_order">OrderActivity</string>
     <string name="title_activity_order_listview">OrderListview</string>

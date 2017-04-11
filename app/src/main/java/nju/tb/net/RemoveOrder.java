@@ -22,7 +22,7 @@ import nju.tb.Commen.MyAppContext;
  * Created by Administrator on 2016/3/12.
  */
 public class RemoveOrder extends Thread implements Parse.ParseHttp{
-    private final String DELETE_ORDER = "http://120.27.112.9:8080/tongbao/driver/auth/deleteOrder";
+    private final String DELETE_ORDER = Net.URL_PREFIX + "/driver/auth/deleteOrder";
     private static int result = -1;
     private Context context;
     private String token;

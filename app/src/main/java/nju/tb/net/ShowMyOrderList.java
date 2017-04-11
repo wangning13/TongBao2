@@ -24,7 +24,7 @@ import nju.tb.entity.Order;
  * Created by Administrator on 2016/3/4.
  */
 public class ShowMyOrderList extends Thread implements Parse.ParseHttp {
-    private final String SHOW_MYORDERLIST = "http://120.27.112.9:8080/tongbao/driver/auth/showMyOrderList";
+    private final String SHOW_MYORDERLIST = Net.URL_PREFIX + "/driver/auth/showMyOrderList";
     private static int result = -1;
     private Context context;
     private String token;

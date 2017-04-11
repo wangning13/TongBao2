@@ -4,7 +4,6 @@ package nju.tb.net;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,7 +23,7 @@ import nju.tb.Commen.MyAppContext;
 import nju.tb.entity.MyMessage;
 
 public class GetMyMessage extends Thread implements Parse.ParseHttp {
-    private final String GETMYMESSAGE = "http://120.27.112.9:8080/tongbao/user/auth/getMyMessages";
+    private final String GETMYMESSAGE = Net.URL_PREFIX + "/user/auth/getMyMessages";
     private static int result = -1;
     private Context context;
     private List<MyMessage> myMessagesList;

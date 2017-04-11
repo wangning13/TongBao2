@@ -22,7 +22,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class Withdraw extends Thread implements Parse.ParseHttp {
-    private final String WITHWRAW = "http://120.27.112.9:8080/tongbao/user/auth/withdraw";
+    private final String WITHWRAW = Net.URL_PREFIX + "/user/auth/withdraw";
     private static int result = -1;
     private Context context;
     private String token;

@@ -2,8 +2,6 @@ package nju.tb.net;
 
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -21,7 +19,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class AddTruck extends Thread implements Parse.ParseHttp {
-    private final String ADDTRUCK = "http://120.27.112.9:8080/tongbao/driver/auth/addTruck";
+    private final String ADDTRUCK = Net.URL_PREFIX + "/driver/auth/addTruck";
     private static int result = -1;
     private Context context;
     private String token;

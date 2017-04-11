@@ -23,7 +23,7 @@ import nju.tb.entity.Order;
  * Created by Administrator on 2016/3/12.
  */
 public class ScrambleOrder extends Thread implements Parse.ParseHttp{
-    private final String GRAB_ORDER = "http://120.27.112.9:8080/tongbao/driver/auth/grabOrder";
+    private final String GRAB_ORDER = Net.URL_PREFIX + "/driver/auth/grabOrder";
     private static int result = -1;
     private Context context;
     private String token;

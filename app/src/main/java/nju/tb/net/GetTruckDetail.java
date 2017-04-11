@@ -4,7 +4,6 @@ package nju.tb.net;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -23,7 +22,7 @@ import nju.tb.Commen.MyAppContext;
 import nju.tb.entity.TruckDetail;
 
 public class GetTruckDetail extends Thread implements Parse.ParseHttp {
-    private final String GETTRUCKDETAIL = "http://120.27.112.9:8080/tongbao/driver/auth/getTruckDetail";
+    private final String GETTRUCKDETAIL = Net.URL_PREFIX + "/driver/auth/getTruckDetail";
     private static int result = -1;
     private Context context;
     private String token;

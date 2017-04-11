@@ -3,44 +3,24 @@ package nju.tb.net;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import org.apache.http.HttpConnection;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import nju.tb.Commen.MyAppContext;
 import nju.tb.entity.ProgressMultipartEntity;
 
 @SuppressWarnings("deprecation")
 public class HttpImage extends AsyncTask<String, Integer, String> {
-    private final String POST_URL = "http://120.27.112.9:8080/tongbao/user/uploadPicture";
+    private final String POST_URL = Net.URL_PREFIX + "/user/uploadPicture";
     private Context context;
     private HttpClient httpClient;
     private File file;

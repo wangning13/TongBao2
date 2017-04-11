@@ -20,7 +20,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class SetTruckAuthInfo extends Thread implements Parse.ParseHttp {
-    private final String SETTRUCKAUTHINFO = "http://120.27.112.9:8080/tongbao/driver/auth/setTruckAuthInfo";
+    private final String SETTRUCKAUTHINFO = Net.URL_PREFIX + "/driver/auth/setTruckAuthInfo";
     private static int result = -1;
     private Context context;
     private String token;

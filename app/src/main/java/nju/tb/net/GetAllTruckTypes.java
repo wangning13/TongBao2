@@ -2,7 +2,6 @@ package nju.tb.net;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,7 +18,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class GetAllTruckTypes extends Thread implements Parse.ParseHttp {
-    private final String GETALLTRUCKTYPES = "http://120.27.112.9:8080/tongbao/user/getAllTruckTypes";
+    private final String GETALLTRUCKTYPES = Net.URL_PREFIX + "/tongbao/user/getAllTruckTypes";
     private static int result = -1;
     private Context context;
     private static String errormsg = "";

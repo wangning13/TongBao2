@@ -18,7 +18,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class ModifyNickName extends Thread implements Parse.ParseHttp {
-    private final String MODIFYNICKNAME = "http://120.27.112.9:8080/tongbao/user/auth/modifyNickName";
+    private final String MODIFYNICKNAME = Net.URL_PREFIX + "/user/auth/modifyNickName";
     private static int result = -1;
     private Context context;
     private String token;

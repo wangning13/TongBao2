@@ -21,7 +21,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class SetRealNameAuthInfo extends Thread implements Parse.ParseHttp {
-    private final String SETREALNAMEAUTHINFO = "http://120.27.112.9:8080/tongbao/driver/auth/setRealNameAuthInfo";
+    private final String SETREALNAMEAUTHINFO = Net.URL_PREFIX + "/driver/auth/setRealNameAuthInfo";
     private static int result = -1;
     private Context context;
     private String token;

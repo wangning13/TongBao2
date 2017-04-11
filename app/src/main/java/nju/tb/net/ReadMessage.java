@@ -18,7 +18,7 @@ import java.util.List;
 import nju.tb.Commen.MyAppContext;
 
 public class ReadMessage extends Thread implements Parse.ParseHttp {
-    private final String READMESSAGE = "http://120.27.112.9:8080/tongbao/user/auth/readMessage";
+    private final String READMESSAGE = Net.URL_PREFIX + "/user/auth/readMessage";
     private static int result = -1;
     private Context context;
     private String token;

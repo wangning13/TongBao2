@@ -22,7 +22,7 @@ import nju.tb.Commen.MyAppContext;
  * Created by Administrator on 2016/3/12.
  */
 public class CancelOrder extends Thread implements Parse.ParseHttp{
-    private final String CANCEL_ORDER = "http://120.27.112.9:8080/tongbao/driver/auth/cancelOrder";
+    private final String CANCEL_ORDER = Net.URL_PREFIX + "/driver/auth/cancelOrder";
     private static int result = -1;
     private Context context;
     private String token;

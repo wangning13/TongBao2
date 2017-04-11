@@ -24,7 +24,7 @@ import nju.tb.Commen.MyAppContext;
 import nju.tb.entity.Account;
 
 public class ShowAccount extends Thread implements Parse.ParseHttp {
-    private final String SHOWACCOUNT = "http://120.27.112.9:8080/tongbao/user/auth/showAccount";
+    private final String SHOWACCOUNT = Net.URL_PREFIX + "/user/auth/showAccount";
     private static int result = -1;
     private Context context;
     private String token;
