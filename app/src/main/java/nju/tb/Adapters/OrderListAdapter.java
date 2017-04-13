@@ -1,30 +1,21 @@
 package nju.tb.Adapters;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
 
-import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
-import nju.tb.atys.GrabOrderContentActivity;
-import nju.tb.atys.ScrambleOrderFragment;
-import nju.tb.atys.TaskOrderContentActivity;
+import nju.tb.activities.GrabOrderContentActivity;
 import nju.tb.entity.Order;
-import nju.tb.net.ScrambleOrder;
 
 /**
  * Created by Administrator on 2016/2/27.

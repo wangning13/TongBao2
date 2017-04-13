@@ -2,7 +2,7 @@ package nju.tb.net;
 
 
 import android.content.Context;
-import android.util.Log;
+import android.content.SharedPreferences;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -14,10 +14,10 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import nju.tb.Commen.Common;
 import nju.tb.Commen.MyAppContext;
 
 public class Login extends Thread implements Parse.ParseHttp {
@@ -27,6 +27,7 @@ public class Login extends Thread implements Parse.ParseHttp {
     private String phoneNumber;
     private String password;
     private MyAppContext myAppContext;
+    SharedPreferences sharedPreferences;
 
     public Login(Context context, String phoneNumber, String password) {
         this.context = context;
@@ -43,12 +44,15 @@ public class Login extends Thread implements Parse.ParseHttp {
     @Override
     public void parseHttpResponse(HttpResponse httpResponse) {
         HttpEntity entity = httpResponse.getEntity();
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Common.USER_INFO,Context.MODE_PRIVATE);
+
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(entity.getContent()));
             StringBuffer stringBuffer = new StringBuffer();
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 stringBuffer.append(line);
             }
+            in.close();
             JSONObject jsonObject = new JSONObject(stringBuffer.toString());
             result = jsonObject.getInt("result");
             if (result == 0) {
@@ -68,6 +72,9 @@ public class Login extends Thread implements Parse.ParseHttp {
             myAppContext.setMoney(data.getInt("money"));
             myAppContext.setToken(data.getString("token"));
             myAppContext.setId(data.getString("id"));
+            sharedPreferences.edit().putBoolean(Common.IS_LOGIN,true).apply();
+            sharedPreferences.edit().putString(Common.PHONE_NUMBER,phoneNumber).apply();
+            sharedPreferences.edit().putString(Common.PWD,password).apply();
             entity.consumeContent();
         } catch (IOException e) {
             e.printStackTrace();

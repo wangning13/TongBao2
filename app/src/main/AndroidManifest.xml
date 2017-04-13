@@ -37,60 +37,61 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".atys.MainActivity"
+            android:name=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".atys.DoTaskActivity"
+            android:name=".activities.DoTaskActivity"
             android:label="@string/title_activity_do_task"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".atys.UserWalletActivity"
+            android:name=".activities.UserWalletActivity"
             android:label="@string/title_activity_use_wallet"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".atys.RechargeActivity"
+            android:name=".activities.RechargeActivity"
             android:label="@string/title_activity_recharge"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".atys.WithdrawActivity"
+            android:name=".activities.WithdrawActivity"
             android:label="@string/title_activity_withdraw"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity android:name=".atys.BillActivity" />
-        <activity android:name=".atys.ChangeInfoActivity" />
+        <activity android:name=".activities.BillActivity" />
+        <activity android:name=".activities.ChangeInfoActivity" />
         <activity
-            android:name=".atys.HelpcenterActivity"
+            android:name=".activities.HelpcenterActivity"
             android:label="@string/title_activity_helpcenter"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".atys.MessageActivity"
+            android:name=".activities.MessageActivity"
             android:label="@string/title_activity_message"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity android:name=".atys.ScrambleOrderActivity" />
-        <activity android:name=".atys.TaskOrderContentActivity" />
-        <activity android:name=".atys.OldOrderContentActivity" />
-        <activity android:name=".atys.MessageContentActivity" />
-        <activity android:name=".atys.CarsManagementActivity" />
-        <activity android:name=".atys.AddCarActivity" />
-        <activity android:name=".atys.CarInfoActivity" />
-        <activity android:name=".atys.CertificationActivity" />
-        <activity android:name=".atys.SelectAlbumActivity" />
-        <activity android:name=".atys.AlbumDetailActivity" />
-        <activity android:name=".atys.RegisterActivity" />
-        <activity android:name=".atys.LoginActivity" >
+        <activity android:name=".activities.ScrambleOrderActivity" />
+        <activity android:name=".activities.TaskOrderContentActivity" />
+        <activity android:name=".activities.OldOrderContentActivity" />
+        <activity android:name=".activities.MessageContentActivity" />
+        <activity android:name=".activities.CarsManagementActivity" />
+        <activity android:name=".activities.AddCarActivity" />
+        <activity android:name=".activities.CarInfoActivity" />
+        <activity android:name=".activities.CertificationActivity" />
+        <activity android:name=".activities.SelectAlbumActivity" />
+        <activity android:name=".activities.AlbumDetailActivity" />
+        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".atys.LoadingActivity" />
+        <activity android:name=".activities.LoadingActivity" />
 
         <service android:name=".services.NetStateService" />
         <service
@@ -202,12 +203,12 @@
             android:value="eH2NRBHcgbYLgpBMpwAyb3Fl6vKSKSAF" />
 
         <activity
-            android:name=".atys.GrabOrderContentActivity"
+            android:name=".activities.GrabOrderContentActivity"
             android:label="@string/title_activity_grab_order_content"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".atys.GPSActivity"
+            android:name=".activities.GPSActivity"
             android:label="@string/title_activity_gps"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>

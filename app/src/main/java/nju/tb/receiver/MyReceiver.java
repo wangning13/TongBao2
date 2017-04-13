@@ -7,16 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.logging.Logger;
-
 import cn.jpush.android.api.JPushInterface;
-import nju.tb.atys.CarInfoActivity;
-import nju.tb.atys.MainActivity;
-import nju.tb.atys.OldOrderContentActivity;
-import nju.tb.atys.TaskOrderContentActivity;
+import nju.tb.activities.CarInfoActivity;
+import nju.tb.activities.OldOrderContentActivity;
+import nju.tb.activities.TaskOrderContentActivity;
 
 public class MyReceiver extends BroadcastReceiver {
 //    private static final String TAG = "JPush";
