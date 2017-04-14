@@ -25,6 +25,24 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         Log.d("SplashActivity","init");
         setContentView(R.layout.activity_splash);
+//        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE
+//                , Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                , Manifest.permission.WAKE_LOCK
+//                , Manifest.permission.READ_PHONE_STATE
+//                , Manifest.permission.INTERNET
+//                , Manifest.permission.GET_ACCOUNTS
+//                , Manifest.permission.ACCESS_NETWORK_STATE
+//                , Manifest.permission.INTERNET
+//                , Manifest.permission.CHANGE_WIFI_STATE
+//                , Manifest.permission.ACCESS_WIFI_STATE
+//                , Manifest.permission.READ_PHONE_STATE
+//                , Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                , Manifest.permission.BROADCAST_STICKY
+//                , Manifest.permission.WRITE_SETTINGS
+//                , Manifest.permission.READ_PHONE_STATE
+//                , Manifest.permission.ACCESS_COARSE_LOCATION
+//                , Manifest.permission.ACCESS_FINE_LOCATION
+//        }, 123);
         SharedPreferences sharedPreferences = getSharedPreferences(Common.USER_INFO, Context.MODE_PRIVATE);
         boolean isLogin = sharedPreferences.getBoolean(Common.IS_LOGIN,false);
         if (isLogin){
@@ -42,7 +60,6 @@ public class SplashActivity extends Activity {
             Log.d("SplashActivity","未登录");
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                    Log.d("SplashActivity","转~");
                     Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
                     SplashActivity.this.startActivity(mainIntent);
                     SplashActivity.this.finish();

@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -226,5 +227,29 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     {
         changeBtn(desTab);
         mViewPager.setCurrentItem(desTab, true);
+    }
+    private int mBackKeyPressedTimes = 0;
+    @Override
+    public void onBackPressed() {
+        if (mBackKeyPressedTimes == 0) {
+            Toast.makeText(this, "再按一次退出程序 ", Toast.LENGTH_SHORT).show();
+            mBackKeyPressedTimes = 1;
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } finally {
+                        mBackKeyPressedTimes = 0;
+                    }
+                }
+            }.start();
+            return;
+        }  else{
+            MainActivity.this.finish();
+        }
+        super.onBackPressed();
     }
 }

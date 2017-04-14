@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import nju.tb.Commen.BitmapHelper;
+import nju.tb.Commen.Common;
 import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
 import nju.tb.net.GetBitmap;
@@ -84,8 +85,10 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreferences settings = getActivity().getSharedPreferences("loginSettings", 0);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Common.USER_INFO,Context.MODE_PRIVATE);
                 if (settings != null) {
                     settings.edit().clear().commit();
+                    sharedPreferences.edit().putBoolean(Common.IS_LOGIN,false).apply();
                 }
                 MyAppContext.setLogIn(false);
                 Intent intent = new Intent(getActivity(), LoginActivity.class);

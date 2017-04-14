@@ -98,6 +98,10 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" >
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2" >
+                </action>
+            </intent-filter>
         </service>
 
         <!-- Required SDK核心功能 -->
@@ -213,11 +217,11 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
 
-        <service
-            android:name=".services.GPSService"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
+        <!--<service-->
+            <!--android:name=".services.GPSService"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true" >-->
+        <!--</service>-->
 
     </application>
 

@@ -1,12 +1,10 @@
 package nju.tb.activities;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 
 import cn.jpush.android.api.JPushInterface;
 import nju.tb.Commen.Common;
-import nju.tb.Commen.MyAppContext;
 import nju.tb.R;
 import nju.tb.net.Login;
 
@@ -47,24 +44,6 @@ public class LoginActivity extends Activity {
         loginButton = (Button) findViewById(R.id.login_button);
         toRegister = (TextView) findViewById(R.id.login_toregister);
 
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE
-                , Manifest.permission.WRITE_EXTERNAL_STORAGE
-                , Manifest.permission.WAKE_LOCK
-                , Manifest.permission.READ_PHONE_STATE
-                , Manifest.permission.INTERNET
-                , Manifest.permission.GET_ACCOUNTS
-                , Manifest.permission.ACCESS_NETWORK_STATE
-                , Manifest.permission.INTERNET
-                , Manifest.permission.CHANGE_WIFI_STATE
-                , Manifest.permission.ACCESS_WIFI_STATE
-                , Manifest.permission.READ_PHONE_STATE
-                , Manifest.permission.WRITE_EXTERNAL_STORAGE
-                , Manifest.permission.BROADCAST_STICKY
-                , Manifest.permission.WRITE_SETTINGS
-                , Manifest.permission.READ_PHONE_STATE
-                , Manifest.permission.ACCESS_COARSE_LOCATION
-                , Manifest.permission.ACCESS_FINE_LOCATION
-        }, 123);
 
 
 
@@ -97,9 +76,9 @@ public class LoginActivity extends Activity {
 
 
         loginButton.setOnClickListener(new LoginButtonClickListener());
-        if (!autoLogin) {
-            loginButton.setClickable(false);
-        }
+//        if (!autoLogin) {
+//            loginButton.setClickable(false);
+//        }
 
         Bundle loadingReturn = getIntent().getBundleExtra("LoadingActivity");
         if (loadingReturn != null && loadingReturn.getString("state").equals("fail")) {
@@ -119,30 +98,30 @@ public class LoginActivity extends Activity {
     public void onStop() {
         super.onStop();
 
-        if (changeLogin) {
-            SharedPreferences loginSettings = getSharedPreferences("loginSettings", 0);
-            loginSettings.edit().clear().commit();
-            autoLogin=false;
-        }
-        if (keepPassword.isChecked()) {
-            SharedPreferences loginSettings = getSharedPreferences("loginSettings", 0);
-            if (MyAppContext.isLogIn() && autoLogin == false) {
-                loginSettings.edit().putString("phone", phoneNumberEditText.getText().toString()).putString("password",
-                        passwordEditText.getText().toString()).commit();
-            }
-        } else {
-            SharedPreferences loginSettings = getSharedPreferences("loginSettings", 0);
-            if (autoLogin == true) {
-                loginSettings.edit().clear().commit();
-            }
-        }
-
-        this.finish();
+//        if (changeLogin) {
+//            SharedPreferences loginSettings = getSharedPreferences("loginSettings", 0);
+//            loginSettings.edit().clear().commit();
+//            autoLogin=false;
+//        }
+//        if (keepPassword.isChecked()) {
+//            SharedPreferences loginSettings = getSharedPreferences("loginSettings", 0);
+//            if (MyAppContext.isLogIn() && autoLogin == false) {
+//                loginSettings.edit().putString("phone", phoneNumberEditText.getText().toString()).putString("password",
+//                        passwordEditText.getText().toString()).commit();
+//            }
+//        } else {
+//            SharedPreferences loginSettings = getSharedPreferences("loginSettings", 0);
+//            if (autoLogin == true) {
+//                loginSettings.edit().clear().commit();
+//            }
+//        }
+//
+//        this.finish();
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK){
-            return  true;
+            moveTaskToBack(true);
         }
         return  super.onKeyDown(keyCode, event);
 
@@ -162,7 +141,7 @@ public class LoginActivity extends Activity {
             bundle.putString("phone", phoneNumber);
             loadingIntent.putExtra("setPhone", bundle);
             startActivity(loadingIntent);
-
+            finish();
 
         }
     }
